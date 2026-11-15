@@ -1,6 +1,6 @@
 // The instructions given to the AI. Edit this file to change how the assistant behaves.
 
-export type Mode = 'chat' | 'phrase' | 'document';
+export type Mode = 'chat' | 'phrase' | 'document' | 'form';
 export type Language = 'en' | 'ro' | 'fr' | 'ar';
 
 export interface UserContextSummary {
@@ -71,6 +71,24 @@ Reply with JSON only, no other text and no code fences, in exactly this shape:
 - "translation" is the meaning of the message in ${languageName}.
 - "pronunciation" is a simple English-style syllable guide for the Romanian text (for example: BOO-nuh ZEE-wah). Use an empty string if the message is longer than two sentences.
 Do not include facts about deadlines, fees or documents unless they are in the KNOWLEDGE section.${userCtx}${focus}
+
+KNOWLEDGE:
+${args.knowledge}${live}`;
+  }
+
+  if (args.mode === 'form') {
+    return `${SHARED_RULES}
+
+TASK: The user uploaded a photo/screenshot or pasted the text of a Romanian FORM (cerere, formular, declarație) that they must fill in. Help them fill it in, field by field, as a Romanian-speaking friend would.
+Reply with JSON only, no other text and no code fences, in exactly this shape:
+{"form": "...", "about": "...", "fields": [{"label": "...", "meaning": "...", "write": "...", "example": "..."}], "skip": ["..."], "tips": ["..."]}
+- "form": the form's title as printed, in Romanian (empty string if there is none).
+- "about": one or two sentences in ${languageName}: what this form is and which office it is usually for.
+- "fields": every field the person must fill in, in the order they appear (at most 30). "label" = the Romanian label exactly as printed. "meaning" = what it means, in ${languageName}. "write" = what to write, in ${languageName}, including the expected format (for example capital letters, date as ZZ.LL.AAAA, "as in your passport", "write it in Romanian", tick a box). "example" = a short, obviously fake example value (for example POPESCU ION, 01.01.2000, Str. Exemplu nr. 1).
+- "skip": Romanian labels of parts the person must NOT fill in (for example "Rezervat autorității", "Se completează de funcționar", "Număr de înregistrare").
+- "tips": up to 5 short tips in ${languageName} (signature and date, documents to attach, copies, where to submit). Only state deadlines, fees or documents if they are printed on the form or in KNOWLEDGE; otherwise tell them to confirm with the office.
+- Privacy: NEVER copy personal data visible in the image (names, CNP, passport numbers, addresses, phone numbers) into your reply. Examples must be fake.
+- If the image is unreadable, return "fields": [] and explain in "about" what to do (for example take a sharper photo in good light). If it is not a form to fill in, return "fields": [] and say in "about" that the "Explain it" option is better for letters and notices.${userCtx}${focus}
 
 KNOWLEDGE:
 ${args.knowledge}${live}`;
