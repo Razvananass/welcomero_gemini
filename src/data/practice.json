@@ -1,0 +1,426 @@
+[
+  {
+    "id": "understand",
+    "title": {
+      "en": "Understanding and being understood",
+      "ro": "Să înțelegi și să fii înțeles",
+      "fr": "Comprendre et se faire comprendre",
+      "ar": "أن تفهم وأن يفهمك الآخرون",
+      "uk": "Розуміти й бути зрозумілим",
+      "ne": "बुझ्न र बुझाउन"
+    },
+    "cards": [
+      {
+        "id": "hello",
+        "ro": "Bună ziua!",
+        "pron": "BOO-nuh ZEE-wah",
+        "meaning": {
+          "en": "Good day! (a polite hello, used until the evening)",
+          "fr": "Bonjour ! (salutation polie, utilisée jusqu’au soir)",
+          "ar": "نهارك سعيد! (تحية مهذبة تُستخدم حتى المساء)",
+          "uk": "Добрий день! (ввічливе привітання, до вечора)",
+          "ne": "शुभ दिन! (विनम्र अभिवादन, साँझसम्म प्रयोग गरिन्छ)"
+        }
+      },
+      {
+        "id": "dont-understand",
+        "ro": "Nu înțeleg.",
+        "pron": "noo un-TSEH-leg",
+        "meaning": {
+          "en": "I do not understand.",
+          "fr": "Je ne comprends pas.",
+          "ar": "أنا لا أفهم.",
+          "uk": "Я не розумію.",
+          "ne": "मैले बुझिनँ।"
+        }
+      },
+      {
+        "id": "repeat",
+        "ro": "Puteți repeta, vă rog?",
+        "pron": "poo-TEHTS reh-peh-TAH, vuh rog",
+        "meaning": {
+          "en": "Could you repeat that, please?",
+          "fr": "Pourriez-vous répéter, s’il vous plaît ?",
+          "ar": "هل يمكنك أن تعيد ذلك من فضلك؟",
+          "uk": "Чи не могли б ви повторити, будь ласка?",
+          "ne": "कृपया, तपाईं फेरि भन्न सक्नुहुन्छ?"
+        }
+      },
+      {
+        "id": "english",
+        "ro": "Vorbiți engleză?",
+        "pron": "vor-BEETS en-GLEH-zuh",
+        "meaning": {
+          "en": "Do you speak English?",
+          "fr": "Parlez-vous anglais ?",
+          "ar": "هل تتحدث الإنجليزية؟",
+          "uk": "Ви говорите англійською?",
+          "ne": "तपाईं अंग्रेजी बोल्नुहुन्छ?"
+        }
+      },
+      {
+        "id": "english-form",
+        "ro": "Aveți acest formular în engleză?",
+        "pron": "ah-VEHTS AH-chest for-moo-LAR un en-GLEH-zuh",
+        "meaning": {
+          "en": "Do you have this form in English?",
+          "fr": "Avez-vous ce formulaire en anglais ?",
+          "ar": "هل لديكم هذه الاستمارة بالإنجليزية؟",
+          "uk": "Чи є у вас ця форма англійською?",
+          "ne": "तपाईंसँग यो फारम अंग्रेजीमा छ?"
+        }
+      },
+      {
+        "id": "help-fill",
+        "ro": "Mă puteți ajuta să completez formularul?",
+        "pron": "muh poo-TEHTS ah-zhoo-TAH suh kom-pleh-TEHZ for-moo-LAH-rool",
+        "meaning": {
+          "en": "Can you help me fill in the form?",
+          "fr": "Pouvez-vous m’aider à remplir le formulaire ?",
+          "ar": "هل يمكنك مساعدتي في تعبئة الاستمارة؟",
+          "uk": "Чи можете ви допомогти мені заповнити форму?",
+          "ne": "तपाईं मलाई फारम भर्न मद्दत गर्न सक्नुहुन्छ?"
+        }
+      }
+    ]
+  },
+  {
+    "id": "documents",
+    "title": {
+      "en": "Your documents",
+      "ro": "Documentele tale",
+      "fr": "Vos documents",
+      "ar": "وثائقك",
+      "uk": "Ваші документи",
+      "ne": "तपाईंका कागजात"
+    },
+    "cards": [
+      {
+        "id": "have-passport",
+        "ro": "Am pașaportul și viza la mine.",
+        "pron": "am pah-shah-POR-tool shee VEE-zah lah MEE-neh",
+        "meaning": {
+          "en": "I have my passport and my visa with me.",
+          "fr": "J’ai mon passeport et mon visa avec moi.",
+          "ar": "معي جواز سفري وتأشيرتي.",
+          "uk": "Паспорт і віза в мене з собою.",
+          "ne": "मसँग मेरो राहदानी र भिसा छ।"
+        }
+      },
+      {
+        "id": "student-cert",
+        "ro": "Aceasta este adeverința mea de student.",
+        "pron": "ah-CHAS-tah YES-teh ah-deh-veh-REEN-tsah meh-ah deh stoo-DENT",
+        "meaning": {
+          "en": "This is my student status certificate.",
+          "fr": "Voici mon certificat de scolarité.",
+          "ar": "هذه شهادة قيدي كطالب.",
+          "uk": "Це моя довідка про навчання.",
+          "ne": "यो मेरो विद्यार्थी प्रमाणपत्र हो।"
+        }
+      },
+      {
+        "id": "copy",
+        "ro": "Aveți nevoie de o copie?",
+        "pron": "ah-VEHTS neh-VOH-yeh deh oh KOH-pee-eh",
+        "meaning": {
+          "en": "Do you need a copy?",
+          "fr": "Avez-vous besoin d’une copie ?",
+          "ar": "هل تحتاج إلى نسخة؟",
+          "uk": "Вам потрібна копія?",
+          "ne": "तपाईंलाई प्रतिलिपि चाहिन्छ?"
+        }
+      },
+      {
+        "id": "missing",
+        "ro": "Îmi lipsește un document.",
+        "pron": "uhm leep-SEHSH-teh oon doh-koo-MENT",
+        "meaning": {
+          "en": "I am missing a document.",
+          "fr": "Il me manque un document.",
+          "ar": "تنقصني وثيقة.",
+          "uk": "Мені бракує одного документа.",
+          "ne": "मसँग एउटा कागजात छैन।"
+        }
+      },
+      {
+        "id": "which-missing",
+        "ro": "Ce document îmi lipsește?",
+        "pron": "cheh doh-koo-MENT uhm leep-SEHSH-teh",
+        "meaning": {
+          "en": "Which document am I missing?",
+          "fr": "Quel document me manque-t-il ?",
+          "ar": "أي وثيقة تنقصني؟",
+          "uk": "Якого документа мені бракує?",
+          "ne": "मसँग कुन कागजात छैन?"
+        }
+      },
+      {
+        "id": "original",
+        "ro": "Aici este originalul.",
+        "pron": "ah-EECH YES-teh oh-ree-zhee-NAH-lool",
+        "meaning": {
+          "en": "Here is the original.",
+          "fr": "Voici l’original.",
+          "ar": "هذا هو الأصل.",
+          "uk": "Ось оригінал.",
+          "ne": "यो सक्कली हो।"
+        }
+      }
+    ]
+  },
+  {
+    "id": "appointments",
+    "title": {
+      "en": "Appointments, fees and results",
+      "ro": "Programări, taxe și rezultate",
+      "fr": "Rendez-vous, frais et résultats",
+      "ar": "المواعيد والرسوم والنتائج",
+      "uk": "Записи на прийом, збори та результати",
+      "ne": "अपोइन्टमेन्ट, शुल्क र नतिजा"
+    },
+    "cards": [
+      {
+        "id": "have-appt",
+        "ro": "Am o programare la ora zece.",
+        "pron": "am oh proh-grah-MAH-reh lah OH-rah ZEH-cheh",
+        "meaning": {
+          "en": "I have an appointment at ten o'clock.",
+          "fr": "J’ai un rendez-vous à 10 heures.",
+          "ar": "لدي موعد في الساعة 10.",
+          "uk": "У мене запис на 10 годину.",
+          "ne": "मेरो दश बजे अपोइन्टमेन्ट छ।"
+        }
+      },
+      {
+        "id": "pay-card",
+        "ro": "Pot plăti cu cardul?",
+        "pron": "pot pluh-TEE koo KAR-dool",
+        "meaning": {
+          "en": "Can I pay by card?",
+          "fr": "Puis-je payer par carte ?",
+          "ar": "هل يمكنني الدفع بالبطاقة؟",
+          "uk": "Чи можна заплатити карткою?",
+          "ne": "के म कार्डले तिर्न सक्छु?"
+        }
+      },
+      {
+        "id": "when-ready",
+        "ro": "Când pot veni să ridic documentul?",
+        "pron": "kund pot veh-NEE suh ree-DEEK doh-koo-MEN-tool",
+        "meaning": {
+          "en": "When can I come to collect the document?",
+          "fr": "Quand puis-je venir récupérer le document ?",
+          "ar": "متى يمكنني الحضور لاستلام الوثيقة؟",
+          "uk": "Коли я можу прийти по документ?",
+          "ne": "म कागजात लिन कहिले आउन सक्छु?"
+        }
+      },
+      {
+        "id": "queue",
+        "ro": "Ce număr de ordine trebuie să iau?",
+        "pron": "cheh NOO-mur deh or-DEE-neh TREH-boo-yeh suh YAH-oo",
+        "meaning": {
+          "en": "Which queue number should I take?",
+          "fr": "Quel numéro de file d’attente dois-je prendre ?",
+          "ar": "أي رقم دور يجب أن آخذ؟",
+          "uk": "Який номер у черзі мені взяти?",
+          "ne": "मैले कुन लाइन नम्बर लिनुपर्छ?"
+        }
+      },
+      {
+        "id": "receipt",
+        "ro": "Pot primi o dovadă că am depus cererea?",
+        "pron": "pot pree-MEE oh doh-VAH-duh kuh am deh-POOS cheh-REH-ah",
+        "meaning": {
+          "en": "Can I get proof that I submitted my application?",
+          "fr": "Puis-je obtenir un justificatif prouvant que j’ai déposé ma demande ?",
+          "ar": "هل يمكنني الحصول على إثبات بأنني قدمت طلبي؟",
+          "uk": "Чи можу я отримати підтвердження, що я подав(-ла) заяву?",
+          "ne": "के मैले आवेदन बुझाएको प्रमाण पाउन सक्छु?"
+        }
+      }
+    ]
+  },
+  {
+    "id": "formwords",
+    "title": {
+      "en": "Words you will see on forms",
+      "ro": "Cuvinte pe care le vei vedea în formulare",
+      "fr": "Mots que vous verrez sur les formulaires",
+      "ar": "كلمات سترونها في الاستمارات",
+      "uk": "Слова, які ви побачите у формах",
+      "ne": "फाराममा देखिने शब्दहरू"
+    },
+    "cards": [
+      {
+        "id": "w-surname",
+        "ro": "Nume",
+        "pron": "NOO-meh",
+        "meaning": {
+          "en": "Surname (family name)",
+          "fr": "Nom de famille",
+          "ar": "اللقب (اسم العائلة)",
+          "uk": "Прізвище",
+          "ne": "थर (पारिवारिक नाम)"
+        }
+      },
+      {
+        "id": "w-firstname",
+        "ro": "Prenume",
+        "pron": "preh-NOO-meh",
+        "meaning": {
+          "en": "First name (given name)",
+          "fr": "Prénom",
+          "ar": "الاسم الأول",
+          "uk": "Ім’я",
+          "ne": "पहिलो नाम (दिइएको नाम)"
+        }
+      },
+      {
+        "id": "w-dob",
+        "ro": "Data nașterii",
+        "pron": "DAH-tah NAHSH-teh-ree",
+        "meaning": {
+          "en": "Date of birth",
+          "fr": "Date de naissance",
+          "ar": "تاريخ الميلاد",
+          "uk": "Дата народження",
+          "ne": "जन्म मिति"
+        }
+      },
+      {
+        "id": "w-pob",
+        "ro": "Locul nașterii",
+        "pron": "LOH-kool NAHSH-teh-ree",
+        "meaning": {
+          "en": "Place of birth",
+          "fr": "Lieu de naissance",
+          "ar": "مكان الميلاد",
+          "uk": "Місце народження",
+          "ne": "जन्म स्थान"
+        }
+      },
+      {
+        "id": "w-citizenship",
+        "ro": "Cetățenie",
+        "pron": "cheh-tuh-TSEH-nee-eh",
+        "meaning": {
+          "en": "Citizenship (nationality)",
+          "fr": "Citoyenneté (nationalité)",
+          "ar": "الجنسية (المواطنة)",
+          "uk": "Громадянство (національність)",
+          "ne": "नागरिकता (राष्ट्रियता)"
+        }
+      },
+      {
+        "id": "w-series",
+        "ro": "Seria și numărul",
+        "pron": "SEH-ree-ah shee NOO-muh-rool",
+        "meaning": {
+          "en": "Series and number (of your passport or ID)",
+          "fr": "Série et numéro (de votre passeport ou pièce d’identité)",
+          "ar": "السلسلة والرقم (في جواز سفرك أو بطاقة هويتك)",
+          "uk": "Серія та номер (вашого паспорта або посвідчення особи)",
+          "ne": "शृङ्खला र नम्बर (तपाईंको राहदानी वा परिचयपत्रको)"
+        }
+      },
+      {
+        "id": "w-address",
+        "ro": "Adresa de domiciliu",
+        "pron": "ah-DREH-sah deh doh-mee-CHEE-lee-oo",
+        "meaning": {
+          "en": "Home address (where you live)",
+          "fr": "Adresse de domicile (où vous habitez)",
+          "ar": "عنوان السكن (المكان الذي تقيم فيه)",
+          "uk": "Адреса проживання (де ви живете)",
+          "ne": "घरको ठेगाना (तपाईं बस्ने ठाउँ)"
+        }
+      },
+      {
+        "id": "w-signature",
+        "ro": "Semnătura",
+        "pron": "sem-NUH-too-rah",
+        "meaning": {
+          "en": "Signature",
+          "fr": "Signature",
+          "ar": "التوقيع",
+          "uk": "Підпис",
+          "ne": "हस्ताक्षर"
+        }
+      },
+      {
+        "id": "w-date",
+        "ro": "Data",
+        "pron": "DAH-tah",
+        "meaning": {
+          "en": "Date",
+          "fr": "Date",
+          "ar": "التاريخ",
+          "uk": "Дата",
+          "ne": "मिति"
+        }
+      },
+      {
+        "id": "w-application",
+        "ro": "Cerere",
+        "pron": "CHEH-reh-reh",
+        "meaning": {
+          "en": "Application (a written request)",
+          "fr": "Demande (une requête écrite)",
+          "ar": "طلب (طلب مكتوب)",
+          "uk": "Заява (письмове прохання)",
+          "ne": "निवेदन (लिखित अनुरोध)"
+        }
+      },
+      {
+        "id": "w-capitals",
+        "ro": "Se completează cu majuscule.",
+        "pron": "seh kom-pleh-TEH-ah-zuh koo mah-zhoo-SKOO-leh",
+        "meaning": {
+          "en": "Fill in with capital letters.",
+          "fr": "À remplir en majuscules.",
+          "ar": "تُعبأ بأحرف كبيرة.",
+          "uk": "Заповнюйте великими літерами.",
+          "ne": "ठूलो अक्षरमा भर्नुहोस्।"
+        }
+      },
+      {
+        "id": "w-reserved",
+        "ro": "Rezervat autorității",
+        "pron": "reh-zer-VAHT ah-oo-toh-ree-TUH-tsee",
+        "meaning": {
+          "en": "Reserved for the authority (leave this part empty)",
+          "fr": "Réservé à l’administration (laissez cette partie vide)",
+          "ar": "خاص بالجهة المختصة (اترك هذا الجزء فارغا)",
+          "uk": "Для службових відміток (залиште цю частину порожньою)",
+          "ne": "अधिकारीका लागि मात्र (यो भाग खाली छोड्नुहोस्)"
+        }
+      },
+      {
+        "id": "w-declaration",
+        "ro": "Declarație pe propria răspundere",
+        "pron": "deh-klah-RAH-tsee-eh peh PROH-pree-ah ruhs-POON-deh-reh",
+        "meaning": {
+          "en": "Declaration on your own responsibility (you confirm the information is true)",
+          "fr": "Déclaration sur l’honneur (vous confirmez que les informations sont vraies)",
+          "ar": "إقرار على مسؤوليتك الشخصية (تؤكد أن المعلومات صحيحة)",
+          "uk": "Декларація під особисту відповідальність (ви підтверджуєте, що інформація правдива)",
+          "ne": "आफ्नै जिम्मेवारीमा घोषणा (तपाईं जानकारी सही छ भनी पुष्टि गर्नुहुन्छ)"
+        }
+      }
+    ]
+  },
+  {
+    "id": "office",
+    "title": {
+      "en": "Questions for the office",
+      "ro": "Întrebări pentru ghișeu",
+      "fr": "Questions pour le bureau",
+      "ar": "أسئلة للمكتب",
+      "uk": "Запитання для офісу",
+      "ne": "कार्यालयका लागि प्रश्नहरू"
+    },
+    "cards": []
+  }
+]

@@ -7,6 +7,7 @@ import { btnPrimary, CopyButton, cardClass, inputClass, Notice, PageHeader, Spea
 import type { MessageKey } from '../i18n';
 import type { Phrase } from '../types';
 import { Icon } from '../components/Icon';
+import { Link } from 'react-router-dom';
 import { getSelectedVoice, setSelectedVoice, subscribeVoiceChange, type VoiceKey } from '../lib/speech';
 
 function PhraseCard({ phrase }: { phrase: Phrase }) {
@@ -227,6 +228,12 @@ export function Helper() {
       ) : (
         <p className="text-sm text-muted">{t('help.speech.note')}</p>
       )}
+      <Link to="/practice" className={`${cardClass} card-lift flex items-center gap-3 font-semibold text-brand-900 hover:border-brand-500`}>
+        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700">
+          <Icon name="graduation" />
+        </span>
+        <span>{t('practice.helperLink')}</span>
+      </Link>
       <div className="grid gap-4 md:grid-cols-2">
         {phrases.map((phrase) => (
           <PhraseCard key={phrase.id} phrase={phrase} />

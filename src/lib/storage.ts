@@ -17,6 +17,7 @@ export const STORAGE_KEYS = {
   docs: 'docs',
   dates: 'dates',
   theme: 'theme',
+  practice: 'practice',
 } as const;
 
 const memoryFallback = new Map<string, string>();

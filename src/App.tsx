@@ -16,6 +16,7 @@ import { NotFound } from './pages/NotFound';
 import { Kit } from './pages/Kit';
 import { Onboarding } from './pages/Onboarding';
 import { Plan } from './pages/Plan';
+import { Practice } from './pages/Practice';
 import { Settings } from './pages/Settings';
 
 /** Pages that need a profile send new visitors to onboarding first. */
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="assistant" element={<Assistant />} />
             <Route path="helper" element={<Helper />} />
             <Route path="counter" element={<Counter />} />
+            <Route path="practice" element={<Practice />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />
