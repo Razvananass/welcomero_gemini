@@ -1,4 +1,4 @@
-// Tests for the parts of welcomeRo that do not need a browser: checklist logic, onboarding rules,
+// Tests for the parts of WelcomeRO that do not need a browser: checklist logic, onboarding rules,
 // data integrity, translations and the AI endpoint (with a fake network).
 // Run with:  npm test
 import { describe, it } from 'node:test';
@@ -346,7 +346,7 @@ describe('translations', () => {
   it('Ukrainian is Cyrillic and Nepali is Devanagari', () => {
     assert.ok(/[\u0400-\u04FF]/.test(dictionaries.uk['landing.cta']));
     assert.ok(/[\u0900-\u097F]/.test(dictionaries.ne['landing.cta']));
-    assert.equal(dictionaries.uk['app.name'], 'welcomeRo');
+    assert.equal(dictionaries.uk['app.name'], 'WelcomeRO');
   });
 
   it('Arabic text is actually Arabic and Romanian has diacritics', () => {
@@ -637,7 +637,7 @@ describe('plan: calendar file (.ics)', () => {
   const now = new Date('2026-11-14T08:00:00Z');
   const ics = buildIcs(
     [
-      { uid: 'a@welcomero', date: '2026-12-31', summary: 'welcomeRo: Permit, with comma; and semicolon', description: 'Line one\nLine two with a very long sentence that must be folded because calendar files limit the length of every line to seventy-five characters.' },
+      { uid: 'a@welcomero', date: '2026-12-31', summary: 'WelcomeRO: Permit, with comma; and semicolon', description: 'Line one\nLine two with a very long sentence that must be folded because calendar files limit the length of every line to seventy-five characters.' },
     ],
     now,
   );

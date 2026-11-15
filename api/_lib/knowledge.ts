@@ -1,5 +1,5 @@
 // Builds the "knowledge" text that is given to the AI: the same JSON data the website shows.
-// This keeps the assistant grounded in welcomeRo's dataset instead of in guesses.
+// This keeps the assistant grounded in WelcomeRO's dataset instead of in guesses.
 //
 // The JSON is read from disk (not imported) so it works the same way on Vercel.
 // vercel.json lists src/data/** under "includeFiles" so these files are bundled with the function.

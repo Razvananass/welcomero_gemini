@@ -17,7 +17,7 @@ export class ErrorBoundary extends Component<Props, { failed: boolean }> {
   }
 
   componentDidCatch(error: unknown) {
-    console.error('welcomeRo page error', error);
+    console.error('WelcomeRO page error', error);
   }
 
   render() {

@@ -1,10 +1,10 @@
-# welcomeRo — Your first month in Romania, made easier
+# WelcomeRO — Your first month in Romania, made easier
 
 A web app that helps newcomers in Timișoara (students first) work through their first month of
 Romanian paperwork: a personal checklist, plain-language guides, an optional AI assistant,
 Romanian phrases and an institutions directory. Languages: English, Română, Français, العربية (RTL), Українська, नेपाली.
 
-**Important:** welcomeRo is an independent information tool, not a government service and not legal advice.
+**Important:** WelcomeRO is an independent information tool, not a government service and not legal advice.
 Most procedure details are marked **"Needs confirmation"** on purpose. Always check with the official institution.
 
 ## Listen to Romanian phrases
@@ -47,7 +47,7 @@ The assistant works with one of three providers. Set the key for **one** of them
 - Never prefix the variable with `VITE_` (that would publish the key in the browser).
 
 Free-tier notes (from the providers' own pages, checked on 14 Nov 2026; they change often):
-- Gemini: the free tier lists `gemini-2.5-flash` as free of charge, **but Google states free-tier content may be used to improve its products**. welcomeRo sends only what the user types in the assistant (no profile, no saved answers), but tell users not to type personal data such as passport numbers. The paid tier does not use content for training.
+- Gemini: the free tier lists `gemini-2.5-flash` as free of charge, **but Google states free-tier content may be used to improve its products**. WelcomeRO sends only what the user types in the assistant (no profile, no saved answers), but tell users not to type personal data such as passport numbers. The paid tier does not use content for training.
 - Groq: the free plan has per-organisation limits (sample: about 30 requests/minute, 1,000 requests/day). Check your account's limits page.
 - Free tiers can be rate-limited or change at any time. When that happens the app shows a "try again later" message and everything else keeps working.
 - Without any key the app works fully; the assistant and the custom-message generator show a clear "not available" message (no fake answers).
