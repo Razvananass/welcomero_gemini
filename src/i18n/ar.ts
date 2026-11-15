@@ -78,8 +78,8 @@ export const ar: Record<MessageKey, string> = {
 
   'onb.title': 'أخبرنا عن نفسك',
   'onb.editing': 'أنت تعدّل إجاباتك.',
-  'onb.step1.title': 'عنك',
-  'onb.step2.title': 'اللغة',
+  'onb.step1.title': 'اللغة',
+  'onb.step2.title': 'عنك',
   'onb.step3.title': 'السكن',
   'onb.step4.title': 'تقدمك',
   'onb.q.situation': 'ما الذي يصف وضعك على أفضل وجه؟',

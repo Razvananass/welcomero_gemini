@@ -22,7 +22,7 @@ import { localData, STORAGE_KEYS } from '../lib/storage';
 import { btnPrimary, btnSecondary, cardClass, Notice, ProgressBar } from '../components/ui';
 import type { ProfileDraft } from '../types';
 
-const STEP_ICONS: IconName[] = ['user', 'globe', 'home', 'list'];
+const STEP_ICONS: IconName[] = ['globe', 'user', 'home', 'list'];
 
 type SavedDraft = ProfileDraft & { step?: number };
 
@@ -163,6 +163,23 @@ export function Onboarding() {
 
       <form onSubmit={handleSubmit} noValidate className={`${cardClass} mt-6 space-y-6`}>
         {step === 1 ? (
+          <Question legend={t('onb.q.language')}>
+            {LANGUAGES.map((lang) => (
+              <Choice
+                key={lang.code}
+                type="radio"
+                name="language"
+                checked={language === lang.code}
+                onChange={() => {
+                  if (isLang(lang.code)) setLanguage(lang.code);
+                }}
+                label={lang.nativeName}
+              />
+            ))}
+          </Question>
+        ) : null}
+
+        {step === 2 ? (
           <>
             <Question legend={t('onb.q.situation')}>
               {SITUATIONS.map((value) => (
@@ -189,23 +206,6 @@ export function Onboarding() {
               ))}
             </Question>
           </>
-        ) : null}
-
-        {step === 2 ? (
-          <Question legend={t('onb.q.language')}>
-            {LANGUAGES.map((lang) => (
-              <Choice
-                key={lang.code}
-                type="radio"
-                name="language"
-                checked={language === lang.code}
-                onChange={() => {
-                  if (isLang(lang.code)) setLanguage(lang.code);
-                }}
-                label={lang.nativeName}
-              />
-            ))}
-          </Question>
         ) : null}
 
         {step === 3 ? (

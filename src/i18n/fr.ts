@@ -78,8 +78,8 @@ export const fr: Record<MessageKey, string> = {
 
   'onb.title': 'Parlez-nous de vous',
   'onb.editing': 'Vous modifiez vos réponses.',
-  'onb.step1.title': 'À propos de vous',
-  'onb.step2.title': 'Langue',
+  'onb.step1.title': 'Langue',
+  'onb.step2.title': 'À propos de vous',
   'onb.step3.title': 'Logement',
   'onb.step4.title': 'Votre progression',
   'onb.q.situation': 'Qu’est-ce qui décrit le mieux votre situation ?',
