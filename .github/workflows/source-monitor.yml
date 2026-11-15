@@ -52,9 +52,11 @@ jobs:
           git push -u origin "$branch"
 
           if [ -z "$existing" ]; then
-            gh api "repos/${GITHUB_REPOSITORY}/pulls" \
+            if ! gh api "repos/${GITHUB_REPOSITORY}/pulls" \
               -f title="Review administrative source changes" \
               -f head="$branch" \
               -f base="${GITHUB_REF_NAME}" \
-              -f body="Automated reachability and content-fingerprint check for the sources used by WelcomeRO. A changed fingerprint is a review alert only: inspect the linked source and update affected guidance before accepting the new baseline."
+              -f body="Automated reachability and content-fingerprint check for the sources used by WelcomeRO. A changed fingerprint is a review alert only: inspect the linked source and update affected guidance before accepting the new baseline."; then
+              echo "::warning::The source-status branch was pushed, but this repository does not allow GitHub Actions to open pull requests. Open a PR from ${branch} manually."
+            fi
           fi
