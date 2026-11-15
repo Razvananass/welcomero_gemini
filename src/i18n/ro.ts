@@ -2,7 +2,7 @@ import type { MessageKey } from './en';
 
 // Romanian UI strings, reviewed for natural, clear everyday phrasing.
 export const ro: Record<MessageKey, string> = {
-  'app.name': 'welcomeRo',
+  'app.name': 'WelcomeRO',
   'app.tagline': 'Prima ta lună în România, mult mai ușoară.',
   'common.back': 'Înapoi',
   'common.continue': 'Continuă',
@@ -28,7 +28,7 @@ export const ro: Record<MessageKey, string> = {
   'nav.language': 'Limba',
   'nav.more': 'Mai multe',
   'nav.practice': 'Exersează româna',
-  'nav.home': 'Pagina principală welcomeRo',
+  'nav.home': 'Pagina principală WelcomeRO',
 
   'level.verified': 'Dintr-o sursă oficială',
   'level.recommended': 'Sfat practic',
@@ -46,7 +46,7 @@ export const ro: Record<MessageKey, string> = {
   'relevance.verify': 'Vezi dacă se aplică și în cazul tău',
 
   'landing.eyebrow': 'Un ghid gratuit pentru nou-veniți',
-  'landing.hero.body': 'Formularele oficiale sunt de obicei doar în română, iar fiecare persoană are nevoie de acte diferite. welcomeRo îți organizează situația într-o listă clară de pași și ghiduri ușor de urmărit, ca să te descurci și pe cont propriu.',
+  'landing.hero.body': 'Formularele oficiale sunt de obicei doar în română, iar fiecare persoană are nevoie de acte diferite. WelcomeRO îți organizează situația într-o listă clară de pași și ghiduri ușor de urmărit, ca să te descurci și pe cont propriu.',
   'landing.cta': 'Începe acum',
   'landing.cta.continue': 'Mergi la panoul meu',
   'landing.audience': 'Pentru studenți internaționali, lucrători și refugiați din Timișoara. Nu trebuie să vorbești română.',
@@ -71,8 +71,8 @@ export const ro: Record<MessageKey, string> = {
   'landing.honesty.title': 'Vezi de unde vine fiecare informație',
   'landing.honesty.body': 'Fiecare pas are o etichetă: dintr-o sursă oficială, sfat practic sau ceva de confirmat la birou. Știi mereu cât te poți baza pe el.',
 
-  'footer.about': 'welcomeRo este un ghid informativ independent.',
-  'footer.disclaimer': 'welcomeRo este un ghid gratuit și independent, nu un serviciu guvernamental. Ultimul cuvânt îl are biroul, așa că ține documentele pregătite și roagă funcționarul să confirme detaliile.',
+  'footer.about': 'WelcomeRO este un ghid informativ independent.',
+  'footer.disclaimer': 'WelcomeRO este un ghid gratuit și independent, nu un serviciu guvernamental. Ultimul cuvânt îl are biroul, așa că ține documentele pregătite și roagă funcționarul să confirme detaliile.',
   'footer.links': 'Linkuri utile',
   'footer.contact': 'Contact',
   'footer.contactPlaceholder': 'E-mail de contact: [urmează să fie adăugat]',
@@ -221,7 +221,7 @@ export const ro: Record<MessageKey, string> = {
 
   'ai.title': 'Asistent AI',
   'ai.subtitle': 'Întreabă, în cuvinte simple, despre actele și procedurile din România.',
-  'ai.disclaimer': 'Asistentul răspunde pe baza ghidurilor welcomeRo, în cuvinte simple. Nu este avocat și nici birou guvernamental, așa că pentru decizii importante roagă biroul să confirme.',
+  'ai.disclaimer': 'Asistentul răspunde pe baza ghidurilor WelcomeRO, în cuvinte simple. Nu este avocat și nici birou guvernamental, așa că pentru decizii importante roagă biroul să confirme.',
   'ai.examples': 'Încearcă să întrebi',
   'ai.ex.1': 'Ce documente îmi trebuie pentru permisul de ședere?',
   'ai.ex.2': 'De unde obțin dovada cazării?',
@@ -271,7 +271,7 @@ export const ro: Record<MessageKey, string> = {
   'kit.bringNote': 'Denumirile documentelor sunt în engleză. Funcționarul îți poate spune dacă mai ai nevoie de ceva astăzi.',
   'kit.askTitle': 'Întrebări utile',
   'kit.notesTitle': 'Notițe',
-  'kit.disclaimer': 'Pregătit de welcomeRo, un ghid gratuit și independent. Nu este un document oficial. Funcționarul îți va spune dacă astăzi ceva este diferit.',
+  'kit.disclaimer': 'Pregătit de WelcomeRO, un ghid gratuit și independent. Nu este un document oficial. Funcționarul îți va spune dacă astăzi ceva este diferit.',
   'kit.printedOn': 'Tipărit la {date}',
   'kit.notFound': 'Această fișă pentru programare nu există.',
   'plan.title': 'Planul meu',
@@ -294,8 +294,8 @@ export const ro: Record<MessageKey, string> = {
   'plan.expiryUrgent': 'Această dată a trecut. Dacă viza sau permisul tău expiră curând, contactează IGI acum: ei îți pot spune ce să faci mai departe.',
   'plan.export': 'Adaugă în calendar (.ics)',
   'plan.export.note': 'Descarcă un fișier pe care îl poți importa în Google Calendar, Outlook sau Apple Calendar, cu un memento cu 3 zile înainte și în ziua respectivă. Pașii deja finalizați sunt omiși.',
-  'plan.event.summary': 'welcomeRo: {title}',
-  'plan.event.desc': 'Dată sugerată de welcomeRo. Urmează întotdeauna datele de pe documentele tale oficiale.',
+  'plan.event.summary': 'WelcomeRO: {title}',
+  'plan.event.desc': 'Dată sugerată de WelcomeRO. Urmează întotdeauna datele de pe documentele tale oficiale.',
   'plan.open': 'Deschide planul',
   'dash.next.hero': 'Următorul tău pas',
   'dash.next.also': 'Pași următori',
@@ -329,7 +329,7 @@ export const ro: Record<MessageKey, string> = {
   'human.preview': 'Vezi mesajul (în română)',
   'human.preview.hint': 'Creat din răspunsurile și lista ta. Completează cu ce ai nevoie după „Am nevoie de ajutor cu:”.',
   'human.website': 'Site',
-  'human.note': 'welcomeRo nu face parte din această organizație. Contactează-i înainte să mergi.',
+  'human.note': 'WelcomeRO nu face parte din această organizație. Contactează-i înainte să mergi.',
   'nav.counter': 'La ghișeu',
   'dash.quick.counter': 'Vorbește cu un funcționar (traducere live)',
   'counter.title': 'La ghișeu',

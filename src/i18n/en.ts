@@ -2,7 +2,7 @@
 // (TypeScript will complain if one is missing). Use {name} for values inserted at runtime.
 export const en = {
   // ---- general
-  'app.name': 'welcomeRo',
+  'app.name': 'WelcomeRO',
   'app.tagline': 'Your first month in Romania, made easier.',
   'common.back': 'Back',
   'common.continue': 'Continue',
@@ -29,7 +29,7 @@ export const en = {
   'nav.language': 'Language',
   'nav.more': 'More',
   'nav.practice': 'Practise Romanian',
-  'nav.home': 'welcomeRo home',
+  'nav.home': 'WelcomeRO home',
 
   // ---- labels
   'level.verified': 'From an official source',
@@ -49,7 +49,7 @@ export const en = {
 
   // ---- landing
   'landing.eyebrow': 'A free guide for newcomers',
-  'landing.hero.body': 'Official forms are mostly in Romanian, and every newcomer needs different documents. welcomeRo turns your situation into a clear checklist and plain-language guides, so you do not need a Romanian-speaking friend.',
+  'landing.hero.body': 'Official forms are mostly in Romanian, and every newcomer needs different documents. WelcomeRO turns your situation into a clear checklist and plain-language guides, so you do not need a Romanian-speaking friend.',
   'landing.cta': 'Get Started',
   'landing.cta.continue': 'Go to my dashboard',
   'landing.audience': 'For international students, workers and refugees in Timișoara. You do not need to speak Romanian.',
@@ -75,8 +75,8 @@ export const en = {
   'landing.honesty.body': 'Each step is labelled: from an official source, a practical tip, or something to confirm at the office. You always know how much to rely on it.',
 
   // ---- footer
-  'footer.about': 'welcomeRo is an independent information tool.',
-  'footer.disclaimer': 'welcomeRo is a free, independent guide, not a government service. The office has the final word, so keep your documents ready and ask the officer to confirm the details.',
+  'footer.about': 'WelcomeRO is an independent information tool.',
+  'footer.disclaimer': 'WelcomeRO is a free, independent guide, not a government service. The office has the final word, so keep your documents ready and ask the officer to confirm the details.',
   'footer.links': 'Useful links',
   'footer.contact': 'Contact',
   'footer.contactPlaceholder': 'Contact email: [to be added]',
@@ -231,7 +231,7 @@ export const en = {
   // ---- AI assistant
   'ai.title': 'AI assistant',
   'ai.subtitle': 'Ask about Romanian paperwork in simple words.',
-  'ai.disclaimer': 'The assistant answers from welcomeRo’s guides in simple words. It is not a lawyer or a government office, so for important decisions ask the office to confirm.',
+  'ai.disclaimer': 'The assistant answers from WelcomeRO’s guides in simple words. It is not a lawyer or a government office, so for important decisions ask the office to confirm.',
   'ai.examples': 'Try asking',
   'ai.ex.1': 'What documents do I need for my residence permit?',
   'ai.ex.2': 'Where do I get proof of accommodation?',
@@ -244,8 +244,8 @@ export const en = {
   'ai.assistant': 'Assistant',
   'ai.checking': 'Checking whether the assistant is available…',
   'ai.unavailable.title': 'The assistant is not available right now',
-  'ai.unavailable.body': 'No AI key is configured on the server. The rest of welcomeRo works without it.',
-  'ai.unreachable.body': 'The AI service could not be reached. If you are running the app on your computer, start it with “npm run dev” so the /api route works. The rest of welcomeRo works without it.',
+  'ai.unavailable.body': 'No AI key is configured on the server. The rest of WelcomeRO works without it.',
+  'ai.unreachable.body': 'The AI service could not be reached. If you are running the app on your computer, start it with “npm run dev” so the /api route works. The rest of WelcomeRO works without it.',
   'ai.error': 'Something went wrong. Please try again.',
   'ai.rateLimited': 'Too many requests. Please wait a moment and try again.',
   'ai.newChat': 'New conversation',
@@ -282,7 +282,7 @@ export const en = {
   'kit.bringNote': 'Document names are in English. The officer can tell you if you need anything else today.',
   'kit.askTitle': 'Questions to ask',
   'kit.notesTitle': 'Notes',
-  'kit.disclaimer': 'Prepared by welcomeRo, a free independent guide. This is not an official document. The officer will tell you if anything is different today.',
+  'kit.disclaimer': 'Prepared by WelcomeRO, a free independent guide. This is not an official document. The officer will tell you if anything is different today.',
   'kit.printedOn': 'Printed on {date}',
   'kit.notFound': 'This appointment kit does not exist.',
   'plan.title': 'My plan',
@@ -305,8 +305,8 @@ export const en = {
   'plan.expiryUrgent': 'This date has passed. If your visa or permit expires soon, contact IGI now: they can tell you what to do next.',
   'plan.export': 'Add to calendar (.ics)',
   'plan.export.note': 'Downloads a file you can open in Google Calendar, Outlook or Apple Calendar, with a reminder 3 days before and on the day. Completed tasks are left out.',
-  'plan.event.summary': 'welcomeRo: {title}',
-  'plan.event.desc': 'Suggested date from welcomeRo. Always follow the dates on your official documents.',
+  'plan.event.summary': 'WelcomeRO: {title}',
+  'plan.event.desc': 'Suggested date from WelcomeRO. Always follow the dates on your official documents.',
   'plan.open': 'Open plan',
   'dash.next.hero': 'Your next step',
   'dash.next.also': 'Also coming up',
@@ -341,7 +341,7 @@ export const en = {
   'human.preview': 'See the message (in Romanian)',
   'human.preview.hint': 'Built from your answers and checklist. Add what you need help with after "Am nevoie de ajutor cu:" (you can write it in English).',
   'human.website': 'Website',
-  'human.note': 'welcomeRo is not part of this organisation. Contact them before you visit.',
+  'human.note': 'WelcomeRO is not part of this organisation. Contact them before you visit.',
   'nav.counter': 'At the counter',
   'dash.quick.counter': 'Talk to an official (translate live)',
   'counter.title': 'At the counter',

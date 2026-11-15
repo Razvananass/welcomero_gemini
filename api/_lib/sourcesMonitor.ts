@@ -193,7 +193,7 @@ async function summarizeOfficialChange(args: {
   if (providers.length === 0) return null;
 
   const system =
-    'You monitor official Romanian government and university webpages for welcomeRo. Compare the BEFORE and AFTER excerpts strictly and factually in 1-2 short plain sentences (max 45 words). Mention only concrete changes (phone, address, opening hours, deadlines, fees, or new notices). If only navigation/date tickers changed, say "Minor page refresh; core administrative details appear unchanged."';
+    'You monitor official Romanian government and university webpages for WelcomeRO. Compare the BEFORE and AFTER excerpts strictly and factually in 1-2 short plain sentences (max 45 words). Mention only concrete changes (phone, address, opening hours, deadlines, fees, or new notices). If only navigation/date tickers changed, say "Minor page refresh; core administrative details appear unchanged."';
 
   const prompt = `Source: ${args.sourceTitle} (${args.url})
 BEFORE:
@@ -249,7 +249,7 @@ async function checkOneSource(
       method: isPdf ? 'HEAD' : 'GET',
       redirect: 'follow',
       headers: {
-        'user-agent': 'welcomeRo-source-monitor/1.0 (+https://welcomero.app)',
+        'user-agent': 'WelcomeRO-source-monitor/1.0 (+https://welcomero.app)',
         accept: isPdf ? 'application/pdf,*/*' : 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
       },
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),

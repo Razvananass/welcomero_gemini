@@ -1,4 +1,4 @@
-// API endpoint for welcomeRo's official-source monitor.
+// API endpoint for WelcomeRO's official-source monitor.
 //   GET  /api/sources-monitor -> returns current snapshot (initializes lazily if empty)
 //   POST /api/sources-monitor -> runs a live sweep across allowlisted official sources (cooldown-protected)
 import { loadMonitorSnapshot, refreshOfficialSources } from './_lib/sourcesMonitor.js';

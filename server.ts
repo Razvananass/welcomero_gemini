@@ -150,7 +150,7 @@ async function start(): Promise<void> {
   });
 
   server.listen(port, '0.0.0.0', () => {
-    console.log(`welcomeRo server listening on http://localhost:${port}`);
+    console.log(`WelcomeRO server listening on http://localhost:${port}`);
     // Run an initial non-blocking sweep 5 seconds after boot and keep checking every 30 minutes.
     setTimeout(() => {
       void refreshOfficialSources({ force: true }).catch(() => undefined);

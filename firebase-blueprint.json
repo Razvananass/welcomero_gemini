@@ -2,7 +2,7 @@
   "entities": {
     "UserWorkspace": {
       "title": "UserWorkspace",
-      "description": "Per-user welcomeRo preferences, onboarding profile, checklist progress, document ticks, and arrival plan dates.",
+      "description": "Per-user WelcomeRO preferences, onboarding profile, checklist progress, document ticks, and arrival plan dates.",
       "type": "object",
       "properties": {
         "ownerId": {
@@ -63,7 +63,7 @@
   "firestore": {
     "/users/{userId}": {
       "schema": { "$ref": "#/entities/UserWorkspace" },
-      "description": "Private single-owner workspace document storing welcomeRo onboarding answers, checklist progress, document readiness, and timeline dates without PII."
+      "description": "Private single-owner workspace document storing WelcomeRO onboarding answers, checklist progress, document readiness, and timeline dates without PII."
     }
   }
 }

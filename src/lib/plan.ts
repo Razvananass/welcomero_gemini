@@ -10,7 +10,7 @@ export interface PlanDates {
 }
 
 /**
- * Suggested order of tasks, in days after arrival. This is welcomeRo's own suggestion for a sensible order,
+ * Suggested order of tasks, in days after arrival. This is WelcomeRO's own suggestion for a sensible order,
  * NOT a legal deadline. The only date taken from a source is the permit lead time below (and it is marked "confirm").
  */
 export const SUGGESTED_OFFSET_DAYS: Record<string, number> = {
@@ -21,7 +21,7 @@ export const SUGGESTED_OFFSET_DAYS: Record<string, number> = {
   'eu-registration-certificate': 21,
   cnp: 28,
   'tax-id': 35,
-  // Workers and refugees: welcomeRo's suggested order, not legal deadlines.
+  // Workers and refugees: WelcomeRO's suggested order, not legal deadlines.
   'international-protection': 1,
   'temporary-protection-ukraine': 7,
   'residence-permit-work': 21,
@@ -104,7 +104,7 @@ export interface PlanItem {
   status: TaskStatus;
   /** Target date shown to the user. */
   date: string;
-  /** "suggested" = welcomeRo's own order; "expiry" = pulled earlier by the permit expiry date. */
+  /** "suggested" = WelcomeRO's own order; "expiry" = pulled earlier by the permit expiry date. */
   basis: 'suggested' | 'expiry';
   /** Latest date to apply under IGI's 30-day rule (permits only; needs an expiry date). */
   latestBy?: string;
@@ -171,7 +171,7 @@ export const REMINDER_TRIGGERS = ['-P3D', 'PT9H'] as const;
 
 export function buildIcs(events: IcsEvent[], now: Date = new Date()): string {
   const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//welcomeRo//Plan//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//WelcomeRO//Plan//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
   for (const event of events) {
     lines.push(
       'BEGIN:VEVENT',

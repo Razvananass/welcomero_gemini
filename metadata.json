@@ -1,6 +1,6 @@
 {
-  "name": "welcomeRo",
-  "description": "welcomeRo helps newcomers understand their first administrative procedures in Romania.",
+  "name": "WelcomeRO",
+  "description": "WelcomeRO helps newcomers understand their first administrative procedures in Romania.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

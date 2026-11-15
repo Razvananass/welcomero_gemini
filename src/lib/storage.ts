@@ -92,7 +92,7 @@ export const sessionData = {
   remove: (key: string) => remove('session', key),
 };
 
-/** Remove everything welcomeRo stored in this browser. */
+/** Remove everything WelcomeRO stored in this browser. */
 export function clearAllData(): void {
   for (const key of Object.values(STORAGE_KEYS)) {
     localData.remove(key);

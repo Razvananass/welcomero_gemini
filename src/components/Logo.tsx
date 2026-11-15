@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useI18n } from '../context/useI18n';
 
 /**
- * Simple geometric mark for welcomeRo: a clean doorway arch over a warm yellow threshold
+ * Simple geometric mark for WelcomeRO: a clean doorway arch over a warm yellow threshold
  * on a flat deep-blue tile.
  */
 export function LogoMark({ className = 'size-9' }: { className?: string }) {
@@ -24,7 +24,7 @@ export function LogoMark({ className = 'size-9' }: { className?: string }) {
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
     <span className={`font-bold tracking-tight ${className}`}>
-      welcome<span className="text-sun-600">Ro</span>
+      Welcome<span className="text-sun-600">RO</span>
     </span>
   );
 }
