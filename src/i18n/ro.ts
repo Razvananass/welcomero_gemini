@@ -414,7 +414,11 @@ export const ro: Record<MessageKey, string> = {
   'ai.doc.submit': 'Explică documentul',
   'ai.doc.result': 'Explicație pe înțelesul tău',
   'ai.doc.privacy': 'Acoperă sau decupează numărul de pașaport, CNP-ul, IBAN-ul și adresa personală înainte de încărcare.',
-  'ai.doc.invalidImage': 'Încarcă o imagine PNG, JPEG sau WebP de maximum 3,5 MB.',
+  'ai.doc.invalidImage': 'Alege o imagine PNG, JPEG sau WebP.',
+  'ai.doc.tooLarge': 'Imaginea este prea mare pentru a fi trimisă, chiar și după micșorare. Încearcă o fotografie doar cu formularul sau un fișier mai mic.',
+  'ai.doc.unreadable': 'Imaginea nu a putut fi citită. Încearcă să faci din nou fotografia.',
+  'ai.doc.takePhoto': 'Fă o fotografie',
+  'ai.doc.preparing': 'Se pregătește fotografia…',
   'ai.action.openPage': 'Deschide {path}',
 
   'monitor.title': 'Monitorizarea surselor oficiale',

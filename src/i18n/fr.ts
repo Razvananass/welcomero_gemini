@@ -414,7 +414,11 @@ export const fr: Record<MessageKey, string> = {
   'ai.doc.submit': 'Expliquer le document',
   'ai.doc.result': 'Explication en langage simple',
   'ai.doc.privacy': 'Masquez les numéros de passeport, CNP, IBAN et adresses personnelles avant l’envoi.',
-  'ai.doc.invalidImage': 'Veuillez importer une image PNG, JPEG ou WebP de moins de 3,5 Mo.',
+  'ai.doc.invalidImage': 'Choisissez une image PNG, JPEG ou WebP.',
+  'ai.doc.tooLarge': 'Cette image est trop lourde pour être envoyée, même après réduction. Essayez une photo du formulaire seul, ou un fichier plus petit.',
+  'ai.doc.unreadable': 'Cette image n’a pas pu être lue. Essayez de reprendre la photo.',
+  'ai.doc.takePhoto': 'Prendre une photo',
+  'ai.doc.preparing': 'Préparation de la photo…',
   'ai.action.openPage': 'Ouvrir {path}',
 
   'monitor.title': 'Surveillance des sources officielles',

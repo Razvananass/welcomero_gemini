@@ -414,7 +414,11 @@ export const ar: Record<MessageKey, string> = {
   'ai.doc.submit': 'اشرح الإشعار',
   'ai.doc.result': 'شرح بلغة بسيطة',
   'ai.doc.privacy': 'أخفِ أو اقتطع رقم جواز السفر وCNP وIBAN والعنوان الشخصي قبل الرفع.',
-  'ai.doc.invalidImage': 'يرجى رفع صورة بصيغة PNG أو JPEG أو WebP بحجم أقل من 3.5 ميجابايت.',
+  'ai.doc.invalidImage': 'اختر صورة بصيغة PNG أو JPEG أو WebP.',
+  'ai.doc.tooLarge': 'هذه الصورة كبيرة جدًا للإرسال حتى بعد تصغيرها. جرّب صورة للاستمارة فقط أو ملفًا أصغر.',
+  'ai.doc.unreadable': 'تعذّرت قراءة هذه الصورة. حاول التقاط الصورة مرة أخرى.',
+  'ai.doc.takePhoto': 'التقاط صورة',
+  'ai.doc.preparing': 'جارٍ تجهيز الصورة…',
   'ai.action.openPage': 'فتح {path}',
 
   'monitor.title': 'مراقبة المصادر الرسمية',
