@@ -157,6 +157,9 @@ function compactDate(iso: string): string {
   return iso.replace(/-/g, '');
 }
 
+/** Relative to the start of the all-day event (00:00 that day): 3 days before, and 09:00 on the day. */
+export const REMINDER_TRIGGERS = ['-P3D', 'PT9H'] as const;
+
 export function buildIcs(events: IcsEvent[], now: Date = new Date()): string {
   const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//welcomeRo//Plan//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
@@ -170,8 +173,12 @@ export function buildIcs(events: IcsEvent[], now: Date = new Date()): string {
       `SUMMARY:${escapeText(event.summary)}`,
       `DESCRIPTION:${escapeText(event.description)}`,
       'TRANSP:TRANSPARENT',
-      'END:VEVENT',
     );
+    // Phone reminders: 3 days before (at midnight, the start of the all-day event) and at 09:00 on the day.
+    for (const trigger of REMINDER_TRIGGERS) {
+      lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:${trigger}`, `DESCRIPTION:${escapeText(event.summary)}`, 'END:VALARM');
+    }
+    lines.push('END:VEVENT');
   }
   lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n') + '\r\n';
