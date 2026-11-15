@@ -174,6 +174,15 @@ export function parseFormReply(reply: string): FormGuide | null {
   }
 }
 
+/** Translate numbered English lines ("N| text") into the user's language. Returns the raw numbered reply. */
+export function translateLines(args: { lines: string; language: Lang }): Promise<string> {
+  return post({
+    mode: 'translate',
+    language: args.language,
+    messages: [{ role: 'user', content: args.lines }],
+  });
+}
+
 export type InterpretDirection = 'to_user' | 'to_ro';
 
 /**

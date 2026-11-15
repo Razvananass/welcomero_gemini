@@ -8,6 +8,7 @@ import { Arrow, btnSecondary, cardClass, LevelBadge, Notice, PageHeader, Progres
 import { Icon, type IconName } from '../components/Icon';
 import { TaskCard } from '../components/TaskCard';
 import { HumanHelpCard } from '../components/HumanHelpCard';
+import { SafetyCard } from '../components/SafetyCard';
 import type { MessageKey } from '../i18n';
 
 const QUICK_LINKS: Array<{ to: string; key: MessageKey; icon: IconName }> = [
@@ -181,6 +182,8 @@ export function Dashboard() {
       ) : null}
 
       <HumanHelpCard />
+
+      <SafetyCard />
 
       <section aria-labelledby="quick-title">
         <h2 id="quick-title" className="text-xl font-bold text-brand-900">

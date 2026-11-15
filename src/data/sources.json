@@ -259,5 +259,88 @@
     "kind": "eu",
     "retrieved": "2026-11-15",
     "note": "Official EU page: temporary protection was last extended until 4 March 2028 (Council Implementing Decision (EU) 2026/1912)."
+  },
+  "reges-portal": {
+    "title": "Labour Inspection: REGES, the national register of employees",
+    "url": "https://reges.inspectiamuncii.ro/en/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official portal where employers register employment contracts (it replaced the older Revisal register). Read through a search excerpt."
+  },
+  "e-justice-ro-trafficking": {
+    "title": "European e-Justice portal: Romania, victims’ rights and support (anti-trafficking helpline)",
+    "url": "https://e-justice.europa.eu/topics/your-rights/victims-crime/victims-rights-country/5-my-rights-support-and-assistance/ro_en",
+    "kind": "eu",
+    "retrieved": "2026-11-15",
+    "note": "Lists the national anti-trafficking helpline 0800 800 678 (toll-free, available around the clock) and +40 21 313 3100 from abroad."
+  },
+  "aida-ro-labour-market": {
+    "title": "Asylum Information Database (ECRE): Romania, access to the labour market",
+    "url": "https://asylumineurope.org/reports/country/romania/reception-conditions/employment-and-education/access-labour-market/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Asylum applicants can work after 3 months from lodging the application if there is no decision, on the same conditions as Romanian citizens."
+  },
+  "aida-ro-reception-health": {
+    "title": "Asylum Information Database (ECRE): Romania, health care for asylum applicants",
+    "url": "https://asylumineurope.org/reports/country/romania/reception-conditions/health-care/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Asylum applicants receive free medical care through IGI’s medical network and do not pay the health insurance contribution for it."
+  },
+  "aida-ro-protection-content": {
+    "title": "Asylum Information Database (ECRE): Romania, content of international protection",
+    "url": "https://asylumineurope.org/reports/country/romania/content-international-protection/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "The integration programme runs for 12 months from the date of the signed protocol."
+  },
+  "aida-ro-social-welfare": {
+    "title": "Asylum Information Database (ECRE): Romania, social welfare for people with protection",
+    "url": "https://asylumineurope.org/reports/country/romania/content-international-protection/social-welfare/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "People with protection who lack means can ask for a monthly non-reimbursable aid for up to 12 months."
+  },
+  "unhcr-ro-rights-duties": {
+    "title": "UNHCR Romania: Rights and duties of asylum seekers",
+    "url": "https://help.unhcr.org/romania/applying-for-asylum/rights-and-duties-of-asylum-seekers/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15"
+  },
+  "unhcr-ro-shelter": {
+    "title": "UNHCR Romania: Shelter and accommodation",
+    "url": "https://help.unhcr.org/romania/topics/shelter-accommodation/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Asylum seekers without enough resources can be accommodated in a Regional Reception Centre."
+  },
+  "unhcr-ro-health-ua": {
+    "title": "UNHCR Romania: Health care for people with temporary protection",
+    "url": "https://help.unhcr.org/romania/information-for-people-from-ukraine/health-care/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "People with temporary protection are entitled to the listed health services, which are free of charge and have no time limit."
+  },
+  "unhcr-ro-integration": {
+    "title": "UNHCR Romania: Integration services",
+    "url": "https://help.unhcr.org/romania/integration-services/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "The Romanian National Council for Refugees (CNRR), UNHCR’s main partner, offers services to people with refugee status or subsidiary protection."
+  },
+  "unhcr-ro-housing-ua": {
+    "title": "UNHCR Romania: Housing and accommodation for people from Ukraine",
+    "url": "https://help.unhcr.org/romania/information-for-people-from-ukraine/housing-and-accommodation/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "UNHCR does not directly offer accommodation or cash assistance; it works with local authorities and partners."
+  },
+  "your-europe-bank": {
+    "title": "Your Europe: Opening a basic bank account within the EU",
+    "url": "https://europa.eu/youreurope/citizens/consumers/financial-products-and-services/bank-accounts-eu/index_en.htm",
+    "kind": "eu",
+    "retrieved": "2026-11-15",
+    "note": "People legally resident in an EU country are entitled to open a basic payment account."
   }
 }

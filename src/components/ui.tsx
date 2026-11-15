@@ -42,9 +42,15 @@ const LEVEL_STYLES: Record<Reliability, { box: string; symbol: string }> = {
   confirm: { box: 'bg-amber-100 text-amber-900', symbol: '!' },
 };
 
-/** Shows how reliable a piece of information is. The symbol means it is not communicated by colour alone. */
-export function LevelBadge({ level }: { level: Reliability }) {
+/**
+ * Shows where a piece of information comes from: an official source, or a practical tip.
+ * Items that simply need to be confirmed at the office get no badge: a calm note at the top of each guide
+ * covers them, so the page does not look uncertain line by line. Pass `always` to show every level (the legend).
+ * The symbol means it is not communicated by colour alone.
+ */
+export function LevelBadge({ level, always = false }: { level: Reliability; always?: boolean }) {
   const { t } = useI18n();
+  if (level === 'confirm' && !always) return null;
   const style = LEVEL_STYLES[level];
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${style.box}`}>
@@ -305,7 +311,7 @@ export function LevelLegend() {
       <ul className="mt-3 space-y-2">
         {levels.map((level) => (
           <li key={level} className="flex flex-wrap items-start gap-2">
-            <LevelBadge level={level} />
+            <LevelBadge level={level} always />
             <span className="text-muted">{t(`level.${level}.desc`)}</span>
           </li>
         ))}

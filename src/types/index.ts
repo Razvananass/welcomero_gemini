@@ -33,7 +33,7 @@ export interface ProfileDraft {
  * How much we trust a piece of information:
  * - verified: read on an official institution page (government or university)
  * - recommended: a practical tip, not a legal requirement
- * - confirm: not verified from an official page; the user must check it
+ * - confirm: general guidance; the office confirms the exact detail (shown as one calm note per guide, not per item)
  */
 export type Reliability = 'verified' | 'recommended' | 'confirm';
 

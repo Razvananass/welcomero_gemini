@@ -18,6 +18,8 @@ export const STORAGE_KEYS = {
   dates: 'dates',
   theme: 'theme',
   practice: 'practice',
+  translations: 'translations',
+  textSize: 'textSize',
 } as const;
 
 const memoryFallback = new Map<string, string>();

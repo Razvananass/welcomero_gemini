@@ -145,7 +145,9 @@ export async function POST(request: Request): Promise<Response> {
           ? "form"
           : payload.mode === "interpret"
             ? "interpret"
-            : "chat";
+            : payload.mode === "translate"
+              ? "translate"
+              : "chat";
   const language = LANGUAGES.find((l) => l === payload.language);
   const messages = parseMessages(payload.messages);
   if (!language || !messages) return json({ error: "bad_request" }, 400);
@@ -191,7 +193,9 @@ export async function POST(request: Request): Promise<Response> {
             ? 2000
             : mode === "interpret"
               ? 600
-              : 500,
+              : mode === "translate"
+                ? 4000
+                : 500,
   };
 
   let lastError: unknown;
