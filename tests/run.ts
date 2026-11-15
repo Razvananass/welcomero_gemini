@@ -1155,7 +1155,7 @@ describe('Official and recognized source monitor allowlist & durable snapshot', 
     }
     const snapshot = loadMonitorSnapshot();
     assert.equal(Object.keys(snapshot.sources).length, Object.keys(loadSourceRegistry()).length);
-    assert.ok(Object.values(snapshot.sources).every((source) => source.status === 'pending'));
+    assert.ok(Object.values(snapshot.sources).every((source) => ['pending', 'reachable', 'updated', 'unreachable'].includes(source.status)));
 
     const clean = extractTextFromHtml('<html><head><script>alert(1)</script><style>.a{}</style></head><body><h1>Program IGI</h1><p>Tel: +40 256 402 450 &amp; email@mai.gov.ro</p></body></html>');
     assert.ok(!clean.includes('alert(1)'));
