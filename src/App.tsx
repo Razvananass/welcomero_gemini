@@ -5,6 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
 import { Assistant } from './pages/Assistant';
 import { Checklist } from './pages/Checklist';
+import { Counter } from './pages/Counter';
 import { Dashboard } from './pages/Dashboard';
 import { GuideDetail } from './pages/GuideDetail';
 import { Guides } from './pages/Guides';
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="institutions" element={<Institutions />} />
             <Route path="assistant" element={<Assistant />} />
             <Route path="helper" element={<Helper />} />
+            <Route path="counter" element={<Counter />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />

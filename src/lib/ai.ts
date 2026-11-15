@@ -174,6 +174,22 @@ export function parseFormReply(reply: string): FormGuide | null {
   }
 }
 
+export type InterpretDirection = 'to_user' | 'to_ro';
+
+/**
+ * Live interpreting at an office counter. `direction` says which way to translate:
+ * 'to_ro' = from the user's language into Romanian; 'to_user' = from Romanian into the user's language.
+ */
+export async function interpret(args: { text: string; language: Lang; direction: InterpretDirection }): Promise<string> {
+  const reply = await post({
+    mode: 'interpret',
+    language: args.language,
+    direction: args.direction,
+    messages: [{ role: 'user', content: args.text.trim() }],
+  });
+  return reply.trim();
+}
+
 export interface GeneratedPhrase {
   romanian: string;
   translation: string;

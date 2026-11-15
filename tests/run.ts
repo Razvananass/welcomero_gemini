@@ -1059,3 +1059,66 @@ describe('form helper: field-by-field replies', () => {
     }
   });
 });
+
+describe('counter mode: interpreter endpoint', () => {
+  const realFetch = globalThis.fetch;
+  const savedKey = process.env.ANTHROPIC_API_KEY;
+  const restore = () => {
+    globalThis.fetch = realFetch;
+    if (savedKey === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = savedKey;
+  };
+  const request = (body: unknown) => new Request('http://localhost/api/chat', { method: 'POST', body: JSON.stringify(body) });
+  const fake = (reply: string) => {
+    const box: { body: { system: string; max_tokens: number; messages: Array<{ content: unknown }> } | null } = { body: null };
+    globalThis.fetch = (async (_u: string, init: RequestInit) => {
+      box.body = JSON.parse(init.body as string);
+      return new Response(JSON.stringify({ content: [{ type: 'text', text: reply }] }), { status: 200 });
+    }) as unknown as typeof fetch;
+    return box;
+  };
+
+  it('to Romanian: translates from the user language, polite register, translation only', async () => {
+    for (const name of ['GEMINI_API_KEY', 'GROQ_API_KEY', 'AI_PROVIDER']) delete process.env[name];
+    process.env.ANTHROPIC_API_KEY = 'test-key';
+    const box = fake('Bună ziua, aș dori să prelungesc permisul de ședere.');
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(request({ mode: 'interpret', direction: 'to_ro', language: 'uk', messages: [{ role: 'user', content: 'Я хочу продовжити дозвіл на проживання' }] }));
+      assert.equal(res.status, 200);
+      assert.deepEqual(await res.json(), { reply: 'Bună ziua, aș dori să prelungesc permisul de ședere.' });
+      const seen = box.body!;
+      assert.ok(seen.system.includes('from Ukrainian into Romanian'));
+      assert.ok(seen.system.includes('dumneavoastră'));
+      assert.ok(seen.system.includes('Output ONLY the translation'));
+      assert.ok(!seen.system.includes('KNOWLEDGE:'), 'fast prompt: no knowledge base');
+      assert.equal(seen.max_tokens, 600);
+    } finally { restore(); }
+  });
+
+  it('to the user: translates from Romanian into the user language', async () => {
+    process.env.ANTHROPIC_API_KEY = 'test-key';
+    const box = fake('Aveți nevoie de adeverința de student.');
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(request({ mode: 'interpret', direction: 'to_user', language: 'ne', messages: [{ role: 'user', content: 'Aveți nevoie de adeverința de student.' }] }));
+      assert.equal(res.status, 200);
+      assert.ok(box.body!.system.includes('from Romanian into Nepali'));
+    } finally { restore(); }
+  });
+
+  it('rejects interpret requests without a direction or with more than one message, before calling the AI', async () => {
+    process.env.ANTHROPIC_API_KEY = 'test-key';
+    let calls = 0;
+    globalThis.fetch = (async () => { calls += 1; return new Response('{}'); }) as typeof fetch;
+    try {
+      const { POST } = await import('../api/chat');
+      const m = { role: 'user', content: 'x' };
+      for (const body of [
+        { mode: 'interpret', language: 'en', messages: [m] },
+        { mode: 'interpret', direction: 'sideways', language: 'en', messages: [m] },
+        { mode: 'interpret', direction: 'to_ro', language: 'en', messages: [m, { role: 'assistant', content: 'y' }, m] },
+      ]) assert.equal((await POST(request(body))).status, 400, JSON.stringify(body).slice(0, 70));
+      assert.equal(calls, 0);
+    } finally { restore(); }
+  });
+});

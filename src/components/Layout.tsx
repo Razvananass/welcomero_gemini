@@ -17,6 +17,7 @@ const NAV_ITEMS: Array<{ to: string; key: MessageKey }> = [
   { to: '/institutions', key: 'nav.institutions' },
   { to: '/assistant', key: 'nav.assistant' },
   { to: '/helper', key: 'nav.helper' },
+  { to: '/counter', key: 'nav.counter' },
   { to: '/settings', key: 'nav.settings' },
 ];
 

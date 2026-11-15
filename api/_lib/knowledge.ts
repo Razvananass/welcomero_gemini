@@ -114,6 +114,7 @@ export function buildKnowledge(): string {
       '- /kit/<procedure-id> : Printable appointment kit and Romanian phrases for a specific procedure',
       '- /institutions : Directory and interactive Timișoara minimap of offices (IGI, UPT, City Hall, ANAF, CNAS)',
       '- /helper : Spoken Romanian phrases and custom Romanian message generator',
+      '- /counter : At the counter: speak or type in your language and show/hear the Romanian for the clerk, and see the clerk\'s Romanian in your language',
       '- /settings : Update profile (student/worker, EU/non-EU, accommodation) and language',
     ].join('\n'),
   );
