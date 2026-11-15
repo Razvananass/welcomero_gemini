@@ -28,7 +28,7 @@ const MAX_IMAGE_BYTES = 3_500_000;
 const ALLOWED_MIME = new Set<ChatAttachment['mimeType']>(['image/png', 'image/jpeg', 'image/webp']);
 
 const LINK_TOKEN_RE =
-  /(https:\/\/[^\s<>()]+|\/(?:dashboard|checklist|guides(?:\/[a-z0-9-]+)?|plan|kit\/[a-z0-9-]+|institutions|helper|settings)\b)/g;
+  /(https:\/\/[^\s<>()]+|\/(?:dashboard|checklist|guides(?:\/[a-z0-9-]+)?|plan|kit\/[a-z0-9-]+|institutions|helper|counter|settings)\b)/g;
 
 function splitTrailingPunctuation(token: string): { target: string; trailing: string } {
   const match = token.match(/^(.+?)([.,;:!?)\]]*)$/);

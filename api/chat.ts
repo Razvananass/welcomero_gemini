@@ -13,6 +13,7 @@ import {
 import { buildKnowledge, procedureTitle } from "./_lib/knowledge.js";
 import {
   buildSystemPrompt,
+  type Direction,
   type Language,
   type Mode,
   type UserContextSummary,
@@ -25,6 +26,7 @@ const MAX_MESSAGE_CHARS = 2_000;
 const MAX_ATTACHMENT_BASE64 = 5_500_000;
 const ALLOWED_MIME_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
 const LANGUAGES: Language[] = ["en", "ro", "fr", "ar", "uk", "ne"];
+const DIRECTIONS: Direction[] = ["to_user", "to_ro"];
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -122,6 +124,7 @@ export async function POST(request: Request): Promise<Response> {
     messages?: unknown;
     procedureId?: unknown;
     userContext?: unknown;
+    direction?: unknown;
   };
 
   try {
@@ -140,10 +143,16 @@ export async function POST(request: Request): Promise<Response> {
         ? "document"
         : payload.mode === "form"
           ? "form"
-          : "chat";
+          : payload.mode === "interpret"
+            ? "interpret"
+            : "chat";
   const language = LANGUAGES.find((l) => l === payload.language);
   const messages = parseMessages(payload.messages);
   if (!language || !messages) return json({ error: "bad_request" }, 400);
+  const direction = DIRECTIONS.find((d) => d === payload.direction);
+  if (mode === "interpret" && (!direction || messages.length !== 1)) {
+    return json({ error: "bad_request" }, 400);
+  }
 
   const providers = getProviders();
   if (providers.length === 0) return json({ error: "not_configured" }, 503);
@@ -170,10 +179,19 @@ export async function POST(request: Request): Promise<Response> {
       focusProcedure,
       userContext: parseUserContext(payload.userContext),
       liveUpdates: getLiveUpdatesPromptBlock(),
+      direction,
     }),
     messages,
     maxTokens:
-      mode === "phrase" ? 200 : mode === "document" ? 700 : mode === "form" ? 2000 : 500,
+      mode === "phrase"
+        ? 200
+        : mode === "document"
+          ? 700
+          : mode === "form"
+            ? 2000
+            : mode === "interpret"
+              ? 600
+              : 500,
   };
 
   let lastError: unknown;

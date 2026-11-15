@@ -14,6 +14,7 @@ const QUICK_LINKS: Array<{ to: string; key: MessageKey; icon: IconName }> = [
   { to: '/plan', key: 'dash.quick.plan', icon: 'calendar' },
   { to: '/guides', key: 'dash.quick.guides', icon: 'book' },
   { to: '/assistant', key: 'dash.quick.assistant', icon: 'sparkles' },
+  { to: '/counter', key: 'dash.quick.counter', icon: 'volume' },
   { to: '/helper', key: 'dash.quick.helper', icon: 'chat' },
   { to: '/institutions', key: 'dash.quick.institutions', icon: 'building' },
 ];
