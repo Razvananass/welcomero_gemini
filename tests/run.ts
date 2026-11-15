@@ -1118,6 +1118,31 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     } finally { console.warn = origWarn; restore(); }
   });
 
+  it('Gemini: retries a 5xx once, then falls back to the fallback model', async () => {
+    setup({ GEMINI_API_KEY: 'g' });
+    const origWarn = console.warn;
+    console.warn = () => {};
+    const urls: string[] = [];
+    globalThis.fetch = (async (input: string | URL | Request) => {
+      const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+      urls.push(url);
+      const ok = url.includes('gemini-3.6-flash');
+      return new Response(
+        JSON.stringify(ok ? { candidates: [{ content: { parts: [{ text: 'Fallback answer' }] } }] } : { error: { message: 'The model is overloaded.' } }),
+        { status: ok ? 200 : 503, headers: { 'content-type': 'application/json' } },
+      );
+    }) as unknown as typeof fetch;
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(post(goodBody));
+      assert.equal(res.status, 200);
+      assert.deepEqual(await res.json(), { reply: 'Fallback answer' });
+      assert.equal(urls.length, 3);
+      assert.ok(urls[0].includes('gemini-3.8-flash') && urls[1].includes('gemini-3.8-flash'));
+      assert.ok(urls[2].includes('gemini-3.6-flash'));
+    } finally { console.warn = origWarn; restore(); }
+  });
+
   it('Gemini: trims quotes from GEMINI_MODEL and ignores a non-Gemini AI_MODEL', async () => {
     setup({ GEMINI_API_KEY: 'g', GEMINI_MODEL: ' "gemini-3.8-flash" ' });
     try {

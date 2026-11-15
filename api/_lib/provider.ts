@@ -115,6 +115,9 @@ const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const REQUEST_TIMEOUT_MS = 12_000;
 const GEMINI_THINKING_HEADROOM = 1024;
+const GEMINI_RETRY_DELAY_MS = 700;
+/** No new retry is started after this much time, so the request ends before the 30 s function limit. */
+const GEMINI_RETRY_BUDGET_MS = 14_000;
 
 /** Sends one JSON request and turns every failure into a ProviderError with a safe, generic message. */
 
@@ -193,6 +196,13 @@ function geminiModel(): string {
   );
 }
 
+/** Second Gemini model tried when the main one keeps returning 5xx. Set GEMINI_FALLBACK_MODEL=none to disable. */
+function geminiFallbackModel(): string {
+  const value = readEnvKey("GEMINI_FALLBACK_MODEL").replace(/^models\//, "");
+  if (value.toLowerCase() === "none") return "";
+  return value || "gemini-3.6-flash";
+}
+
 function anthropicModel(): string {
   return sharedModelFor("claude") || "claude-sonnet-5-5";
 }
@@ -269,9 +279,6 @@ const geminiProvider: AiProvider = {
       },
     });
 
-    const isGemini4 = model.startsWith("gemini-4");
-    const isGemini3 = model.startsWith("gemini-3");
-
     const contents = messages.map((m) => {
       const parts: Array<
         { text: string } | { inlineData: { mimeType: string; data: string } }
@@ -291,31 +298,31 @@ const geminiProvider: AiProvider = {
       };
     });
 
-    const tunedConfig: GenerateContentConfig = {
-      ...(isGemini4
+    const tunedConfigFor = (name: string): GenerateContentConfig =>
+      name.startsWith("gemini-4")
         ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
-        : isGemini3
+        : name.startsWith("gemini-3")
           ? {
               // Thinking tokens count against maxOutputTokens, so leave room for them.
               maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM,
               // LOW works on every Gemini 3 model. MINIMAL is rejected by 3.8 Flash (the default model).
               thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
             }
-          : model.startsWith("gemini-2.5-flash")
+          : name.startsWith("gemini-2.5-flash")
             ? {
                 maxOutputTokens: maxTokens,
                 thinkingConfig: { thinkingBudget: 0 },
               }
-            : { maxOutputTokens: maxTokens }),
-    };
+            : { maxOutputTokens: maxTokens };
     // Used if the model rejects the tuned settings (e.g. a thinking level it does not support).
-    const plainConfig: GenerateContentConfig = isGemini4
-      ? {}
-      : { maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM };
+    const plainConfigFor = (name: string): GenerateContentConfig =>
+      name.startsWith("gemini-4")
+        ? {}
+        : { maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM };
 
-    const generate = (extra: GenerateContentConfig) =>
+    const generate = (name: string, extra: GenerateContentConfig) =>
       ai.models.generateContent({
-        model,
+        model: name,
         contents,
         config: {
           systemInstruction: system,
@@ -324,20 +331,59 @@ const geminiProvider: AiProvider = {
         },
       });
 
-    try {
-      let response;
+    const generateWithConfigFallback = async (name: string) => {
       try {
-        response = await generate(tunedConfig);
+        return await generate(name, tunedConfigFor(name));
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
         const status = (error as { status?: unknown })?.status;
         if (status !== 400 || classifyFailure(400, msg) !== "bad_request")
           throw error;
         console.warn(
-          `[gemini] ${model} rejected tuned config, retrying with defaults: ${msg}`,
+          `[gemini] ${name} rejected tuned config, retrying with defaults: ${msg}`,
         );
-        response = await generate(plainConfig);
+        return await generate(name, plainConfigFor(name));
       }
+    };
+
+    // Gemini 5xx errors (overloaded / internal) are usually transient: retry the same model once,
+    // then try a fallback model. Stop early so the whole request stays inside the function time limit.
+    const fallback = geminiFallbackModel();
+    const attempts = [
+      model,
+      model,
+      ...(fallback && fallback !== model ? [fallback] : []),
+    ];
+    const startedAt = Date.now();
+
+    try {
+      let response: Awaited<ReturnType<typeof generate>> | undefined;
+      let firstError: unknown;
+      for (let i = 0; ; i += 1) {
+        try {
+          response = await generateWithConfigFallback(attempts[i]);
+          break;
+        } catch (error) {
+          firstError ??= error;
+          // A failing fallback model should not hide the main model's error.
+          if (i >= 2) throw firstError;
+          const status = (error as { status?: unknown })?.status;
+          const retryable = typeof status === "number" && status >= 500;
+          const last = i === attempts.length - 1;
+          if (
+            !retryable ||
+            last ||
+            Date.now() - startedAt > GEMINI_RETRY_BUDGET_MS
+          )
+            throw error;
+          console.warn(
+            `[gemini] ${attempts[i]} returned ${status}, retrying with ${attempts[i + 1]}: ${error instanceof Error ? error.message : String(error)}`,
+          );
+          await new Promise((r) => setTimeout(r, GEMINI_RETRY_DELAY_MS));
+        }
+      }
+      if (!response)
+        throw new ProviderError("Empty response", "upstream", "empty_response");
       const text = (response.text ?? "").trim();
       if (!text) {
         const blocked =
