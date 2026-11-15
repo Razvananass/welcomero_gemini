@@ -18,14 +18,34 @@ import type {
 
 export const ADDRESS_PROCEDURE_ID = 'address-registration';
 
+/**
+ * Prefer a status-scoped rule when a new profile has a worker/protection status.
+ * An unscoped rule remains the compatibility path for old profiles. If a procedure
+ * has scoped rules but none matches a known status, it does not apply.
+ */
+export function findAudienceRule(procedure: Procedure, profile: Profile) {
+  const baseRules = procedure.audience.filter(
+    (rule) => rule.situations.includes(profile.situation) && rule.citizenships.includes(profile.citizenship),
+  );
+
+  if (profile.situation === 'worker' && profile.workerStatus) {
+    const scoped = baseRules.filter((rule) => rule.workerStatuses !== undefined);
+    if (scoped.length > 0) return scoped.find((rule) => rule.workerStatuses?.includes(profile.workerStatus!));
+  }
+  if (profile.situation === 'refugee' && profile.protectionStatus) {
+    const scoped = baseRules.filter((rule) => rule.protectionStatuses !== undefined);
+    if (scoped.length > 0) return scoped.find((rule) => rule.protectionStatuses?.includes(profile.protectionStatus!));
+  }
+
+  return baseRules.find((rule) => rule.workerStatuses === undefined && rule.protectionStatuses === undefined);
+}
+
 /** Which tasks apply to this user? Sorted in a sensible order (dependencies first). */
 export function buildChecklist(procedures: Procedure[], profile: Profile): ChecklistTask[] {
   const tasks: ChecklistTask[] = [];
 
   for (const procedure of procedures) {
-    const rule = procedure.audience.find(
-      (r) => r.situations.includes(profile.situation) && r.citizenships.includes(profile.citizenship),
-    );
+    const rule = findAudienceRule(procedure, profile);
     if (!rule) continue; // does not apply to this person
 
     const notes: TaskNote[] = [];
@@ -119,9 +139,12 @@ export function pendingDependencies(task: ChecklistTask, tasks: ChecklistTask[],
     .map((t) => t.procedure);
 }
 
-/** True when the detailed data in this app does not yet cover the user's situation. */
+/** True when the profile is too broad for a status-specific checklist. */
 export function hasLimitedCoverage(profile: Profile): boolean {
-  return profile.situation !== 'student';
+  if (profile.situation === 'other') return true;
+  if (profile.situation === 'worker') return profile.workerStatus !== 'employed';
+  if (profile.situation === 'refugee') return !profile.protectionStatus || profile.protectionStatus === 'unsure';
+  return false;
 }
 
 export function isTaskStatus(value: unknown): value is TaskStatus {

@@ -8,12 +8,16 @@ export type Localized = { en: string } & Partial<Record<Exclude<Lang, 'en'>, str
 // ---- User profile (collected in onboarding) --------------------------------
 
 export type Situation = 'student' | 'worker' | 'refugee' | 'other';
+export type WorkerStatus = 'employed' | 'looking-for-work' | 'self-employed' | 'unsure';
+export type ProtectionStatus = 'considering-asylum' | 'asylum-pending' | 'protection-granted' | 'temporary-protection' | 'unsure';
 export type Citizenship = 'eu' | 'non-eu';
 export type Accommodation = 'registered' | 'not-registered' | 'none' | 'unsure';
 export type CompletedKey = 'residence' | 'address' | 'health' | 'cnp' | 'university' | 'none' | 'unsure';
 
 export interface Profile {
   situation: Situation;
+  workerStatus?: WorkerStatus;
+  protectionStatus?: ProtectionStatus;
   citizenship: Citizenship;
   accommodation: Accommodation;
   completed: CompletedKey[];
@@ -22,6 +26,8 @@ export interface Profile {
 /** Answers while onboarding is still in progress. */
 export interface ProfileDraft {
   situation?: Situation;
+  workerStatus?: WorkerStatus;
+  protectionStatus?: ProtectionStatus;
   citizenship?: Citizenship;
   accommodation?: Accommodation;
   completed: CompletedKey[];
@@ -31,9 +37,9 @@ export interface ProfileDraft {
 
 /**
  * How much we trust a piece of information:
- * - verified: read on an official institution page (government or university)
+ * - verified: supported by a cited government, EU, UN, university, or recognized specialist source
  * - recommended: a practical tip, not a legal requirement
- * - confirm: general guidance; the office confirms the exact detail (shown as one calm note per guide, not per item)
+ * - confirm: the named detail depends on the person's case or the office's current process
  */
 export type Reliability = 'verified' | 'recommended' | 'confirm';
 
@@ -64,6 +70,8 @@ export type Relevance = 'core' | 'verify';
 export interface AudienceRule {
   situations: Situation[];
   citizenships: Citizenship[];
+  workerStatuses?: WorkerStatus[];
+  protectionStatuses?: ProtectionStatus[];
   relevance: Relevance;
 }
 

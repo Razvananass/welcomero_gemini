@@ -4,7 +4,6 @@ import { extname, join, resolve } from 'node:path';
 import { GET as handleChatGet, POST as handleChatPost } from './api/chat';
 import { GET as handleTtsGet, POST as handleTtsPost } from './api/tts';
 import { GET as handleSourcesGet, POST as handleSourcesPost } from './api/sources-monitor';
-import { refreshOfficialSources } from './api/_lib/sourcesMonitor';
 
 for (const envFile of ['.env.local', '.env']) {
   if (existsSync(envFile)) {
@@ -32,8 +31,6 @@ const MIME_TYPES: Record<string, string> = {
   '.woff2': 'font/woff2',
 };
 
-const SOURCE_MONITOR_INTERVAL_MS = 30 * 60 * 1000;
-
 function readBody(req: IncomingMessage, maxBytes = 100_000): Promise<Buffer> {
   return new Promise((resolveBody, rejectBody) => {
     const chunks: Buffer[] = [];
@@ -57,7 +54,7 @@ async function handleWebRoute(
   res: ServerResponse,
   handlers: {
     get: () => Response | Promise<Response>;
-    post: (request: Request) => Promise<Response>;
+    post: (request: Request) => Response | Promise<Response>;
   },
   maxBodyBytes = 100_000,
 ): Promise<void> {
@@ -92,10 +89,10 @@ async function handleWebRoute(
     });
     const arrayBuffer = await webRes.arrayBuffer();
     res.end(Buffer.from(arrayBuffer));
-  } catch (err) {
+  } catch {
     res.statusCode = 500;
     res.setHeader('content-type', 'application/json; charset=utf-8');
-    res.end(JSON.stringify({ error: err instanceof Error ? err.message : 'internal_error' }));
+    res.end(JSON.stringify({ error: 'internal_error' }));
   }
 }
 
@@ -151,13 +148,6 @@ async function start(): Promise<void> {
 
   server.listen(port, '0.0.0.0', () => {
     console.log(`WelcomeRO server listening on http://localhost:${port}`);
-    // Run an initial non-blocking sweep 5 seconds after boot and keep checking every 30 minutes.
-    setTimeout(() => {
-      void refreshOfficialSources({ force: true }).catch(() => undefined);
-    }, 5_000);
-    setInterval(() => {
-      void refreshOfficialSources({ force: false }).catch(() => undefined);
-    }, SOURCE_MONITOR_INTERVAL_MS).unref();
   });
 }
 

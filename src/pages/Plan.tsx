@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import {
@@ -30,6 +30,7 @@ function downloadFile(name: string, content: string, type: string) {
 export function Plan() {
   const { tasks, progress, dates, setDates, language } = useApp();
   const { t, loc } = useI18n();
+  const location = useLocation();
   const [draft, setDraft] = useState<PlanDates>(dates);
   const [touched, setTouched] = useState({ arrival: false, expiry: false });
 
@@ -171,7 +172,7 @@ export function Plan() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <h2 className="text-lg font-bold text-brand-900">
-                        <Link to={`/guides/${item.task.procedure.id}`} className="hover:underline">
+                        <Link to={`/guides/${item.task.procedure.id}`} state={{ from: location.pathname }} className="hover:underline">
                           {loc(item.task.procedure.title)}
                         </Link>
                       </h2>
@@ -197,7 +198,7 @@ export function Plan() {
                       </div>
                     ) : null}
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Link to={`/guides/${item.task.procedure.id}`} className={btnSecondary}>
+                      <Link to={`/guides/${item.task.procedure.id}`} state={{ from: location.pathname }} className={btnSecondary}>
                         {t('check.open')}
                       </Link>
                       <Link to={`/kit/${item.task.procedure.id}`} className={btnSecondary}>

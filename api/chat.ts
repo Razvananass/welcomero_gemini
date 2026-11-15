@@ -1,7 +1,7 @@
 // Serverless endpoint used by the AI assistant, document explainer, and custom Romanian message feature.
 //
 //   GET  /api/chat  -> { configured: boolean, provider?: string }
-//   POST /api/chat  -> { reply: string }
+//   POST /api/chat  -> { reply: string, citations?: curated source metadata[] }
 //
 // The API key is read from process.env on the SERVER only. It is never sent to the browser.
 import {
@@ -10,7 +10,8 @@ import {
   type ChatAttachment,
   type ChatMessage,
 } from "./_lib/provider.js";
-import { buildKnowledge, procedureTitle } from "./_lib/knowledge.js";
+import { buildKnowledge, citationsInReply, procedureTitle } from "./_lib/knowledge.js";
+import { checkRateLimit, rateLimitedResponse } from "./_lib/rateLimit.js";
 import {
   buildSystemPrompt,
   type Direction,
@@ -18,7 +19,6 @@ import {
   type Mode,
   type UserContextSummary,
 } from "./_lib/prompt.js";
-import { getLiveUpdatesPromptBlock } from "./_lib/sourcesMonitor.js";
 
 const MAX_BODY_CHARS = 6_000_000;
 const MAX_MESSAGES = 20;
@@ -94,6 +94,8 @@ function parseUserContext(value: unknown): UserContextSummary | null {
     typeof v === "string" ? v.trim().slice(0, max) : undefined;
   return {
     situation: safeStr(raw.situation, 20),
+    workerStatus: safeStr(raw.workerStatus, 24),
+    protectionStatus: safeStr(raw.protectionStatus, 24),
     citizenship: safeStr(raw.citizenship, 20),
     accommodation: safeStr(raw.accommodation, 24),
     arrival: safeStr(raw.arrival, 16),
@@ -118,6 +120,9 @@ export function GET(): Response {
 }
 
 export async function POST(request: Request): Promise<Response> {
+  const rateLimit = checkRateLimit(request, 'chat', 30, 10 * 60_000);
+  if (!rateLimit.allowed) return rateLimitedResponse(rateLimit.retryAfterSeconds);
+
   let payload: {
     mode?: unknown;
     language?: unknown;
@@ -166,9 +171,9 @@ export async function POST(request: Request): Promise<Response> {
 
   const hasAttachment = messages.some((m) => Boolean(m.attachment));
   // Only vision-capable providers (Gemini / Anthropic) can inspect images; skip text-only Groq if image attached.
-  const eligibleProviders = hasAttachment
+  const eligibleProviders = (hasAttachment
     ? providers.filter((p) => p.name !== "groq")
-    : providers;
+    : providers).slice(0, 2);
   if (eligibleProviders.length === 0) {
     return json({ error: "not_configured" }, 503);
   }
@@ -180,7 +185,6 @@ export async function POST(request: Request): Promise<Response> {
       knowledge: buildKnowledge(),
       focusProcedure,
       userContext: parseUserContext(payload.userContext),
-      liveUpdates: getLiveUpdatesPromptBlock(),
       direction,
     }),
     messages,
@@ -203,7 +207,8 @@ export async function POST(request: Request): Promise<Response> {
   for (const provider of eligibleProviders) {
     try {
       const reply = await provider.complete(input);
-      return json({ reply });
+      const citations = citationsInReply(reply);
+      return json({ reply, ...(citations.length > 0 ? { citations } : {}) });
     } catch (error) {
       lastError = error;
       const kind = error instanceof ProviderError ? error.kind : "upstream";

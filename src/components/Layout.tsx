@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { getProcedure } from '../data';
+import { routeTitleKey } from '../lib/journey';
 import { useI18n } from '../context/useI18n';
 import type { MessageKey } from '../i18n';
 import { Icon } from './Icon';
@@ -40,6 +42,7 @@ function MoreMenu() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement | null>(null);
+  const trigger = useRef<HTMLButtonElement | null>(null);
   const location = useLocation();
 
   useEffect(() => setOpen(false), [location.pathname]);
@@ -49,7 +52,10 @@ function MoreMenu() {
       if (box.current && !box.current.contains(event.target as Node)) setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        setOpen(false);
+        trigger.current?.focus();
+      }
     };
     document.addEventListener('mousedown', onClick);
     document.addEventListener('keydown', onKey);
@@ -59,13 +65,15 @@ function MoreMenu() {
     };
   }, [open]);
 
-  const anyActive = MORE_ITEMS.some((item) => location.pathname.startsWith(item.to));
+  const anyActive = MORE_ITEMS.some((item) => location.pathname === item.to || location.pathname.startsWith(`${item.to}/`));
   return (
     <div ref={box} className="relative">
       <button
+        ref={trigger}
         type="button"
         aria-expanded={open}
         aria-haspopup="true"
+        aria-controls="more-navigation"
         onClick={() => setOpen((value) => !value)}
         className={`inline-flex items-center gap-1 whitespace-nowrap border-b-2 px-3 py-2 text-base font-medium ${
           anyActive ? 'border-brand-700 text-brand-900' : 'border-transparent text-slate-700 hover:text-brand-900'
@@ -75,7 +83,7 @@ function MoreMenu() {
         <Icon name="arrow" className="size-3.5 rotate-90" />
       </button>
       {open ? (
-        <ul className="absolute end-0 top-full z-30 mt-1 w-60 overflow-hidden rounded-lg border border-slate-200 bg-white py-1">
+        <ul id="more-navigation" className="absolute end-0 top-full z-30 mt-1 w-60 overflow-hidden rounded-lg border border-slate-200 bg-white py-1">
           {MORE_ITEMS.map((item) => (
             <li key={item.to}>
               <NavLink to={item.to} className={menuLinkClass}>
@@ -214,7 +222,11 @@ function Footer() {
         </div>
         <div>
           <p className="font-semibold text-brand-900">{t('footer.contact')}</p>
-          <p className="mt-2 text-sm text-muted">{t('footer.contactPlaceholder')}</p>
+          <p className="mt-2 text-sm">
+            <a className={linkClass} href="mailto:welcomero.contact@gmail.com">
+              {t('footer.contactPlaceholder')}
+            </a>
+          </p>
           <p className="mt-4 text-sm text-muted">{t('footer.disclaimer')}</p>
         </div>
       </div>
@@ -223,17 +235,48 @@ function Footer() {
 }
 
 export function Layout() {
-  const { t } = useI18n();
+  const { t, loc } = useI18n();
   const location = useLocation();
+  const main = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    document.title = `${t('app.name')}`;
-  }, [t]);
+    const guideMatch = location.pathname.match(/^\/guides\/([^/]+)$/);
+    const kitMatch = location.pathname.match(/^\/kit\/([^/]+)$/);
+    const procedure = getProcedure(guideMatch?.[1] ?? kitMatch?.[1] ?? '');
+    const pageTitle = guideMatch
+      ? procedure
+        ? loc(procedure.title)
+        : t('guide.notFound')
+      : kitMatch
+        ? procedure
+          ? `${t('kit.title')}: ${loc(procedure.title)}`
+          : t('kit.notFound')
+        : t(routeTitleKey(location.pathname));
+    document.title = `${pageTitle} | ${t('app.name')}`;
+  }, [loc, location.pathname, t]);
 
-  // Start each page at the top.
+  // Focus the requested section, or start the new page at the top and announce its main region.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    const frame = window.requestAnimationFrame(() => {
+      if (location.hash) {
+        let id = location.hash.slice(1);
+        try {
+          id = decodeURIComponent(id);
+        } catch {
+          // Use the literal fragment when it is not valid URI encoding.
+        }
+        const target = document.getElementById(id);
+        if (target) {
+          target.scrollIntoView({ block: 'start' });
+          target.focus({ preventScroll: true });
+          return;
+        }
+      }
+      window.scrollTo(0, 0);
+      main.current?.focus({ preventScroll: true });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash, location.pathname]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -244,7 +287,7 @@ export function Layout() {
         {t('nav.skip')}
       </a>
       <Header />
-      <main id="main" className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">
+      <main ref={main} id="main" tabIndex={-1} className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 outline-none">
         <Outlet />
       </main>
       <Footer />

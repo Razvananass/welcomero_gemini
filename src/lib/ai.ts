@@ -15,6 +15,8 @@ export interface ChatMessage {
 
 export interface UserContextSummary {
   situation?: string;
+  workerStatus?: string;
+  protectionStatus?: string;
   citizenship?: string;
   accommodation?: string;
   arrival?: string;
@@ -33,6 +35,8 @@ export class AiError extends Error {
 
 export type AiAvailability = 'ready' | 'not_configured' | 'unreachable';
 
+const CLIENT_TIMEOUT_MS = 28_000;
+
 async function readJson(response: Response): Promise<Record<string, unknown> | null> {
   const type = response.headers.get('content-type') ?? '';
   if (!type.includes('application/json')) return null; // e.g. the dev server returning index.html for /api
@@ -46,7 +50,7 @@ async function readJson(response: Response): Promise<Record<string, unknown> | n
 /** Ask the server whether an AI key is configured. */
 export async function checkAvailability(): Promise<AiAvailability> {
   try {
-    const response = await fetch('/api/chat', { method: 'GET' });
+    const response = await fetch('/api/chat', { method: 'GET', signal: AbortSignal.timeout(8_000) });
     const data = await readJson(response);
     if (!response.ok || !data || typeof data.configured !== 'boolean') return 'unreachable';
     return data.configured ? 'ready' : 'not_configured';
@@ -62,6 +66,7 @@ async function post(body: unknown): Promise<string> {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(CLIENT_TIMEOUT_MS),
     });
   } catch {
     throw new AiError('unreachable');

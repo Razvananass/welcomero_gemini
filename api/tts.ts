@@ -1,5 +1,6 @@
 // Server-side ElevenLabs Text-to-Speech proxy (/api/tts).
 // Keeps ELEVENLABS_API_KEY strictly on the server and returns audio/mpeg for natural Romanian pronunciation.
+import { checkRateLimit, rateLimitedResponse } from './_lib/rateLimit.js';
 const ELEVENLABS_BASE = 'https://api.elevenlabs.io/v1/text-to-speech';
 const MAX_TEXT_CHARS = 600;
 const TTS_TIMEOUT_MS = 12_000;
@@ -49,6 +50,9 @@ export function GET(): Response {
 }
 
 export async function POST(request: Request): Promise<Response> {
+  const rateLimit = checkRateLimit(request, 'tts', 60, 10 * 60_000);
+  if (!rateLimit.allowed) return rateLimitedResponse(rateLimit.retryAfterSeconds);
+
   const apiKey = readEnv('ELEVENLABS_API_KEY');
   if (!apiKey) {
     return json({ error: 'not_configured' }, 503);

@@ -1,5 +1,5 @@
 import { Icon, type IconName } from '../components/Icon';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
@@ -9,16 +9,20 @@ import {
   CITIZENSHIPS,
   COMPLETED_KEYS,
   ONBOARDING_STEPS,
+  PROTECTION_STATUSES,
   SITUATIONS,
+  WORKER_STATUSES,
   draftToProfile,
   emptyDraft,
   isDraft,
+  profileNeedsDetails,
   profileToDraft,
   toggleCompleted,
   validateStep,
   type OnboardingError,
 } from '../lib/profile';
 import { localData, STORAGE_KEYS } from '../lib/storage';
+import { stepProgress } from '../lib/journey';
 import { btnPrimary, btnSecondary, cardClass, Notice, ProgressBar } from '../components/ui';
 import type { ProfileDraft } from '../types';
 
@@ -65,12 +69,26 @@ function loadInitial(profileDraft: ProfileDraft | null): { draft: ProfileDraft; 
   const saved = localData.read<unknown>(STORAGE_KEYS.draft, null);
   if (isDraft(saved)) {
     const step = Number((saved as SavedDraft).step);
+    const restoredDraft: ProfileDraft = {
+      situation: saved.situation,
+      workerStatus: saved.workerStatus,
+      protectionStatus: saved.protectionStatus,
+      citizenship: saved.citizenship,
+      accommodation: saved.accommodation,
+      completed: saved.completed,
+    };
+    const restoredStep = Number.isInteger(step) && step >= 1 && step <= ONBOARDING_STEPS ? step : 1;
+    const missingStatus = (restoredDraft.situation === 'worker' && !restoredDraft.workerStatus)
+      || (restoredDraft.situation === 'refugee' && !restoredDraft.protectionStatus);
     return {
-      draft: { situation: saved.situation, citizenship: saved.citizenship, accommodation: saved.accommodation, completed: saved.completed },
-      step: Number.isInteger(step) && step >= 1 && step <= ONBOARDING_STEPS ? step : 1,
+      draft: restoredDraft,
+      step: missingStatus && restoredStep > 2 ? 2 : restoredStep,
     };
   }
-  return { draft: profileDraft ?? emptyDraft(), step: 1 };
+  if (profileDraft) {
+    return { draft: profileDraft, step: profileNeedsDetails(profileDraft) ? 2 : 1 };
+  }
+  return { draft: emptyDraft(), step: 1 };
 }
 
 export function Onboarding() {
@@ -83,6 +101,15 @@ export function Onboarding() {
   const [draft, setDraft] = useState<ProfileDraft>(initial.draft);
   const [step, setStep] = useState(initial.step);
   const [error, setError] = useState<OnboardingError | null>(null);
+  const appliedLateProfile = useRef(false);
+
+  // Firebase may finish loading a legacy cloud profile after this page mounts.
+  useEffect(() => {
+    if (appliedLateProfile.current || !profile || !profileNeedsDetails(profile) || draft.situation) return;
+    appliedLateProfile.current = true;
+    setDraft(profileToDraft(profile));
+    setStep(2);
+  }, [draft.situation, profile]);
 
   useEffect(() => {
     localData.write(STORAGE_KEYS.draft, { ...draft, step });
@@ -120,7 +147,7 @@ export function Onboarding() {
   }
 
   const stepTitles: MessageKey[] = ['onb.step1.title', 'onb.step2.title', 'onb.step3.title', 'onb.step4.title'];
-  const percent = Math.round(((step - 1) / ONBOARDING_STEPS) * 100);
+  const percent = stepProgress(step, ONBOARDING_STEPS);
   const isLast = step === ONBOARDING_STEPS;
 
   return (
@@ -188,11 +215,45 @@ export function Onboarding() {
                   type="radio"
                   name="situation"
                   checked={draft.situation === value}
-                  onChange={() => update({ situation: value })}
+                  onChange={() =>
+                    update({
+                      situation: value,
+                      ...(value !== 'worker' ? { workerStatus: undefined } : {}),
+                      ...(value !== 'refugee' ? { protectionStatus: undefined } : {}),
+                    })
+                  }
                   label={t(`onb.situation.${value}`)}
                 />
               ))}
             </Question>
+            {draft.situation === 'worker' ? (
+              <Question legend={t('onb.q.workerStatus')}>
+                {WORKER_STATUSES.map((value) => (
+                  <Choice
+                    key={value}
+                    type="radio"
+                    name="workerStatus"
+                    checked={draft.workerStatus === value}
+                    onChange={() => update({ workerStatus: value })}
+                    label={t(`onb.workerStatus.${value}`)}
+                  />
+                ))}
+              </Question>
+            ) : null}
+            {draft.situation === 'refugee' ? (
+              <Question legend={t('onb.q.protectionStatus')}>
+                {PROTECTION_STATUSES.map((value) => (
+                  <Choice
+                    key={value}
+                    type="radio"
+                    name="protectionStatus"
+                    checked={draft.protectionStatus === value}
+                    onChange={() => update({ protectionStatus: value })}
+                    label={t(`onb.protectionStatus.${value}`)}
+                  />
+                ))}
+              </Question>
+            ) : null}
             <Question legend={t('onb.q.citizenship')}>
               {CITIZENSHIPS.map((value) => (
                 <Choice

@@ -1536,6 +1536,30 @@
         "citizenships": [
           "non-eu"
         ],
+        "protectionStatuses": [
+          "considering-asylum"
+        ],
+        "relevance": "core"
+      },
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "protectionStatuses": [
+          "unsure"
+        ],
+        "relevance": "verify"
+      },
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
         "relevance": "core"
       }
     ],
@@ -1694,6 +1718,18 @@
     "processingTime": null,
     "deadline": null,
     "audience": [
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "protectionStatuses": [
+          "temporary-protection"
+        ],
+        "relevance": "verify"
+      },
       {
         "situations": [
           "refugee"
@@ -1942,6 +1978,18 @@
         "citizenships": [
           "non-eu"
         ],
+        "workerStatuses": [
+          "employed"
+        ],
+        "relevance": "core"
+      },
+      {
+        "situations": [
+          "worker"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
         "relevance": "core"
       }
     ],
@@ -2127,6 +2175,32 @@
       }
     },
     "audience": [
+      {
+        "situations": [
+          "worker"
+        ],
+        "citizenships": [
+          "eu",
+          "non-eu"
+        ],
+        "workerStatuses": [
+          "employed"
+        ],
+        "relevance": "core"
+      },
+      {
+        "situations": [
+          "worker"
+        ],
+        "citizenships": [
+          "eu",
+          "non-eu"
+        ],
+        "workerStatuses": [
+          "unsure"
+        ],
+        "relevance": "verify"
+      },
       {
         "situations": [
           "worker"
@@ -2498,6 +2572,18 @@
         "citizenships": [
           "non-eu"
         ],
+        "protectionStatuses": [
+          "asylum-pending"
+        ],
+        "relevance": "core"
+      },
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
         "relevance": "core"
       }
     ],
@@ -2668,6 +2754,18 @@
         "citizenships": [
           "non-eu"
         ],
+        "protectionStatuses": [
+          "protection-granted"
+        ],
+        "relevance": "verify"
+      },
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
         "relevance": "verify"
       }
     ],
@@ -2823,6 +2921,18 @@
       "temporary-protection-ukraine"
     ],
     "audience": [
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "protectionStatuses": [
+          "temporary-protection"
+        ],
+        "relevance": "verify"
+      },
       {
         "situations": [
           "refugee"
