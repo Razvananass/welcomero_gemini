@@ -3,7 +3,7 @@
 export type Mode = 'chat' | 'phrase' | 'document' | 'form' | 'interpret' | 'translate';
 /** For "interpret" mode: from the clerk (Romanian) to the user, or from the user to Romanian. */
 export type Direction = 'to_user' | 'to_ro';
-export type Language = 'en' | 'ro' | 'fr' | 'ar' | 'uk' | 'ne';
+export type Language = 'en' | 'ro' | 'fr' | 'ar' | 'uk' | 'ne' | 'ru' | 'es' | 'tr' | 'hi' | 'bn' | 'fa' | 'ur' | 'vi' | 'zh' | 'de';
 
 export interface UserContextSummary {
   situation?: string;
@@ -24,6 +24,16 @@ const LANGUAGE_NAMES: Record<Language, string> = {
   ar: 'Arabic (Modern Standard)',
   uk: 'Ukrainian',
   ne: 'Nepali (Devanagari script, simple everyday words)',
+  ru: 'Russian',
+  es: 'Spanish',
+  tr: 'Turkish',
+  hi: 'Hindi (Devanagari script, simple everyday words)',
+  bn: 'Bengali (Bengali script, simple everyday words)',
+  fa: 'Persian (Farsi, Persian script)',
+  ur: 'Urdu (Urdu script)',
+  vi: 'Vietnamese',
+  zh: 'Chinese (Simplified)',
+  de: 'German',
 };
 
 const SHARED_RULES = `You are the assistant inside WelcomeRO, a free information tool that helps newcomers in Romania (international students, EU/EEA/Swiss citizens, non-EU citizens, workers, and residents) with immigration, residence permits, visas, administrative paperwork, public institutions, and practical integration in Romania (especially Timișoara).

@@ -65,7 +65,7 @@ export const ne: Record<MessageKey, string> = {
   'landing.feature.checklist.title': 'निजी चेकलिस्ट',
   'landing.feature.checklist.body': 'तपाईंको अवस्थासँग मिल्ने प्रक्रियाहरू मात्र, तपाईंको प्रगति सुरक्षित रहन्छ।',
   'landing.feature.guides.title': 'बहुभाषी गाइडहरू',
-  'landing.feature.guides.body': 'अङ्ग्रेजी, रोमानियन, फ्रेन्च, अरबी, युक्रेनी र नेपाली भाषामा, दायाँबाट बायाँ लेखिने लेआउटसहित।',
+  'landing.feature.guides.body': 'धेरै भाषामा गाइडहरू, दायाँबाट बायाँ लेखिने लेआउटसहित।',
   'landing.feature.ai.title': 'AI को सहयोग',
   'landing.feature.ai.body': 'आफ्नै भाषामा प्रश्न सोध्नुहोस्। जवाफहरू हाम्रो पुष्टि गरिएको जानकारीमा आधारित हुन्छन्।',
   'landing.feature.helper.title': 'रोमानियन सञ्चार सहयोगी',

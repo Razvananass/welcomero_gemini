@@ -64,7 +64,7 @@ export const en = {
   'landing.feature.checklist.title': 'Personalised checklist',
   'landing.feature.checklist.body': 'Only the procedures that fit your situation, with your progress saved.',
   'landing.feature.guides.title': 'Multilingual guides',
-  'landing.feature.guides.body': 'English, Romanian, French, Arabic, Ukrainian and Nepali, including right-to-left layout.',
+  'landing.feature.guides.body': 'Guides in many languages, including right-to-left layout.',
   'landing.feature.ai.title': 'AI-powered assistance',
   'landing.feature.ai.body': 'Ask questions in your language. Answers are based on our verified information.',
   'landing.feature.helper.title': 'Romanian communication helper',

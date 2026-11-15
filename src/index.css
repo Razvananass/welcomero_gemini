@@ -15,7 +15,7 @@
   --color-sun-600: #9a7400;
   --color-ink: #17212b;
   --color-muted: #4b5a68;
-  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans", "Noto Sans Arabic", "Noto Sans Devanagari", "Nirmala UI", Mangal, Tahoma, sans-serif;
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans", "Noto Sans Arabic", "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans SC", "Noto Naskh Arabic", "Nirmala UI", "Microsoft YaHei", "PingFang SC", Mangal, Tahoma, sans-serif;
 }
 
 /* `dark:` utilities apply when <html> has the `dark` class (set by src/lib/theme.ts and index.html). */

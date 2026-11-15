@@ -61,7 +61,7 @@ export const ro: Record<MessageKey, string> = {
   'landing.feature.checklist.title': 'Listă personalizată',
   'landing.feature.checklist.body': 'Doar procedurile relevante pentru tine, cu progresul salvat automat.',
   'landing.feature.guides.title': 'Ghiduri în mai multe limbi',
-  'landing.feature.guides.body': 'Disponibile în engleză, română, franceză, arabă, ucraineană și nepaleză, inclusiv cu scriere de la dreapta la stânga.',
+  'landing.feature.guides.body': 'Ghiduri în multe limbi, inclusiv cu scriere de la dreapta la stânga.',
   'landing.feature.ai.title': 'Asistent AI dedicat',
   'landing.feature.ai.body': 'Pui întrebări în limba ta și primești răspunsuri bazate pe informațiile noastre verificate.',
   'landing.feature.helper.title': 'Expresii utile în română',

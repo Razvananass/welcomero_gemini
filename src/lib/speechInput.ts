@@ -39,6 +39,16 @@ const RECOGNITION_LOCALES: Record<string, string> = {
   ar: 'ar',
   uk: 'uk-UA',
   ne: 'ne-NP',
+  ru: 'ru-RU',
+  es: 'es-ES',
+  tr: 'tr-TR',
+  hi: 'hi-IN',
+  bn: 'bn-BD',
+  fa: 'fa-IR',
+  ur: 'ur-PK',
+  vi: 'vi-VN',
+  zh: 'zh-CN',
+  de: 'de-DE',
 };
 
 export interface Listener {

@@ -1,6 +1,8 @@
 // Shared types. Keeping them in one file makes the data shape easy to find.
 
-export type Lang = 'en' | 'ro' | 'ar' | 'fr' | 'uk' | 'ne';
+export type Lang =
+  | 'en' | 'ro' | 'fr' | 'ar' | 'uk' | 'ne'
+  | 'ru' | 'es' | 'tr' | 'hi' | 'bn' | 'fa' | 'ur' | 'vi' | 'zh' | 'de';
 
 /** Text that can exist in several languages. English is always required. */
 export type Localized = { en: string } & Partial<Record<Exclude<Lang, 'en'>, string>>;

@@ -25,7 +25,7 @@ const MAX_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 2_000;
 const MAX_ATTACHMENT_BASE64 = 5_500_000;
 const ALLOWED_MIME_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
-const LANGUAGES: Language[] = ["en", "ro", "fr", "ar", "uk", "ne"];
+const LANGUAGES: Language[] = ["en", "ro", "fr", "ar", "uk", "ne", "ru", "es", "tr", "hi", "bn", "fa", "ur", "vi", "zh", "de"];
 const DIRECTIONS: Direction[] = ["to_user", "to_ro"];
 
 function json(body: unknown, status = 200): Response {
