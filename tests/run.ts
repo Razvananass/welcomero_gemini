@@ -17,6 +17,8 @@ import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanit
 import { docCounts, sanitizeDocs, toggleDoc } from '../src/lib/docs';
 import { buildHelpMessage, HELP_ORG_ID, helpMailto } from '../src/lib/helpRequest';
 import { dataUrlBytes, fitWithin, MAX_RESULT_BYTES, MAX_SIDE } from '../src/lib/image';
+import { collectEnglishOnly, formatBatch, makeBatches, MAX_BATCH_CHARS, missingIndexes, parseBatchReply } from '../src/lib/translate';
+import { isTextSize, TEXT_SIZE_PERCENT } from '../src/lib/textSize';
 import { ALL_CARDS, buildQuiz, DECKS, normalizeForCompare, rateAttempt, sanitizeKnown, similarity, toggleKnown, totalProgress } from '../src/lib/practice';
 import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
@@ -38,7 +40,7 @@ describe('checklist: the three required profiles', () => {
   it('Profile A: non-EU student, accommodation secured, address NOT registered', () => {
     const tasks = buildChecklist(procedures, profile({ accommodation: 'not-registered' }));
     const list = tasks.map((t) => t.procedure.id);
-    assert.deepEqual(list, ['university-enrolment', 'address-registration', 'health-insurance', 'residence-permit-student', 'cnp', 'tax-id']);
+    assert.deepEqual(list, ['university-enrolment', 'address-registration', 'health-insurance', 'residence-permit-student', 'cnp', 'bank-account', 'tax-id', 'learn-romanian']);
     const address = tasks.find((t) => t.procedure.id === 'address-registration')!;
     assert.equal(address.priority?.level, 'high');
     assert.equal(address.priority?.reasonKey, 'addressNotRegistered');
@@ -49,7 +51,7 @@ describe('checklist: the three required profiles', () => {
   it('Profile B: EU student, accommodation secured, address registered', () => {
     const tasks = buildChecklist(procedures, profile({ citizenship: 'eu', accommodation: 'registered' }));
     const list = tasks.map((t) => t.procedure.id);
-    assert.deepEqual(list, ['university-enrolment', 'address-registration', 'health-insurance', 'eu-registration-certificate', 'cnp', 'tax-id']);
+    assert.deepEqual(list, ['university-enrolment', 'address-registration', 'health-insurance', 'eu-registration-certificate', 'cnp', 'bank-account', 'tax-id', 'learn-romanian']);
     assert.ok(!list.includes('residence-permit-student'), 'EU must not automatically get a non-EU residence permit task');
     const address = tasks.find((t) => t.procedure.id === 'address-registration')!;
     assert.equal(address.preCompleted, true);
@@ -97,16 +99,27 @@ describe('checklist: rules for every combination of answers', () => {
     }
   });
 
-  it('only students get the university task; non-students get "verify" on shared tasks and a coverage warning', () => {
-    const ownGuides = ['residence-permit-work', 'international-protection'];
+  it('only students get the university task; non-students get a coverage notice; "verify" tasks carry the note', () => {
     for (const p of combos) {
       const tasks = buildChecklist(procedures, p);
       assert.equal(tasks.some((t) => t.procedure.id === 'university-enrolment'), p.situation === 'student');
-      if (p.situation !== 'student') {
-        assert.ok(hasLimitedCoverage(p));
-        for (const t of tasks.filter((x) => !ownGuides.includes(x.procedure.id))) {
-          assert.ok(t.relevance === 'verify' && t.notes.includes('verifyApplies'), `${p.situation}: ${t.procedure.id}`);
-        }
+      if (p.situation !== 'student') assert.ok(hasLimitedCoverage(p));
+      for (const t of tasks) assert.equal(t.relevance === 'verify', t.notes.includes('verifyApplies'), `${p.situation}: ${t.procedure.id}`);
+    }
+  });
+
+  it('people in the "other" situation are asked to check whether the shared guides apply', () => {
+    const tasks = buildChecklist(procedures, profile({ situation: 'other', accommodation: 'registered' }));
+    for (const id of ['health-insurance', 'cnp', 'tax-id']) {
+      assert.equal(tasks.find((t) => t.procedure.id === id)?.relevance, 'verify', id);
+    }
+  });
+
+  it('workers, students and refugees see the everyday guides as core: address, health, CNP, bank account, learning Romanian', () => {
+    for (const situation of ['student', 'worker', 'refugee'] as const) {
+      const tasks = buildChecklist(procedures, profile({ situation, accommodation: 'none' }));
+      for (const id of ['address-registration', 'health-insurance', 'cnp', 'bank-account', 'learn-romanian']) {
+        assert.equal(tasks.find((t) => t.procedure.id === id)?.relevance, 'core', `${situation}: ${id}`);
       }
     }
   });
@@ -127,11 +140,9 @@ describe('checklist: rules for every combination of answers', () => {
     assert.equal(refugee.find((t) => t.procedure.id === 'temporary-protection-ukraine')?.relevance, 'verify', 'temporary protection only applies to people from Ukraine');
   });
 
-  it('CNP and tax number are always labelled "verify whether this applies"', () => {
+  it('the tax number is always a "check if this applies" guide', () => {
     for (const p of combos) {
-      for (const t of buildChecklist(procedures, p).filter((x) => ['cnp', 'tax-id'].includes(x.procedure.id))) {
-        assert.equal(t.relevance, 'verify');
-      }
+      for (const t of buildChecklist(procedures, p).filter((x) => x.procedure.id === 'tax-id')) assert.equal(t.relevance, 'verify');
     }
   });
 
@@ -240,8 +251,8 @@ describe('administrative data integrity', () => {
   const levels = ['verified', 'recommended', 'confirm'];
   const hasEn = (l: { en?: string } | undefined) => Boolean(l && typeof l.en === 'string' && l.en.length > 0);
 
-  it('has 5-12 procedures with unique ids', () => {
-    assert.ok(procedures.length >= 5 && procedures.length <= 12);
+  it('has 5-20 procedures with unique ids', () => {
+    assert.ok(procedures.length >= 5 && procedures.length <= 20);
     assert.equal(new Set(procedures.map((p) => p.id)).size, procedures.length);
   });
 
@@ -370,6 +381,7 @@ describe('translations', () => {
       'guide.sourceKind.': ['government', 'university', 'eu', 'ngo'], 'priority.': ['high', 'low'], 'ai.ex.': ['1', '2', '3', '4', '5'],
       'check.filter.': ['all', 'todo', 'progress', 'done'], 'guide.s': ['1', '2', '3', '4', '6', '7', '8', '9', '10'],
       'monitor.status.': ['verified_unchanged', 'updated', 'unreachable', 'pending'],
+      'text.': ['normal', 'large', 'xlarge'],
     };
     for (const prefix of dynamicPrefixes) {
       assert.ok(values[prefix], `dynamic key prefix "${prefix}" is not covered by this test; add it`);
@@ -1212,5 +1224,145 @@ describe('Romanian practice', () => {
     const known = deck.cards.slice(0, deck.cards.length - 2).map((c) => c.id);
     const quiz = buildQuiz(deck, known, 2, () => 0.5);
     assert.deepEqual(quiz.map((q) => q.card.id).sort(), deck.cards.slice(-2).map((c) => c.id).sort());
+  });
+});
+
+describe('new guides for workers and refugees', () => {
+  const guide = (id: string) => getProcedure(id)!;
+
+  it('exist, are complete in all six languages for their headline fields, and cite real sources', () => {
+    for (const id of ['employment-contract', 'bank-account', 'asylum-seeker-rights', 'integration-programme', 'temporary-protection-rights', 'learn-romanian']) {
+      const p = guide(id);
+      assert.ok(p, id);
+      for (const lang of LANGUAGES) for (const f of ['title', 'summary', 'why', 'whoNeeds', 'whoDoesNot', 'submitWhere'] as const) {
+        assert.ok(p[f][lang.code], `${id}.${f} missing ${lang.code}`);
+      }
+      assert.ok(p.steps.length >= 4 && p.warnings.length >= 1 && p.documents.length >= 1, `${id} has content`);
+    }
+  });
+
+  it('workers get the contract guide, refugees get the asylum-stage guides, nobody gets guides that are not theirs', () => {
+    const worker = ids(profile({ situation: 'worker', citizenship: 'non-eu' }));
+    assert.ok(worker.includes('employment-contract') && worker.includes('residence-permit-work'));
+    assert.ok(!worker.includes('asylum-seeker-rights') && !worker.includes('integration-programme'));
+    const refugee = ids(profile({ situation: 'refugee', citizenship: 'non-eu' }));
+    for (const id of ['international-protection', 'asylum-seeker-rights', 'temporary-protection-rights', 'integration-programme']) assert.ok(refugee.includes(id), id);
+    assert.ok(!refugee.includes('employment-contract'));
+    const student = ids(profile());
+    for (const id of ['employment-contract', 'asylum-seeker-rights', 'integration-programme', 'temporary-protection-rights']) assert.ok(!student.includes(id), id);
+  });
+
+  it('the integration programme comes after the asylum guide it depends on', () => {
+    const refugee = buildChecklist(procedures, profile({ situation: 'refugee' }));
+    const order = refugee.map((t) => t.procedure.id);
+    assert.ok(order.indexOf('international-protection') < order.indexOf('integration-programme'));
+    assert.deepEqual(guide('integration-programme').dependsOn, ['international-protection']);
+  });
+
+  it('the anti-trafficking helpline number is cited to the European e-Justice portal', () => {
+    const warning = guide('employment-contract').warnings.find((w) => w.text.en.includes('0800 800 678'));
+    assert.ok(warning && warning.level === 'verified' && warning.sourceIds?.includes('e-justice-ro-trafficking'));
+    assert.ok(sources['e-justice-ro-trafficking'].note?.includes('0800 800 678'));
+  });
+});
+
+describe('calm wording', () => {
+  it('guide and institution texts do not say things were "not verified" or "unconfirmed"', () => {
+    const bad = /not (been )?verified|was not verified|were not verified|unconfirmed|could not be verified/i;
+    const found: string[] = [];
+    for (const p of procedures) {
+      const texts = [p.summary.en, p.why.en, p.whoNeeds.en, p.whoDoesNot.en, p.submitWhere.en, ...p.steps.map((x) => x.text.en), ...p.warnings.map((x) => x.text.en), ...p.documents.map((d) => `${d.name.en} ${d.whereToGet.en}`)];
+      for (const text of texts) if (bad.test(text)) found.push(`${p.id}: ${text.slice(0, 60)}`);
+    }
+    for (const i of institutions) if (bad.test(i.verifiedNote.en)) found.push(`${i.id}: note`);
+    assert.deepEqual(found, []);
+  });
+
+  it('every guide with "confirm at the office" items is covered by the one note shown at the top (the string exists in all languages)', () => {
+    for (const lang of LANGUAGES) assert.ok(dictionaries[lang.code]['guide.confirmNote'].length > 20, lang.code);
+    assert.ok(procedures.some((p) => p.steps.some((s) => s.level === 'confirm')));
+  });
+
+  it('the emergency and helpline numbers appear in every language, and the helpline is cited', () => {
+    for (const lang of LANGUAGES) {
+      assert.ok(dictionaries[lang.code]['safe.traffic'].includes('0800 800 678'), `${lang.code} helpline`);
+      assert.ok(dictionaries[lang.code]['safe.112'].includes('112'), `${lang.code} 112`);
+    }
+    assert.ok(sources['e-justice-ro-trafficking'].note?.includes('0800 800 678'));
+  });
+});
+
+describe('text size', () => {
+  it('knows the three sizes and scales up only', () => {
+    assert.ok(isTextSize('normal') && isTextSize('large') && isTextSize('xlarge'));
+    assert.ok(!isTextSize('huge') && !isTextSize(3));
+    assert.equal(TEXT_SIZE_PERCENT.normal, 100);
+    assert.ok(TEXT_SIZE_PERCENT.large > 100 && TEXT_SIZE_PERCENT.xlarge > TEXT_SIZE_PERCENT.large);
+  });
+});
+
+describe('guide details in your language (AI translation helpers)', () => {
+  const permit = getProcedure('residence-permit-work')!;
+
+  it('collects only English-only texts, once each, and nothing for English', () => {
+    assert.deepEqual(collectEnglishOnly(permit, 'en'), []);
+    const ne = collectEnglishOnly(permit, 'ne');
+    assert.ok(ne.length >= 10);
+    assert.equal(new Set(ne).size, ne.length);
+    assert.ok(ne.includes(permit.steps[0].text.en));
+    assert.ok(!ne.includes(permit.title.en), 'headline fields are already translated');
+    const done = { ...permit, steps: [{ ...permit.steps[0], text: { ...permit.steps[0].text, ne: 'x' } }] };
+    assert.ok(!collectEnglishOnly(done, 'ne').includes(permit.steps[0].text.en), 'already translated text is skipped');
+  });
+
+  it('splits into batches under the server limit and keeps global numbering', () => {
+    const texts = Array.from({ length: 40 }, (_, i) => `Sentence number ${i} `.repeat(6).trim());
+    const batches = makeBatches(texts);
+    assert.ok(batches.length > 1);
+    for (const batch of batches) assert.ok(formatBatch(batch).length <= MAX_BATCH_CHARS + 10, 'batch fits');
+    assert.deepEqual(batches.flat().map((e) => e.index), texts.map((_, i) => i));
+    assert.ok(formatBatch(batches[1]).startsWith(`${batches[1][0].index + 1}| `));
+  });
+
+  it('flattens line breaks and truncates absurdly long texts', () => {
+    const [[entry]] = makeBatches(['Line one\n\nline two']);
+    assert.equal(entry.text, 'Line one line two');
+    assert.ok(makeBatches(['x'.repeat(5000)])[0][0].text.length < MAX_BATCH_CHARS);
+  });
+
+  it('reads the numbered reply, tolerating spaces, blank lines and chatter, and reports what is missing', () => {
+    const reply = 'Here you go:\n1| Prima propoziție\n\n 2 |  A doua propoziție \n4| A patra\nnot a numbered line';
+    const parsed = parseBatchReply(reply);
+    assert.equal(parsed.get(0), 'Prima propoziție');
+    assert.equal(parsed.get(1), 'A doua propoziție');
+    assert.equal(parsed.get(3), 'A patra');
+    assert.equal(parsed.size, 3);
+    assert.deepEqual(missingIndexes([{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }], parsed), [2]);
+  });
+
+  it('the endpoint accepts translate mode and asks for numbered lines in the target language', async () => {
+    const realFetch = globalThis.fetch;
+    const savedKey = process.env.ANTHROPIC_API_KEY;
+    for (const name of ['GEMINI_API_KEY', 'GROQ_API_KEY', 'AI_PROVIDER']) delete process.env[name];
+    process.env.ANTHROPIC_API_KEY = 'test-key';
+    let body: { system: string; max_tokens: number } | null = null;
+    globalThis.fetch = (async (_u: string, init: RequestInit) => {
+      body = JSON.parse(init.body as string);
+      return new Response(JSON.stringify({ content: [{ type: 'text', text: '1| Prima\n2| A doua' }] }), { status: 200 });
+    }) as unknown as typeof fetch;
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(new Request('http://localhost/api/chat', { method: 'POST', body: JSON.stringify({ mode: 'translate', language: 'ro', messages: [{ role: 'user', content: '1| First\n2| Second' }] }) }));
+      assert.equal(res.status, 200);
+      assert.deepEqual(await res.json(), { reply: '1| Prima\n2| A doua' });
+      const seen = body as unknown as { system: string; max_tokens: number };
+      assert.ok(seen.system.includes('into Romanian'));
+      assert.ok(seen.system.includes('N| translation'));
+      assert.ok(!seen.system.includes('KNOWLEDGE:'));
+      assert.equal(seen.max_tokens, 4000);
+    } finally {
+      globalThis.fetch = realFetch;
+      if (savedKey === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = savedKey;
+    }
   });
 });

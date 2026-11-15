@@ -5,6 +5,7 @@ import { useI18n } from '../context/useI18n';
 import { Icon } from '../components/Icon';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { ThemeChoice } from '../components/ThemeToggle';
+import { TEXT_SIZES } from '../lib/textSize';
 import { btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHeader } from '../components/ui';
 
 export function Settings() {
@@ -18,6 +19,8 @@ export function Settings() {
     syncStatus,
     signInWithGoogle,
     signOutUser,
+    textSize,
+    setTextSize,
   } = useApp();
   const { t } = useI18n();
   const navigate = useNavigate();
@@ -141,6 +144,32 @@ export function Settings() {
         <p className="mt-2 text-sm text-muted">{t('theme.body')}</p>
         <div className="mt-3">
           <ThemeChoice />
+        </div>
+      </section>
+
+      <section className={cardClass} aria-labelledby="text-title">
+        <h2 id="text-title" className="text-lg font-bold text-brand-900">
+          {t('text.title')}
+        </h2>
+        <p className="mt-2 text-sm text-muted">{t('text.body')}</p>
+        <div role="group" aria-label={t('text.title')} className="mt-3 flex flex-wrap gap-2">
+          {TEXT_SIZES.map((size) => {
+            const selected = textSize === size;
+            return (
+              <button
+                key={size}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setTextSize(size)}
+                className={`inline-flex min-h-11 items-center gap-2 rounded-lg border px-4 py-2 font-semibold ${
+                  selected ? 'border-brand-700 bg-brand-700 text-white' : 'border-slate-400 bg-white text-brand-900 hover:bg-brand-50'
+                }`}
+              >
+                {selected ? <Icon name="check" className="size-4" /> : null}
+                {t(`text.${size}`)}
+              </button>
+            );
+          })}
         </div>
       </section>
 

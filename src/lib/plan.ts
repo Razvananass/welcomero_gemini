@@ -106,7 +106,7 @@ export interface PlanItem {
   date: string;
   /** "suggested" = welcomeRo's own order; "expiry" = pulled earlier by the permit expiry date. */
   basis: 'suggested' | 'expiry';
-  /** Latest date to apply if the unconfirmed 30-day rule is right (permit only, needs an expiry date). */
+  /** Latest date to apply under IGI's 30-day rule (permits only; needs an expiry date). */
   latestBy?: string;
   /** True when the target date is in the past and the task is not done. */
   pastDue: boolean;

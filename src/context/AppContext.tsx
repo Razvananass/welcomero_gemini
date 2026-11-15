@@ -9,6 +9,7 @@ import { auth, googleProvider } from '../lib/firebase';
 import { sanitizeDates, type PlanDates } from '../lib/plan';
 import { isProfile } from '../lib/profile';
 import { clearAllData, localData, STORAGE_KEYS } from '../lib/storage';
+import { applyTextSize, isTextSize, type TextSize } from '../lib/textSize';
 import {
   applyTheme,
   isThemePreference,
@@ -67,6 +68,8 @@ interface AppContextValue {
   /** The theme actually shown right now. */
   theme: ResolvedTheme;
   setThemePreference: (preference: ThemePreference) => void;
+  textSize: TextSize;
+  setTextSize: (size: TextSize) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -84,6 +87,11 @@ function loadProfile(): Profile | null {
 function loadThemePreference(): ThemePreference {
   const stored = localData.read<unknown>(STORAGE_KEYS.theme, 'system');
   return isThemePreference(stored) ? stored : 'system';
+}
+
+function loadTextSize(): TextSize {
+  const stored = localData.read<unknown>(STORAGE_KEYS.textSize, 'normal');
+  return isTextSize(stored) ? stored : 'normal';
 }
 
 function writeWorkspaceToLocal(state: WorkspaceState): void {
@@ -114,6 +122,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [themePreference, setThemePreferenceState] = useState<ThemePreference>(loadThemePreference);
   const [prefersDark, setPrefersDark] = useState<boolean>(systemPrefersDark);
   const theme = resolveTheme(themePreference, prefersDark);
+  const [textSize, setTextSizeState] = useState<TextSize>(loadTextSize);
 
   const stateRef = useRef<WorkspaceState>({ language, profile, progress, docs, dates });
   const activeUidRef = useRef<string | null>(null);
@@ -129,6 +138,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Follow the device's light/dark setting live, and apply the resulting theme to the page.
   useEffect(() => watchSystemTheme(setPrefersDark), []);
   useEffect(() => applyTheme(theme), [theme]);
+
+  useEffect(() => applyTextSize(textSize), [textSize]);
+  const setTextSize = useCallback((size: TextSize) => {
+    setTextSizeState(size);
+    localData.write(STORAGE_KEYS.textSize, size);
+  }, []);
 
   const setThemePreference = useCallback((preference: ThemePreference) => {
     setThemePreferenceState(preference);
@@ -285,6 +300,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setLanguageState(DEFAULT_LANG);
     setLanguageChosen(false);
     setThemePreferenceState('system');
+    setTextSizeState('normal');
 
     const uid = activeUidRef.current;
     if (uid) {
@@ -373,6 +389,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       themePreference,
       theme,
       setThemePreference,
+      textSize,
+      setTextSize,
     }),
     [
       language,
@@ -399,6 +417,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       themePreference,
       theme,
       setThemePreference,
+      textSize,
+      setTextSize,
     ],
   );
 

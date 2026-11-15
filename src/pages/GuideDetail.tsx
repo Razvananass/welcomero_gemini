@@ -1,13 +1,16 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { getInstitution, getProcedure, getSources } from '../data';
 import { effectiveStatus } from '../lib/checklist';
+import { AiError, translateLines } from '../lib/ai';
+import { collectEnglishOnly, formatBatch, makeBatches, parseBatchReply } from '../lib/translate';
+import { sessionData, STORAGE_KEYS } from '../lib/storage';
 import { docCounts, isDocReady } from '../lib/docs';
 import { Icon } from '../components/Icon';
 import { Arrow, btnPrimary, btnSecondary, cardClass, inputClass, LevelBadge, LevelLegend, Notice, ProgressBar, StatusBadge, linkClass } from '../components/ui';
-import type { Item, Procedure, TaskStatus } from '../types';
+import type { Item, Localized, Procedure, TaskStatus } from '../types';
 
 const STATUSES: TaskStatus[] = ['not-started', 'in-progress', 'completed'];
 
@@ -33,8 +36,21 @@ export function GuideDetail() {
   const { id } = useParams<{ id: string }>();
   const { tasks, progress, setTaskStatus, lang, docs, toggleDoc } = useGuideContext();
   const { t, loc, isFallback } = useI18n();
-
   const procedure = id ? getProcedure(id) : undefined;
+
+  // Reading the English-only details in the user's language (translated by the AI on request, kept for this visit).
+  const [translations, setTranslations] = useState<Record<string, string>>(() => readCachedTranslations(lang));
+  const [showTranslated, setShowTranslated] = useState(() => Object.keys(readCachedTranslations(lang)).length > 0);
+  const [translating, setTranslating] = useState(false);
+  const [translateFailed, setTranslateFailed] = useState(false);
+  const inFlight = useRef(false);
+  useEffect(() => {
+    const cached = readCachedTranslations(lang);
+    setTranslations(cached);
+    setShowTranslated(Object.keys(cached).length > 0);
+    setTranslateFailed(false);
+  }, [lang]);
+
   if (!procedure) {
     return (
       <div className="space-y-4">
@@ -57,6 +73,49 @@ export function GuideDetail() {
     lang !== 'en' &&
     (allItems(procedure).some((item) => isFallback(item.text)) ||
       procedure.documents.some((d) => isFallback(d.name) || isFallback(d.whereToGet)));
+
+  const pending = collectEnglishOnly(procedure, lang);
+  const missing = pending.filter((text) => !translations[text]);
+  const translatedActive = showTranslated && Object.keys(translations).length > 0;
+  /** Text for the page: the user's language if it exists, else the AI translation if shown, else English. */
+  const tx = (value: Localized | undefined): string => {
+    if (!value) return '';
+    if (translatedActive && isFallback(value) && translations[value.en]) return translations[value.en];
+    return loc(value);
+  };
+
+  async function translateDetails() {
+    if (inFlight.current || missing.length === 0) {
+      setShowTranslated(true);
+      return;
+    }
+    inFlight.current = true;
+    setTranslating(true);
+    setTranslateFailed(false);
+    try {
+      const merged: Record<string, string> = { ...translations };
+      for (const batch of makeBatches(missing)) {
+        const reply = await translateLines({ lines: formatBatch(batch), language: lang });
+        const parsed = parseBatchReply(reply);
+        for (const entry of batch) {
+          // The reply numbers are global positions in `missing`.
+          const text = parsed.get(entry.index);
+          if (text) merged[missing[entry.index]] = text;
+        }
+      }
+      const got = missing.filter((text) => merged[text]).length;
+      if (got === 0) throw new AiError('failed');
+      setTranslations(merged);
+      writeCachedTranslations(lang, merged);
+      setShowTranslated(true);
+      if (got < missing.length) setTranslateFailed(true);
+    } catch {
+      setTranslateFailed(true);
+    } finally {
+      inFlight.current = false;
+      setTranslating(false);
+    }
+  }
 
   const sourceLabel = (ids: string[] | undefined) => {
     const found = getSources(ids);
@@ -95,7 +154,32 @@ export function GuideDetail() {
 
       {!task ? <Notice tone="warning">{t('guide.notRelevant')}</Notice> : null}
       {lang !== 'en' ? <Notice tone="info">{t('guide.translationNotice')}</Notice> : null}
-      {englishOnly ? <Notice tone="info">{t('guide.englishNotice')}</Notice> : null}
+      {englishOnly && !translatedActive ? <Notice tone="info">{t('guide.englishNotice')}</Notice> : null}
+      {lang !== 'en' && pending.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-3" aria-live="polite">
+          {translatedActive ? (
+            <>
+              <p className="text-sm text-muted">{t('guide.translated')}</p>
+              <button type="button" className={btnSecondary} onClick={() => setShowTranslated(false)}>
+                {t('guide.showEnglish')}
+              </button>
+            </>
+          ) : (
+            <button type="button" className={btnPrimary} onClick={() => void translateDetails()} disabled={translating}>
+              <Icon name="globe" className="size-4" />
+              {translating ? t('guide.translating') : t('guide.translate')}
+            </button>
+          )}
+          {translateFailed ? (
+            <p role="alert" className="text-sm font-semibold text-red-800">
+              {t('guide.translateError')}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+      {allItems(procedure).some((item) => item.level === 'confirm') || procedure.documents.some((d) => d.level === 'confirm') ? (
+        <Notice tone="info">{t('guide.confirmNote')}</Notice>
+      ) : null}
 
       <LevelLegend />
 
@@ -178,12 +262,12 @@ export function GuideDetail() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <label htmlFor={`doc-${index}`} className="cursor-pointer font-semibold">
-                        {loc(doc.name)}
+                        {tx(doc.name)}
                       </label>
                       <LevelBadge level={doc.level} />
                     </div>
                     <p className="mt-1 text-sm text-muted">
-                      <span className="font-semibold">{t('guide.getAt')}:</span> {loc(doc.whereToGet)}
+                      <span className="font-semibold">{t('guide.getAt')}:</span> {tx(doc.whereToGet)}
                       {sourceLabel(doc.sourceIds)}
                     </p>
                   </div>
@@ -215,7 +299,7 @@ export function GuideDetail() {
                 {index + 1}
               </span>
               <div>
-                <p>{loc(step.text)}</p>
+                <p>{tx(step.text)}</p>
                 <div className="mt-1 flex flex-wrap items-center">
                   <LevelBadge level={step.level} />
                   {sourceLabel(step.sourceIds)}
@@ -229,7 +313,7 @@ export function GuideDetail() {
       <Section title={t('guide.s8')}>
         {procedure.processingTime ? (
           <div>
-            <p>{loc(procedure.processingTime.text)}</p>
+            <p>{tx(procedure.processingTime.text)}</p>
             <div className="mt-1 flex flex-wrap items-center">
               <LevelBadge level={procedure.processingTime.level} />
               {sourceLabel(procedure.processingTime.sourceIds)}
@@ -241,7 +325,7 @@ export function GuideDetail() {
         {procedure.deadline ? (
           <div className="rounded-xl bg-amber-50 p-3">
             <p className="font-semibold text-amber-950">{t('guide.s8.deadline')}</p>
-            <p>{loc(procedure.deadline.text)}</p>
+            <p>{tx(procedure.deadline.text)}</p>
             <div className="mt-1 flex flex-wrap items-center">
               <LevelBadge level={procedure.deadline.level} />
               {sourceLabel(procedure.deadline.sourceIds)}
@@ -254,7 +338,7 @@ export function GuideDetail() {
         <ul className="space-y-3">
           {procedure.warnings.map((warning) => (
             <li key={warning.text.en} className="rounded-xl bg-slate-50 p-3">
-              <p>{loc(warning.text)}</p>
+              <p>{tx(warning.text)}</p>
               <div className="mt-1 flex flex-wrap items-center">
                 <LevelBadge level={warning.level} />
                 {sourceLabel(warning.sourceIds)}
@@ -307,4 +391,16 @@ function useGuideContext() {
     docs: app.docs,
     toggleDoc: app.toggleDoc,
   };
+}
+
+/** Translations made during this visit (browser tab), per language: English text to translated text. */
+function readCachedTranslations(lang: string): Record<string, string> {
+  const all = sessionData.read<Record<string, Record<string, string>>>(STORAGE_KEYS.translations, {});
+  const mine = all && typeof all === 'object' ? all[lang] : undefined;
+  return mine && typeof mine === 'object' ? mine : {};
+}
+
+function writeCachedTranslations(lang: string, value: Record<string, string>): void {
+  const all = sessionData.read<Record<string, Record<string, string>>>(STORAGE_KEYS.translations, {});
+  sessionData.write(STORAGE_KEYS.translations, { ...(all && typeof all === 'object' ? all : {}), [lang]: value });
 }

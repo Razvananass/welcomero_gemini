@@ -64,6 +64,7 @@ const ALLOWED_HOST_SUFFIXES = [
   // Worker and refugee guides: the government hiring platform, the UN Refugee Agency's Romania help site,
   // and ECRE's Asylum Information Database. Exact hosts only, not whole domains.
   'workinromania.gov.ro',
+  'inspectiamuncii.ro',
   'help.unhcr.org',
   'asylumineurope.org',
 ];

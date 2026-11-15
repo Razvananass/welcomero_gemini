@@ -18,9 +18,30 @@
       "ne": "आप्रवासन अधिकारी निकाय। यसले बसोबास अनुमति र दर्ता प्रमाणपत्रहरू हेर्छ।"
     },
     "services": [
-      { "en": "Residence permits for studies (non-EU)", "ro": "Permise de ședere pentru studii (non-UE)", "fr": "Titres de séjour pour études (hors UE)", "ar": "تصاريح الإقامة للدراسة (من خارج الاتحاد الأوروبي)", "uk": "Дозволи на проживання для навчання (для громадян країн поза ЄС)", "ne": "अध्ययनका लागि बसोबास अनुमति (EU बाहिरका)" },
-      { "en": "Registration certificates (EU/EEA/Swiss)", "ro": "Certificate de înregistrare (UE/SEE/Elveția)", "fr": "Certificats d’enregistrement (UE/EEE/Suisse)", "ar": "شهادات التسجيل (الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا)", "uk": "Свідоцтва про реєстрацію (ЄС/ЄЕЗ/Швейцарія)", "ne": "दर्ता प्रमाणपत्र (EU/EEA/स्विस)" },
-      { "en": "Questions about your permit file", "ro": "Întrebări despre dosarul tău de ședere", "fr": "Questions sur votre dossier de séjour", "ar": "أسئلة حول ملف إقامتك", "uk": "Запитання щодо вашої справи про дозвіл на проживання", "ne": "तपाईंको अनुमतिको फाइलबारे प्रश्नहरू" }
+      {
+        "en": "Residence permits for studies (non-EU)",
+        "ro": "Permise de ședere pentru studii (non-UE)",
+        "fr": "Titres de séjour pour études (hors UE)",
+        "ar": "تصاريح الإقامة للدراسة (من خارج الاتحاد الأوروبي)",
+        "uk": "Дозволи на проживання для навчання (для громадян країн поза ЄС)",
+        "ne": "अध्ययनका लागि बसोबास अनुमति (EU बाहिरका)"
+      },
+      {
+        "en": "Registration certificates (EU/EEA/Swiss)",
+        "ro": "Certificate de înregistrare (UE/SEE/Elveția)",
+        "fr": "Certificats d’enregistrement (UE/EEE/Suisse)",
+        "ar": "شهادات التسجيل (الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا)",
+        "uk": "Свідоцтва про реєстрацію (ЄС/ЄЕЗ/Швейцарія)",
+        "ne": "दर्ता प्रमाणपत्र (EU/EEA/स्विस)"
+      },
+      {
+        "en": "Questions about your permit file",
+        "ro": "Întrebări despre dosarul tău de ședere",
+        "fr": "Questions sur votre dossier de séjour",
+        "ar": "أسئلة حول ملف إقامتك",
+        "uk": "Запитання щодо вашої справи про дозвіл на проживання",
+        "ne": "तपाईंको अनुमतिको फाइलबारे प्रश्नहरू"
+      }
     ],
     "address": "Str. Andrei Mocioni nr. 8-10, Timișoara",
     "phone": "0256.402430",
@@ -28,14 +49,18 @@
     "website": "https://igi.mai.gov.ro/",
     "hours": null,
     "verifiedNote": {
-      "en": "Address and phone are from an IGI web page dated 14 May 2024. Opening hours and email were not verified. Check the IGI contact page before you travel.",
-      "ro": "Adresa și telefonul provin dintr-o pagină IGI din 14 mai 2024. Programul și e-mailul nu au fost verificate. Verifică pagina de contact IGI înainte să mergi.",
-      "fr": "L’adresse et le téléphone proviennent d’une page de l’IGI datée du 14 mai 2024. Les horaires et l’e-mail n’ont pas été vérifiés. Consultez la page de contact de l’IGI avant de vous déplacer.",
-      "ar": "العنوان والهاتف من صفحة لـ IGI بتاريخ 14 مايو 2024. لم يتم التحقق من ساعات العمل والبريد الإلكتروني. راجع صفحة اتصال IGI قبل الذهاب.",
-      "uk": "Адресу та телефон взято зі сторінки IGI від 14 травня 2024 року. Години роботи й електронну пошту не перевірено. Перед поїздкою перегляньте сторінку контактів IGI.",
-      "ne": "ठेगाना र फोन IGI को 14 मे 2024 को वेब पृष्ठबाट लिइएको हो। खुल्ने समय र इमेल पुष्टि गरिएको छैन। जानुअघि IGI को सम्पर्क पृष्ठ जाँच गर्नुहोस्।"
+      "en": "Address and phone are from IGI’s website (May 2024). Opening hours and email are not listed there, so check the IGI contact page before you travel.",
+      "ro": "Adresa și telefonul sunt de pe site-ul IGI (mai 2024). Programul și emailul nu sunt listate acolo, așa că verifică pagina de contact IGI înainte să mergi.",
+      "fr": "L’adresse et le téléphone viennent du site de l’IGI (mai 2024). Les horaires et l’e-mail n’y figurent pas : consultez donc la page de contact de l’IGI avant de vous déplacer.",
+      "ar": "العنوان والهاتف من موقع IGI (مايو 2024). ساعات العمل والبريد الإلكتروني غير مدرجة هناك، لذلك راجع صفحة التواصل في IGI قبل أن تسافر.",
+      "uk": "Адреса й телефон узяті з сайту IGI (травень 2024). Годин роботи та електронної пошти там немає, тому перед поїздкою перегляньте сторінку контактів IGI.",
+      "ne": "ठेगाना र फोन IGI को वेबसाइटबाट लिइएको हो (मे 2024)। खुल्ने समय र इमेल त्यहाँ दिइएको छैन, त्यसैले जानुअघि IGI को सम्पर्क पृष्ठ हेर्नुहोस्।"
     },
-    "sourceIds": ["igi-timis-page", "igi-contact", "igi-home"]
+    "sourceIds": [
+      "igi-timis-page",
+      "igi-contact",
+      "igi-home"
+    ]
   },
   {
     "id": "upt-iso",
@@ -56,9 +81,30 @@
       "ne": "नयाँ आउने अन्तर्राष्ट्रिय विद्यार्थीहरूलाई सहयोग गर्ने विश्वविद्यालयको कार्यालय।"
     },
     "services": [
-      { "en": "Contact with the immigration services about students’ files", "ro": "Legătura cu serviciile de imigrări pentru dosarele studenților", "fr": "Liaison avec les services d’immigration pour les dossiers des étudiants", "ar": "التواصل مع دوائر الهجرة بشأن ملفات الطلاب", "uk": "Зв’язок з імміграційними службами щодо справ студентів", "ne": "विद्यार्थीहरूको फाइलबारे आप्रवासन सेवाहरूसँग सम्पर्क" },
-      { "en": "Help with accommodation", "ro": "Ajutor pentru cazare", "fr": "Aide pour le logement", "ar": "المساعدة في السكن", "uk": "Допомога з житлом", "ne": "बसोबासमा सहयोग" },
-      { "en": "Help with health insurance", "ro": "Ajutor pentru asigurarea de sănătate", "fr": "Aide pour l’assurance maladie", "ar": "المساعدة في التأمين الصحي", "uk": "Допомога з медичним страхуванням", "ne": "स्वास्थ्य बीमामा सहयोग" }
+      {
+        "en": "Contact with the immigration services about students’ files",
+        "ro": "Legătura cu serviciile de imigrări pentru dosarele studenților",
+        "fr": "Liaison avec les services d’immigration pour les dossiers des étudiants",
+        "ar": "التواصل مع دوائر الهجرة بشأن ملفات الطلاب",
+        "uk": "Зв’язок з імміграційними службами щодо справ студентів",
+        "ne": "विद्यार्थीहरूको फाइलबारे आप्रवासन सेवाहरूसँग सम्पर्क"
+      },
+      {
+        "en": "Help with accommodation",
+        "ro": "Ajutor pentru cazare",
+        "fr": "Aide pour le logement",
+        "ar": "المساعدة في السكن",
+        "uk": "Допомога з житлом",
+        "ne": "बसोबासमा सहयोग"
+      },
+      {
+        "en": "Help with health insurance",
+        "ro": "Ajutor pentru asigurarea de sănătate",
+        "fr": "Aide pour l’assurance maladie",
+        "ar": "المساعدة في التأمين الصحي",
+        "uk": "Допомога з медичним страхуванням",
+        "ne": "स्वास्थ्य बीमामा सहयोग"
+      }
     ],
     "address": "UPT Rectorate, Piața Victoriei nr. 2, 300006 Timișoara (office 107)",
     "phone": "+40-256-403187",
@@ -66,14 +112,16 @@
     "website": "https://international.upt.ro/en/",
     "hours": null,
     "verifiedNote": {
-      "en": "Details are from the office’s official web page. Opening hours were not listed. More staff emails are on that page.",
-      "ro": "Detaliile provin de pe pagina oficială a biroului. Programul nu era menționat. Pe pagină sunt și alte adrese de e-mail ale personalului.",
-      "fr": "Les informations viennent de la page officielle du bureau. Les horaires n’y figuraient pas. D’autres e-mails du personnel sont sur cette page.",
-      "ar": "التفاصيل من الصفحة الرسمية للمكتب. لم تُذكر ساعات العمل. توجد عناوين بريد إلكتروني أخرى للموظفين في تلك الصفحة.",
-      "uk": "Дані взято з офіційної вебсторінки офісу. Години роботи не вказано. Додаткові адреси електронної пошти працівників є на цій сторінці.",
-      "ne": "विवरणहरू कार्यालयको आधिकारिक वेब पृष्ठबाट लिइएका हुन्। खुल्ने समय उल्लेख गरिएको थिएन। त्यो पृष्ठमा अन्य कर्मचारीका इमेलहरू पनि छन्।"
+      "en": "Details are from the office’s official web page. Opening hours are not listed there, so check the page before you go. It also lists more staff emails.",
+      "ro": "Detaliile sunt de pe pagina web oficială a biroului. Programul nu este listat acolo, așa că verifică pagina înainte să mergi. Aceasta listează și mai multe adrese de email ale personalului.",
+      "fr": "Les informations viennent de la page web officielle du bureau. Les horaires n’y figurent pas : consultez la page avant d’y aller. Elle indique aussi d’autres adresses e-mail du personnel.",
+      "ar": "التفاصيل من الصفحة الرسمية للمكتب. ساعات العمل غير مدرجة هناك، لذلك راجع الصفحة قبل أن تذهب. وتعرض الصفحة أيضًا مزيدًا من عناوين البريد الإلكتروني للموظفين.",
+      "uk": "Дані взято з офіційної вебсторінки офісу. Годин роботи там немає, тому перевірте сторінку перед візитом. Там також є електронні адреси інших працівників.",
+      "ne": "विवरण अफिसको आधिकारिक वेब पृष्ठबाट लिइएको हो। खुल्ने समय त्यहाँ दिइएको छैन, त्यसैले जानुअघि पृष्ठ हेर्नुहोस्। त्यहाँ अरू कर्मचारीका इमेल पनि छन्।"
     },
-    "sourceIds": ["upt-international"]
+    "sourceIds": [
+      "upt-international"
+    ]
   },
   {
     "id": "university-office",
@@ -94,8 +142,22 @@
       "ne": "धेरैजसो विश्वविद्यालयमा अन्तर्राष्ट्रिय विद्यार्थीहरूका लागि कार्यालय हुन्छ। यो एपमा UPT को कार्यालय मात्र पुष्टि गरिएको छ; अन्य विश्वविद्यालयहरू अहिलेसम्म सूचीमा छैनन्।"
     },
     "services": [
-      { "en": "Student-status certificate", "ro": "Adeverință de student", "fr": "Attestation d’étudiant", "ar": "شهادة صفة الطالب", "uk": "Довідка про статус студента", "ne": "विद्यार्थी हुनुको प्रमाणपत्र" },
-      { "en": "Advice on permits, accommodation and insurance", "ro": "Sfaturi despre permise, cazare și asigurare", "fr": "Conseils sur les titres de séjour, le logement et l’assurance", "ar": "نصائح حول التصاريح والسكن والتأمين", "uk": "Поради щодо дозволів, житла та страхування", "ne": "अनुमति, बसोबास र बीमाबारे सल्लाह" }
+      {
+        "en": "Student-status certificate",
+        "ro": "Adeverință de student",
+        "fr": "Attestation d’étudiant",
+        "ar": "شهادة صفة الطالب",
+        "uk": "Довідка про статус студента",
+        "ne": "विद्यार्थी हुनुको प्रमाणपत्र"
+      },
+      {
+        "en": "Advice on permits, accommodation and insurance",
+        "ro": "Sfaturi despre permise, cazare și asigurare",
+        "fr": "Conseils sur les titres de séjour, le logement et l’assurance",
+        "ar": "نصائح حول التصاريح والسكن والتأمين",
+        "uk": "Поради щодо дозволів, житла та страхування",
+        "ne": "अनुमति, बसोबास र बीमाबारे सल्लाह"
+      }
     ],
     "address": null,
     "phone": null,
@@ -103,14 +165,16 @@
     "website": "https://www.upt.ro/educatie/international-students",
     "hours": null,
     "verifiedNote": {
-      "en": "No address or contact is listed because it depends on your university. The link goes to UPT as an example; use your own university’s official website.",
-      "ro": "Nu sunt listate adresă sau contact, deoarece depind de universitatea ta. Linkul duce la UPT ca exemplu; folosește site-ul oficial al universității tale.",
-      "fr": "Aucune adresse ni contact n’est listé car cela dépend de votre université. Le lien mène à l’UPT à titre d’exemple ; utilisez le site officiel de votre université.",
-      "ar": "لا يوجد عنوان أو اتصال لأن ذلك يعتمد على جامعتك. الرابط يؤدي إلى UPT كمثال؛ استخدم الموقع الرسمي لجامعتك.",
-      "uk": "Адреси чи контактів немає, бо вони залежать від вашого університету. Посилання веде на UPT як приклад; користуйтеся офіційним сайтом власного університету.",
-      "ne": "ठेगाना वा सम्पर्क दिइएको छैन किनभने त्यो तपाईंको विश्वविद्यालयमा निर्भर हुन्छ। लिङ्कले उदाहरणका रूपमा UPT मा लैजान्छ; आफ्नै विश्वविद्यालयको आधिकारिक वेबसाइट प्रयोग गर्नुहोस्।"
+      "en": "Your own university has its own office. Look for its address and contact details on your university’s website. The link goes to UPT as an example.",
+      "ro": "Universitatea ta are propriul birou. Caută adresa și datele de contact pe site-ul universității tale. Linkul duce la UPT, ca exemplu.",
+      "fr": "Votre propre université a son propre bureau. Cherchez son adresse et ses coordonnées sur le site de votre université. Le lien mène à l’UPT, à titre d’exemple.",
+      "ar": "لجامعتك مكتبها الخاص. ابحث عن عنوانه وبيانات التواصل في موقع جامعتك. الرابط يذهب إلى UPT كمثال.",
+      "uk": "Ваш власний університет має свій офіс. Адресу та контакти шукайте на сайті вашого університету. Посилання веде на UPT як приклад.",
+      "ne": "तपाईंको आफ्नै विश्वविद्यालयको आफ्नै अफिस हुन्छ। यसको ठेगाना र सम्पर्क विवरण आफ्नो विश्वविद्यालयको वेबसाइटमा हेर्नुहोस्। लिङ्कले उदाहरणका रूपमा UPT मा लैजान्छ।"
     },
-    "sourceIds": ["upt-edu"],
+    "sourceIds": [
+      "upt-edu"
+    ],
     "placeholder": true
   },
   {
@@ -132,8 +196,22 @@
       "ne": "स्थानीय प्रशासन। यसको जनसंख्या अभिलेख सेवाले रोमानियन परिचयपत्र र बसोबासको उल्लेख हेर्छ। यो विदेशी नयाँ आउनेहरूका लागि सान्दर्भिक छ कि छैन भन्ने पुष्टि गर्नुपर्छ।"
     },
     "services": [
-      { "en": "ID cards and residence mentions (Romanian citizens)", "ro": "Cărți de identitate și mențiuni de reședință (cetățeni români)", "fr": "Cartes d’identité et mentions de résidence (citoyens roumains)", "ar": "بطاقات الهوية وبيانات الإقامة (للمواطنين الرومانيين)", "uk": "Посвідчення особи та відмітки про місце проживання (для громадян Румунії)", "ne": "परिचयपत्र र बसोबासको उल्लेख (रोमानियन नागरिकहरू)" },
-      { "en": "Electronic ID card appointments are booked online through HUB-MAI", "ro": "Programările pentru cartea electronică de identitate se fac online prin HUB-MAI", "fr": "Les rendez-vous pour la carte d’identité électronique se prennent en ligne via HUB-MAI", "ar": "تُحجز مواعيد بطاقة الهوية الإلكترونية عبر الإنترنت من خلال HUB-MAI", "uk": "Запис на отримання електронного посвідчення особи робиться онлайн через HUB-MAI", "ne": "इलेक्ट्रोनिक परिचयपत्रका अपोइन्टमेन्टहरू HUB-MAI मार्फत अनलाइन बुक गरिन्छन्" }
+      {
+        "en": "ID cards and residence mentions (Romanian citizens)",
+        "ro": "Cărți de identitate și mențiuni de reședință (cetățeni români)",
+        "fr": "Cartes d’identité et mentions de résidence (citoyens roumains)",
+        "ar": "بطاقات الهوية وبيانات الإقامة (للمواطنين الرومانيين)",
+        "uk": "Посвідчення особи та відмітки про місце проживання (для громадян Румунії)",
+        "ne": "परिचयपत्र र बसोबासको उल्लेख (रोमानियन नागरिकहरू)"
+      },
+      {
+        "en": "Electronic ID card appointments are booked online through HUB-MAI",
+        "ro": "Programările pentru cartea electronică de identitate se fac online prin HUB-MAI",
+        "fr": "Les rendez-vous pour la carte d’identité électronique se prennent en ligne via HUB-MAI",
+        "ar": "تُحجز مواعيد بطاقة الهوية الإلكترونية عبر الإنترنت من خلال HUB-MAI",
+        "uk": "Запис на отримання електронного посвідчення особи робиться онлайн через HUB-MAI",
+        "ne": "इलेक्ट्रोनिक परिचयपत्रका अपोइन्टमेन्टहरू HUB-MAI मार्फत अनलाइन बुक गरिन्छन्"
+      }
     ],
     "address": "Bd. C.D. Loga nr. 1, 300030 Timișoara",
     "phone": null,
@@ -141,14 +219,18 @@
     "website": "https://www.primariatm.ro/",
     "hours": null,
     "verifiedNote": {
-      "en": "Address and general email are from an undated City Hall report. The phone number in that report was incomplete and opening hours were not listed. The records section may be at a different counter; check the website.",
-      "ro": "Adresa și e-mailul general provin dintr-un raport nedatat al Primăriei. Numărul de telefon din raport era incomplet, iar programul nu era menționat. Serviciul de evidență a persoanelor poate funcționa la alt ghișeu; verifică site-ul.",
-      "fr": "L’adresse et l’e-mail général viennent d’un rapport non daté de la mairie. Le numéro de téléphone y était incomplet et les horaires n’étaient pas indiqués. Le service peut se trouver à un autre guichet ; consultez le site.",
-      "ar": "العنوان والبريد العام من تقرير غير مؤرخ للبلدية. كان رقم الهاتف فيه ناقصًا ولم تُذكر ساعات العمل. قد يكون القسم في شباك آخر؛ راجع الموقع.",
-      "uk": "Адресу та загальну електронну пошту взято з недатованого звіту мерії. Телефонний номер у цьому звіті був неповним, а години роботи не вказано. Служба обліку населення може працювати за іншим віконцем; перевірте сайт.",
-      "ne": "ठेगाना र सामान्य इमेल नगरपालिकाको मिति नभएको प्रतिवेदनबाट लिइएका हुन्। त्यो प्रतिवेदनको फोन नम्बर अधूरो थियो र खुल्ने समय उल्लेख गरिएको थिएन। अभिलेख शाखा अर्कै काउन्टरमा हुन सक्छ; वेबसाइट जाँच गर्नुहोस्।"
+      "en": "Address and general email are from a City Hall report. For the phone number and opening hours, check the City Hall website before you go. The records section may be at a different counter.",
+      "ro": "Adresa și emailul general sunt dintr-un raport al Primăriei. Pentru numărul de telefon și program, verifică site-ul Primăriei înainte să mergi. Secția de evidență poate fi la un alt ghișeu.",
+      "fr": "L’adresse et l’e-mail général viennent d’un rapport de la Mairie. Pour le numéro de téléphone et les horaires, consultez le site de la Mairie avant d’y aller. Le service de l’état civil peut se trouver à un autre guichet.",
+      "ar": "العنوان والبريد الإلكتروني العام من تقرير للبلدية. وللحصول على رقم الهاتف وساعات العمل، راجع موقع البلدية قبل أن تذهب. وقد يكون قسم السجلات عند شباك آخر.",
+      "uk": "Адреса та загальна електронна пошта взяті зі звіту міської ради. Номер телефону та години роботи перевірте на сайті міської ради перед візитом. Відділ реєстрації може бути біля іншого віконця.",
+      "ne": "ठेगाना र सामान्य इमेल नगरपालिकाको प्रतिवेदनबाट लिइएको हो। फोन नम्बर र खुल्ने समयका लागि जानुअघि नगरपालिकाको वेबसाइट हेर्नुहोस्। अभिलेख विभाग अर्कै काउन्टरमा हुन सक्छ।"
     },
-    "sourceIds": ["primariatm-evidenta", "primariatm", "hub-cei"]
+    "sourceIds": [
+      "primariatm-evidenta",
+      "primariatm",
+      "hub-cei"
+    ]
   },
   {
     "id": "anaf-timis",
@@ -169,7 +251,14 @@
       "ne": "कर अधिकारी निकाय। तपाईंलाई कर पहिचान नम्बर चाहिन्छ कि चाहिँदैन भनेर यसले बताउन सक्छ।"
     },
     "services": [
-      { "en": "Tax identification questions", "ro": "Întrebări despre identificarea fiscală", "fr": "Questions sur l’identification fiscale", "ar": "أسئلة حول التعريف الضريبي", "uk": "Запитання щодо податкової ідентифікації", "ne": "कर पहिचानबारे प्रश्नहरू" }
+      {
+        "en": "Tax identification questions",
+        "ro": "Întrebări despre identificarea fiscală",
+        "fr": "Questions sur l’identification fiscale",
+        "ar": "أسئلة حول التعريف الضريبي",
+        "uk": "Запитання щодо податкової ідентифікації",
+        "ne": "कर पहिचानबारे प्रश्नहरू"
+      }
     ],
     "address": "Str. Gheorghe Lazăr nr. 9B, Timișoara",
     "phone": "0256.290.500",
@@ -184,14 +273,17 @@
       "ne": "जनसम्पर्क सेवा: सोम, मंगल, बिहि, शुक्र 08:30–16:30; बुध 08:30–18:30। कार्यालयको कार्य समय: सोम–बिहि 08:00–16:30, शुक्र 08:00–14:00।"
     },
     "verifiedNote": {
-      "en": "From an undated ANAF contact page. Confirm the hours on anaf.ro before you go. The email is for general public relations and does not accept petitions or requests.",
-      "ro": "De pe o pagină de contact ANAF fără dată. Confirmă programul pe anaf.ro înainte să mergi. E-mailul este pentru relații publice generale și nu primește petiții sau cereri.",
-      "fr": "D’après une page de contact de l’ANAF non datée. Confirmez les horaires sur anaf.ro avant d’y aller. L’e-mail sert aux relations publiques générales et n’accepte pas les pétitions ni les demandes.",
-      "ar": "من صفحة اتصال غير مؤرخة لـ ANAF. تأكد من ساعات العمل على anaf.ro قبل الذهاب. البريد مخصص للعلاقات العامة ولا يقبل الالتماسات أو الطلبات.",
-      "uk": "З недатованої сторінки контактів ANAF. Перед візитом підтвердьте години роботи на anaf.ro. Ця електронна адреса призначена для загальних зв’язків з громадськістю і не приймає петицій чи заяв.",
-      "ne": "मिति नभएको ANAF को सम्पर्क पृष्ठबाट। जानुअघि anaf.ro मा समय पक्का गर्नुहोस्। इमेल सामान्य जनसम्पर्कका लागि हो र निवेदन वा अनुरोध स्वीकार गर्दैन।"
+      "en": "From ANAF’s contact page. Check the opening hours on anaf.ro before you go. The email is for general public relations only, not for requests.",
+      "ro": "De pe pagina de contact ANAF. Verifică programul pe anaf.ro înainte să mergi. Emailul este doar pentru relații generale cu publicul, nu pentru cereri.",
+      "fr": "Tiré de la page de contact de l’ANAF. Consultez les horaires sur anaf.ro avant d’y aller. L’e-mail sert uniquement aux relations générales avec le public, pas aux demandes.",
+      "ar": "من صفحة التواصل في ANAF. راجع ساعات العمل على anaf.ro قبل أن تذهب. والبريد الإلكتروني للعلاقات العامة فقط، وليس للطلبات.",
+      "uk": "З сторінки контактів ANAF. Перед візитом перевірте години роботи на anaf.ro. Електронна пошта призначена лише для загальних зв’язків з громадськістю, не для запитів.",
+      "ne": "ANAF को सम्पर्क पृष्ठबाट। जानुअघि anaf.ro मा खुल्ने समय हेर्नुहोस्। इमेल सामान्य जनसम्पर्कका लागि मात्र हो, अनुरोधका लागि होइन।"
     },
-    "sourceIds": ["anaf-timis-contact", "anaf-home"]
+    "sourceIds": [
+      "anaf-timis-contact",
+      "anaf-home"
+    ]
   },
   {
     "id": "cnas",
@@ -212,7 +304,14 @@
       "ne": "राष्ट्रिय स्वास्थ्य बीमा कोष। तपाईं सार्वजनिक प्रणालीमा सामेल हुन सक्नुहुन्छ कि सक्नुहुन्न र कसरी भनेर सोध्नुहोस्।"
     },
     "services": [
-      { "en": "Public health insurance information", "ro": "Informații despre asigurarea publică de sănătate", "fr": "Informations sur l’assurance maladie publique", "ar": "معلومات عن التأمين الصحي العام", "uk": "Інформація про державне медичне страхування", "ne": "सार्वजनिक स्वास्थ्य बीमाबारे जानकारी" }
+      {
+        "en": "Public health insurance information",
+        "ro": "Informații despre asigurarea publică de sănătate",
+        "fr": "Informations sur l’assurance maladie publique",
+        "ar": "معلومات عن التأمين الصحي العام",
+        "uk": "Інформація про державне медичне страхування",
+        "ne": "सार्वजनिक स्वास्थ्य बीमाबारे जानकारी"
+      }
     ],
     "address": "Strada Corbului nr. 4, 300239 Timișoara",
     "phone": null,
@@ -220,14 +319,16 @@
     "website": "https://cnas.ro/",
     "hours": null,
     "verifiedNote": {
-      "en": "The address is for the Timiș County Health Insurance House (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). Phone, email, and opening hours were not verified. Start at cnas.ro.",
-      "ro": "Adresa aparține Casei Județene de Asigurări de Sănătate Timiș (Strada Corbului nr. 4, cod poștal 300239, Timișoara). Telefonul, e-mailul și programul nu au fost verificate. Începe de la cnas.ro.",
-      "fr": "L’adresse correspond à la Caisse départementale d’assurance maladie de Timiș (CJAS Timiș : Strada Corbului nr. 4, 300239 Timișoara). Le téléphone, l’e-mail et les horaires n’ont pas été vérifiés. Commencez par cnas.ro.",
-      "ar": "العنوان يعود لصندوق التأمين الصحي لمقاطعة تيميش (Strada Corbului nr. 4, 300239 Timișoara). لم يتم التحقق من الهاتف والبريد الإلكتروني وساعات العمل. ابدأ من cnas.ro.",
-      "uk": "Адреса належить Повітовій касі медичного страхування Тіміш (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). Телефон, електронну пошту та години роботи не перевірено. Почніть із cnas.ro.",
-      "ne": "ठेगाना तिमिश जिल्ला स्वास्थ्य बीमा कार्यालयको हो (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara)। फोन, इमेल र खुल्ने समय पुष्टि गरिएको छैन। cnas.ro बाट सुरु गर्नुहोस्।"
+      "en": "The address is for the Timiș County Health Insurance House (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). For phone, email and opening hours, start at cnas.ro.",
+      "ro": "Adresa este a Casei Județene de Asigurări de Sănătate Timiș (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). Pentru telefon, email și program, începe de la cnas.ro.",
+      "fr": "L’adresse est celle de la Caisse d’assurance maladie du comté de Timiș (CJAS Timiș : Strada Corbului nr. 4, 300239 Timișoara). Pour le téléphone, l’e-mail et les horaires, commencez par cnas.ro.",
+      "ar": "العنوان لبيت التأمين الصحي في مقاطعة تيميش (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). وللهاتف والبريد الإلكتروني وساعات العمل، ابدأ من cnas.ro.",
+      "uk": "Адреса належить Повітовій касі медичного страхування Тіміш (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara). Телефон, електронну пошту та години роботи шукайте, починаючи з cnas.ro.",
+      "ne": "ठेगाना टिमिस काउन्टी स्वास्थ्य बीमा कार्यालयको हो (CJAS Timiș: Strada Corbului nr. 4, 300239 Timișoara)। फोन, इमेल र खुल्ने समयका लागि cnas.ro बाट सुरु गर्नुहोस्।"
     },
-    "sourceIds": ["cnas-home"]
+    "sourceIds": [
+      "cnas-home"
+    ]
   },
   {
     "id": "logs-timisoara",
@@ -248,9 +349,30 @@
       "ne": "तिमिशोराको एउटा गैरसरकारी संस्था र नयाँ आउनेहरूका लागि दिवा परामर्श केन्द्र, जसले आप्रवासी, शरणार्थी र अन्तर्राष्ट्रिय नयाँ आउनेहरूलाई निःशुल्क समाहितीकरण, कानुनी मार्गदर्शन र सामुदायिक सहयोग दिन्छ।"
     },
     "services": [
-      { "en": "Free social and integration counseling for newcomers and migrants", "ro": "Consiliere socială și sprijin gratuit pentru integrarea nou-veniților și migranților", "fr": "Conseil social et aide gratuite à l’intégration pour les nouveaux arrivants", "ar": "استشارات اجتماعية ودعم مجاني للاندماج للوافدين الجدد", "uk": "Безкоштовні соціальні та інтеграційні консультації для новоприбулих і мігрантів", "ne": "नयाँ आउने र आप्रवासीहरूका लागि निःशुल्क सामाजिक र समाहितीकरण परामर्श" },
-      { "en": "Guidance on residence, health insurance, housing, and employment", "ro": "Orientare privind șederea, asigurarea de sănătate, locuirea și angajarea", "fr": "Orientation pour le séjour, l’assurance maladie, le logement et l’emploi", "ar": "توجيه بشأن الإقامة والتأمين الصحي والسكن والعمل", "uk": "Поради щодо проживання, медичного страхування, житла та працевлаштування", "ne": "बसोबास, स्वास्थ्य बीमा, आवास र रोजगारीबारे मार्गदर्शन" },
-      { "en": "Romanian language classes and community activities at Casa LOGS", "ro": "Cursuri de limba română și activități comunitare la Casa LOGS", "fr": "Cours de roumain et activités communautaires à Casa LOGS", "ar": "دروس لغة رومانية وأنشطة مجتمعية في Casa LOGS", "uk": "Курси румунської мови та заходи для спільноти в Casa LOGS", "ne": "Casa LOGS मा रोमानियन भाषाका कक्षाहरू र सामुदायिक गतिविधिहरू" }
+      {
+        "en": "Free social and integration counseling for newcomers and migrants",
+        "ro": "Consiliere socială și sprijin gratuit pentru integrarea nou-veniților și migranților",
+        "fr": "Conseil social et aide gratuite à l’intégration pour les nouveaux arrivants",
+        "ar": "استشارات اجتماعية ودعم مجاني للاندماج للوافدين الجدد",
+        "uk": "Безкоштовні соціальні та інтеграційні консультації для новоприбулих і мігрантів",
+        "ne": "नयाँ आउने र आप्रवासीहरूका लागि निःशुल्क सामाजिक र समाहितीकरण परामर्श"
+      },
+      {
+        "en": "Guidance on residence, health insurance, housing, and employment",
+        "ro": "Orientare privind șederea, asigurarea de sănătate, locuirea și angajarea",
+        "fr": "Orientation pour le séjour, l’assurance maladie, le logement et l’emploi",
+        "ar": "توجيه بشأن الإقامة والتأمين الصحي والسكن والعمل",
+        "uk": "Поради щодо проживання, медичного страхування, житла та працевлаштування",
+        "ne": "बसोबास, स्वास्थ्य बीमा, आवास र रोजगारीबारे मार्गदर्शन"
+      },
+      {
+        "en": "Romanian language classes and community activities at Casa LOGS",
+        "ro": "Cursuri de limba română și activități comunitare la Casa LOGS",
+        "fr": "Cours de roumain et activités communautaires à Casa LOGS",
+        "ar": "دروس لغة رومانية وأنشطة مجتمعية في Casa LOGS",
+        "uk": "Курси румунської мови та заходи для спільноти в Casa LOGS",
+        "ne": "Casa LOGS मा रोमानियन भाषाका कक्षाहरू र सामुदायिक गतिविधिहरू"
+      }
     ],
     "address": "Str. Țebea nr. 12, Timișoara",
     "phone": "+40 783 001 667",
@@ -258,14 +380,16 @@
     "website": "https://grupullogs.ro/",
     "hours": null,
     "verifiedNote": {
-      "en": "Casa LOGS counseling center address, phone, and email are listed from grupullogs.ro. Opening hours vary by program; contact them in advance.",
-      "ro": "Adresa centrului de zi Casa LOGS, telefonul și e-mailul provin de pe grupullogs.ro. Programul depinde de activități; contactează-i înainte.",
-      "fr": "L’adresse de Casa LOGS, le téléphone et l’e-mail proviennent de grupullogs.ro. Les horaires varient selon les programmes ; contactez-les à l’avance.",
-      "ar": "العنوان والهاتف والبريد الإلكتروني لمركز Casa LOGS مأخوذة من grupullogs.ro. تختلف ساعات العمل حسب البرامج؛ تواصل معهم مسبقًا.",
-      "uk": "Адресу, телефон та електронну пошту консультаційного центру Casa LOGS взято з grupullogs.ro. Години роботи залежать від програми; зв’яжіться з ними заздалегідь.",
-      "ne": "Casa LOGS परामर्श केन्द्रको ठेगाना, फोन र इमेल grupullogs.ro बाट लिइएका हुन्। खुल्ने समय कार्यक्रम अनुसार फरक हुन्छ; अगाडि नै सम्पर्क गर्नुहोस्।"
+      "en": "Casa LOGS’s address, phone and email are from grupullogs.ro. Opening hours depend on the programme, so contact them before you visit.",
+      "ro": "Adresa, telefonul și emailul Casei LOGS sunt de pe grupullogs.ro. Programul depinde de activitate, așa că ia legătura cu ei înainte să mergi.",
+      "fr": "L’adresse, le téléphone et l’e-mail de Casa LOGS viennent de grupullogs.ro. Les horaires dépendent du programme : contactez-les avant de venir.",
+      "ar": "عنوان Casa LOGS وهاتفها وبريدها الإلكتروني من grupullogs.ro. تعتمد ساعات العمل على البرنامج، لذلك تواصل معهم قبل زيارتهم.",
+      "uk": "Адреса, телефон та електронна пошта Casa LOGS взяті з grupullogs.ro. Години роботи залежать від програми, тому зв’яжіться з ними перед візитом.",
+      "ne": "Casa LOGS को ठेगाना, फोन र इमेल grupullogs.ro बाट लिइएका हुन्। खुल्ने समय कार्यक्रमअनुसार फरक हुन्छ, त्यसैले जानुअघि उनीहरूलाई सम्पर्क गर्नुहोस्।"
     },
-    "sourceIds": ["logs-home"]
+    "sourceIds": [
+      "logs-home"
+    ]
   },
   {
     "id": "uvt-dri",
@@ -286,8 +410,22 @@
       "ne": "तिमिशोरा पश्चिमी विश्वविद्यालयमा भर्ना भएका अन्तर्राष्ट्रिय डिग्री र Erasmus+ विद्यार्थीहरूलाई सुरुवाती सहयोग, कागजात र मार्गदर्शनमा सहयोग गर्छ।"
     },
     "services": [
-      { "en": "Support for UVT international and Erasmus+ students", "ro": "Sprijin pentru studenții internaționali și Erasmus+ ai UVT", "fr": "Accompagnement des étudiants internationaux et Erasmus+ de l’UVT", "ar": "دعم الطلاب الدوليين وطلاب إيراسموس+ في UVT", "uk": "Підтримка іноземних студентів UVT і студентів Erasmus+", "ne": "UVT का अन्तर्राष्ट्रिय र Erasmus+ विद्यार्थीहरूका लागि सहयोग" },
-      { "en": "University arrival orientation and enrollment certificates", "ro": "Orientare la sosire și adeverințe universitare", "fr": "Orientation à l’arrivée et attestations universitaires", "ar": "التوجيه عند الوصول وإفادات القيد الجامعي", "uk": "Орієнтація після прибуття та довідки про зарахування в університет", "ne": "विश्वविद्यालयमा आइपुगेपछिको मार्गदर्शन र भर्नाको प्रमाणपत्र" }
+      {
+        "en": "Support for UVT international and Erasmus+ students",
+        "ro": "Sprijin pentru studenții internaționali și Erasmus+ ai UVT",
+        "fr": "Accompagnement des étudiants internationaux et Erasmus+ de l’UVT",
+        "ar": "دعم الطلاب الدوليين وطلاب إيراسموس+ في UVT",
+        "uk": "Підтримка іноземних студентів UVT і студентів Erasmus+",
+        "ne": "UVT का अन्तर्राष्ट्रिय र Erasmus+ विद्यार्थीहरूका लागि सहयोग"
+      },
+      {
+        "en": "University arrival orientation and enrollment certificates",
+        "ro": "Orientare la sosire și adeverințe universitare",
+        "fr": "Orientation à l’arrivée et attestations universitaires",
+        "ar": "التوجيه عند الوصول وإفادات القيد الجامعي",
+        "uk": "Орієнтація після прибуття та довідки про зарахування в університет",
+        "ne": "विश्वविद्यालयमा आइपुगेपछिको मार्गदर्शन र भर्नाको प्रमाणपत्र"
+      }
     ],
     "address": "Bd. Vasile Pârvan nr. 4, 300223 Timișoara",
     "phone": null,
@@ -295,14 +433,16 @@
     "website": "https://www.uvt.ro/",
     "hours": null,
     "verifiedNote": {
-      "en": "Main UVT building address (International Relations Office is in Room 155B, 1st floor). Phone, email, and office hours were not verified; check uvt.ro.",
-      "ro": "Adresa clădirii principale UVT (Biroul de Relații Internaționale este la etajul 1, sala 155B). Telefonul, e-mailul și programul nu au fost verificate; verifică pe uvt.ro.",
-      "fr": "Adresse du bâtiment principal de l’UVT (le bureau des relations internationales se trouve au 1er étage, salle 155B). Le téléphone, l’e-mail et les horaires n’ont pas été vérifiés ; consultez uvt.ro.",
-      "ar": "عنوان المبنى الرئيسي لجامعة UVT (يقع مكتب العلاقات الدولية في الطابق الأول، القاعة 155B). لم يتم التحقق من الهاتف والبريد وساعات العمل؛ راجع uvt.ro.",
-      "uk": "Адреса головного корпусу UVT (Відділ міжнародних зв’язків розташований у кімнаті 155B, 1-й поверх). Телефон, електронну пошту та години роботи не перевірено; дивіться uvt.ro.",
-      "ne": "UVT को मुख्य भवनको ठेगाना (अन्तर्राष्ट्रिय सम्बन्ध कार्यालय पहिलो तलामा, कोठा 155B मा छ)। फोन, इमेल र कार्यालय समय पुष्टि गरिएको छैन; uvt.ro जाँच गर्नुहोस्।"
+      "en": "Main UVT building address (the International Relations Office is in Room 155B, 1st floor). For phone, email and office hours, check uvt.ro.",
+      "ro": "Adresa clădirii principale UVT (Biroul de Relații Internaționale este în Camera 155B, etajul 1). Pentru telefon, email și program, verifică uvt.ro.",
+      "fr": "Adresse du bâtiment principal de l’UVT (le Bureau des relations internationales se trouve en salle 155B, au 1er étage). Pour le téléphone, l’e-mail et les horaires, consultez uvt.ro.",
+      "ar": "عنوان المبنى الرئيسي لـ UVT (مكتب العلاقات الدولية في الغرفة 155B، الطابق الأول). وللهاتف والبريد الإلكتروني وساعات العمل، راجع uvt.ro.",
+      "uk": "Адреса головного корпусу UVT (Офіс міжнародних зв’язків — кімната 155B, 1-й поверх). Телефон, електронну пошту та години роботи шукайте на uvt.ro.",
+      "ne": "UVT को मुख्य भवनको ठेगाना (अन्तर्राष्ट्रिय सम्बन्ध कार्यालय कोठा 155B, पहिलो तल्लामा छ)। फोन, इमेल र कार्यालय समयका लागि uvt.ro हेर्नुहोस्।"
     },
-    "sourceIds": ["uvt-home"]
+    "sourceIds": [
+      "uvt-home"
+    ]
   },
   {
     "id": "umft-dri",
@@ -323,8 +463,22 @@
       "ne": "तिमिशोरामा मेडिसिन, दन्त चिकित्सा वा फार्मेसी पढ्ने विदेशी विद्यार्थीहरूका लागि मुख्य क्याम्पस र अन्तर्राष्ट्रिय विद्यार्थी सम्बन्ध केन्द्र।"
     },
     "services": [
-      { "en": "Support for international medical and pharmacy students", "ro": "Sprijin pentru studenții internaționali la medicină și farmacie", "fr": "Accompagnement des étudiants internationaux en médecine et pharmacie", "ar": "دعم طلاب الطب والصيدلة الدوليين", "uk": "Підтримка іноземних студентів-медиків і фармацевтів", "ne": "अन्तर्राष्ट्रिय मेडिकल र फार्मेसी विद्यार्थीहरूका लागि सहयोग" },
-      { "en": "Enrollment confirmation and study-visa documentation", "ro": "Confirmarea înscrierii și documente pentru viza/șederea de studii", "fr": "Confirmation d’inscription et documents pour le visa et le séjour d’études", "ar": "تأكيد التسجيل ومستندات تأشيرة وإقامة الدراسة", "uk": "Підтвердження зарахування та документи для студентської візи", "ne": "भर्नाको पुष्टि र अध्ययन भिसाका कागजात" }
+      {
+        "en": "Support for international medical and pharmacy students",
+        "ro": "Sprijin pentru studenții internaționali la medicină și farmacie",
+        "fr": "Accompagnement des étudiants internationaux en médecine et pharmacie",
+        "ar": "دعم طلاب الطب والصيدلة الدوليين",
+        "uk": "Підтримка іноземних студентів-медиків і фармацевтів",
+        "ne": "अन्तर्राष्ट्रिय मेडिकल र फार्मेसी विद्यार्थीहरूका लागि सहयोग"
+      },
+      {
+        "en": "Enrollment confirmation and study-visa documentation",
+        "ro": "Confirmarea înscrierii și documente pentru viza/șederea de studii",
+        "fr": "Confirmation d’inscription et documents pour le visa et le séjour d’études",
+        "ar": "تأكيد التسجيل ومستندات تأشيرة وإقامة الدراسة",
+        "uk": "Підтвердження зарахування та документи для студентської візи",
+        "ne": "भर्नाको पुष्टि र अध्ययन भिसाका कागजात"
+      }
     ],
     "address": "Piața Eftimie Murgu nr. 2, 300041 Timișoara",
     "phone": null,
@@ -332,14 +486,16 @@
     "website": "https://www.umft.eu/",
     "hours": null,
     "verifiedNote": {
-      "en": "Main UMFT rectorate address at Piața Eftimie Murgu nr. 2. Direct phone, email, and counter hours should be checked on umft.eu before visiting.",
-      "ro": "Adresa rectoratului UMFT din Piața Eftimie Murgu nr. 2. Telefonul direct, e-mailul și programul ghișeului se verifică pe umft.eu înainte de vizită.",
-      "fr": "Adresse du rectorat de l’UMFT à Piața Eftimie Murgu nr. 2. Vérifiez le téléphone direct, l’e-mail et les horaires sur umft.eu avant de vous déplacer.",
-      "ar": "عنوان رئاسة جامعة UMFT في ساحة Eftimie Murgu رقم 2. يُرجى التحقق من الهاتف المباشر والبريد الإلكتروني وساعات العمل على umft.eu قبل الزيارة.",
-      "uk": "Адреса ректорату UMFT: Piața Eftimie Murgu nr. 2. Прямий телефон, електронну пошту та години роботи віконця слід перевірити на umft.eu перед візитом.",
-      "ne": "UMFT को मुख्य रेक्टोरेटको ठेगाना Piața Eftimie Murgu nr. 2 हो। जानुअघि सिधा फोन, इमेल र काउन्टरको समय umft.eu मा जाँच गर्नुहोस्।"
+      "en": "Main UMFT rectorate address at Piața Eftimie Murgu nr. 2. For direct phone, email and counter hours, check umft.eu before you visit.",
+      "ro": "Adresa rectoratului principal UMFT, Piața Eftimie Murgu nr. 2. Pentru telefon direct, email și programul ghișeelor, verifică umft.eu înainte să mergi.",
+      "fr": "Adresse du rectorat principal de l’UMFT, Piața Eftimie Murgu nr. 2. Pour le téléphone direct, l’e-mail et les horaires des guichets, consultez umft.eu avant de venir.",
+      "ar": "عنوان مبنى رئاسة UMFT الرئيسي في Piața Eftimie Murgu nr. 2. وللهاتف المباشر والبريد الإلكتروني وساعات الشباك، راجع umft.eu قبل أن تزور.",
+      "uk": "Адреса ректорату UMFT на Piața Eftimie Murgu nr. 2. Прямий телефон, електронну пошту та години роботи віконець перевірте на umft.eu перед візитом.",
+      "ne": "UMFT को मुख्य रेक्टोरेटको ठेगाना Piața Eftimie Murgu nr. 2। सिधा फोन, इमेल र काउन्टर समयका लागि जानुअघि umft.eu हेर्नुहोस्।"
     },
-    "sourceIds": ["umft-home"]
+    "sourceIds": [
+      "umft-home"
+    ]
   },
   {
     "id": "igi-dai-timisoara",
@@ -391,15 +547,77 @@
     "website": "https://igi.mai.gov.ro/en/general-description/",
     "hours": null,
     "verifiedNote": {
-      "en": "IGI lists a regional asylum centre in Timișoara. Its address and phone were not verified for this app. Ask LOGS or UNHCR’s legal partners how to get there.",
-      "ro": "IGI menționează un centru regional pentru azil în Timișoara. Adresa și telefonul nu au fost verificate pentru această aplicație. Întreabă LOGS sau partenerii juridici UNHCR cum ajungi acolo.",
-      "fr": "L’IGI mentionne un centre régional d’asile à Timișoara. Son adresse et son téléphone n’ont pas été vérifiés pour cette application. Demandez à LOGS ou aux partenaires juridiques du HCR comment vous y rendre.",
-      "ar": "تذكر IGI وجود مركز إقليمي للجوء في تيميشوارا. لم يتم التحقق من عنوانه وهاتفه لهذا التطبيق. اسأل LOGS أو الشركاء القانونيين للمفوضية كيف تصل إليه.",
-      "uk": "IGI зазначає регіональний центр з питань притулку в Тімішоарі. Його адресу й телефон для цього застосунку не перевірено. Запитайте в LOGS або юридичних партнерів УВКБ ООН, як туди дістатися.",
-      "ne": "IGI ले तिमिशोरामा शरणको क्षेत्रीय केन्द्र रहेको जनाएको छ। यसको ठेगाना र फोन यो एपका लागि जाँच गरिएको छैन। त्यहाँ कसरी पुग्ने भनेर LOGS वा UNHCR का कानुनी साझेदारलाई सोध्नुहोस्।"
+      "en": "IGI lists a regional asylum centre in Timișoara. Ask LOGS or UNHCR’s legal partners how to get there, or check igi.mai.gov.ro.",
+      "ro": "IGI listează un centru regional de azil în Timișoara. Întreabă LOGS sau partenerii juridici ai UNHCR cum ajungi acolo sau verifică igi.mai.gov.ro.",
+      "fr": "L’IGI indique un centre régional d’asile à Timișoara. Demandez à LOGS ou aux partenaires juridiques de l’UNHCR comment vous y rendre, ou consultez igi.mai.gov.ro.",
+      "ar": "يذكر IGI مركز لجوء إقليميًا في تيميشوارا. اسأل LOGS أو الشركاء القانونيين لـ UNHCR عن طريقة الوصول إليه، أو راجع igi.mai.gov.ro.",
+      "uk": "IGI вказує регіональний центр притулку в Тімішоарі. Запитайте в LOGS або юридичних партнерів UNHCR, як туди дістатися, або перегляньте igi.mai.gov.ro.",
+      "ne": "IGI ले टिमिसोआरामा क्षेत्रीय शरण केन्द्र देखाएको छ। त्यहाँ कसरी पुग्ने भनेर LOGS वा UNHCR का कानुनी साझेदारहरूलाई सोध्नुहोस्, वा igi.mai.gov.ro हेर्नुहोस्।"
     },
     "sourceIds": [
       "igi-asylum-general"
     ]
+  },
+  {
+    "id": "bank",
+    "name": {
+      "en": "Your bank branch",
+      "ro": "Sucursala băncii tale",
+      "fr": "Votre agence bancaire",
+      "ar": "فرع البنك الذي تختاره",
+      "uk": "Відділення вашого банку",
+      "ne": "तपाईंको बैंक शाखा"
+    },
+    "description": {
+      "en": "Any bank in Timișoara can open an account for you. Choose one near your home, work or university.",
+      "ro": "Orice bancă din Timișoara îți poate deschide un cont. Alege una aproape de casă, de serviciu sau de universitate.",
+      "fr": "N’importe quelle banque de Timișoara peut vous ouvrir un compte. Choisissez-en une près de chez vous, de votre travail ou de votre université.",
+      "ar": "يستطيع أي بنك في تيميشوارا فتح حساب لك. اختر بنكًا قريبًا من بيتك أو عملك أو جامعتك.",
+      "uk": "Будь-який банк у Тімішоарі може відкрити вам рахунок. Оберіть той, що поруч із домом, роботою чи університетом.",
+      "ne": "टिमिसोआराको जुनसुकै बैंकले तपाईंको खाता खोल्न सक्छ। आफ्नो घर, काम वा विश्वविद्यालयनजिकको बैंक छान्नुहोस्।"
+    },
+    "services": [
+      {
+        "en": "Current account and bank card",
+        "ro": "Cont curent și card bancar",
+        "fr": "Compte courant et carte bancaire",
+        "ar": "حساب جارٍ وبطاقة مصرفية",
+        "uk": "Поточний рахунок і банківська картка",
+        "ne": "चल्ती खाता र बैंक कार्ड"
+      },
+      {
+        "en": "Receiving your salary or scholarship",
+        "ro": "Primirea salariului sau a bursei",
+        "fr": "Réception de votre salaire ou de votre bourse",
+        "ar": "استلام راتبك أو منحتك",
+        "uk": "Отримання зарплати чи стипендії",
+        "ne": "तलब वा छात्रवृत्ति प्राप्त गर्ने"
+      },
+      {
+        "en": "Bank statement for your permit application",
+        "ro": "Extras de cont pentru cererea de permis",
+        "fr": "Relevé bancaire pour votre demande de titre de séjour",
+        "ar": "كشف حساب لطلب التصريح",
+        "uk": "Банківська виписка для заяви на дозвіл",
+        "ne": "अनुमतिपत्र निवेदनका लागि बैंक स्टेटमेन्ट"
+      }
+    ],
+    "address": null,
+    "phone": null,
+    "email": null,
+    "website": "https://europa.eu/youreurope/citizens/consumers/financial-products-and-services/bank-accounts-eu/index_en.htm",
+    "hours": null,
+    "verifiedNote": {
+      "en": "This is an example, not one bank. Each bank has its own opening hours and documents list; check the bank’s website or ask at the branch.",
+      "ro": "Acesta este un exemplu, nu o bancă anume. Fiecare bancă are propriul program și propria listă de documente; verifică site-ul băncii sau întreabă la sucursală.",
+      "fr": "C’est un exemple, pas une banque en particulier. Chaque banque a ses propres horaires et sa propre liste de documents ; consultez le site de la banque ou demandez à l’agence.",
+      "ar": "هذا مثال وليس بنكًا واحدًا. لكل بنك ساعات عمله وقائمة مستنداته؛ راجع موقع البنك أو اسأل في الفرع.",
+      "uk": "Це приклад, а не конкретний банк. Кожен банк має власні години роботи та перелік документів; перегляньте сайт банку або запитайте у відділенні.",
+      "ne": "यो उदाहरण हो, कुनै एउटा बैंक होइन। हरेक बैंकको आफ्नै खुल्ने समय र कागजातको सूची हुन्छ; बैंकको वेबसाइट हेर्नुहोस् वा शाखामा सोध्नुहोस्।"
+    },
+    "sourceIds": [
+      "your-europe-bank"
+    ],
+    "placeholder": true
   }
 ]
