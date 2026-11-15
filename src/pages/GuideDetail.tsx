@@ -16,8 +16,8 @@ const STATUSES: TaskStatus[] = ['not-started', 'in-progress', 'completed'];
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className={cardClass}>
-      <h2 className="text-lg font-bold text-brand-900">{title}</h2>
+    <section className="border-t border-slate-200 pt-6">
+      <h2 className="text-xl font-bold text-brand-900">{title}</h2>
       <div className="mt-3 space-y-3">{children}</div>
     </section>
   );
@@ -135,7 +135,7 @@ export function GuideDetail() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="mx-auto max-w-3xl space-y-6">
       <Link to="/checklist" className={`${linkClass} inline-flex items-center gap-1`}>
         <Icon name="arrow" className="size-4 rotate-180 rtl:rotate-0" /> {t('guide.back')}
       </Link>
@@ -192,7 +192,7 @@ export function GuideDetail() {
         </div>
         <div className="flex flex-wrap items-end gap-3">
           <div className="min-w-44">
-            <label htmlFor="guide-status" className="mb-1 block text-xs font-semibold text-muted">
+            <label htmlFor="guide-status" className="mb-1 block text-sm font-semibold text-muted">
               {t('check.status')}
             </label>
             <select
@@ -233,14 +233,14 @@ export function GuideDetail() {
       </Section>
 
       <Section title={t('guide.s4')}>
-        <div className="rounded-xl bg-brand-50 p-3">
-          <p className="text-sm font-semibold text-brand-900" data-testid="docs-progress">
+        <div>
+          <p className="font-semibold text-brand-900" data-testid="docs-progress">
             {t('docs.progress', { ready: counts.ready, total: counts.total })}
           </p>
           <div className="mt-2">
             <ProgressBar percent={counts.total ? Math.round((counts.ready / counts.total) * 100) : 0} label={t('guide.s4')} />
           </div>
-          <p className="mt-2 text-xs text-muted">{t('docs.hint')}</p>
+          <p className="mt-2 text-sm text-muted">{t('docs.hint')}</p>
         </div>
         {counts.total > 0 && counts.ready === counts.total ? <Notice role="status">{t('docs.allReady')}</Notice> : null}
         <ul className="space-y-3">
@@ -249,7 +249,7 @@ export function GuideDetail() {
             return (
               <li
                 key={doc.name.en}
-                className={`rounded-xl border p-3 transition-colors ${ready ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200'}`}
+                className={`rounded-lg border p-3 transition-colors ${ready ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200'}`}
               >
                 <div className="flex items-start gap-3">
                   <input
@@ -323,8 +323,8 @@ export function GuideDetail() {
           <p className="text-muted">{t('guide.unverified')}</p>
         )}
         {procedure.deadline ? (
-          <div className="rounded-xl bg-amber-50 p-3">
-            <p className="font-semibold text-amber-950">{t('guide.s8.deadline')}</p>
+          <div className="border-s-4 border-amber-500 ps-4">
+            <p className="font-semibold text-brand-900">{t('guide.s8.deadline')}</p>
             <p>{tx(procedure.deadline.text)}</p>
             <div className="mt-1 flex flex-wrap items-center">
               <LevelBadge level={procedure.deadline.level} />
@@ -337,7 +337,7 @@ export function GuideDetail() {
       <Section title={t('guide.s9')}>
         <ul className="space-y-3">
           {procedure.warnings.map((warning) => (
-            <li key={warning.text.en} className="rounded-xl bg-slate-50 p-3">
+            <li key={warning.text.en} className="border-s-4 border-slate-300 ps-4">
               <p>{tx(warning.text)}</p>
               <div className="mt-1 flex flex-wrap items-center">
                 <LevelBadge level={warning.level} />

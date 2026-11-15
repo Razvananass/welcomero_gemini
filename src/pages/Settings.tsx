@@ -180,7 +180,7 @@ export function Settings() {
         <p className="mt-2 text-muted">{user ? t('set.data.bodyCloud') : t('set.data.body')}</p>
         <div className="mt-4">
           {confirmingDelete ? (
-            <div className="space-y-3 rounded-xl border border-red-300 bg-red-50 p-4" role="alertdialog" aria-labelledby="delete-confirm-text">
+            <div className="space-y-3 rounded-lg border border-red-300 bg-red-50 p-4" role="alertdialog" aria-labelledby="delete-confirm-text">
               <p id="delete-confirm-text" className="text-sm font-semibold text-red-900">
                 {t('set.delete.confirm')}
               </p>

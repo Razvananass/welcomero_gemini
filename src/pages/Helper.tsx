@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { phrases } from '../data';
 import { AiError, checkAvailability, generatePhrase, type AiAvailability, type GeneratedPhrase } from '../lib/ai';
-import { btnPrimary, CopyButton, cardClass, inputClass, Notice, PageHeader, SpeakButtons, useSpeechSupport } from '../components/ui';
+import { Arrow, btnPrimary, CopyButton, cardClass, inputClass, Notice, PageHeader, SpeakButtons, useSpeechSupport } from '../components/ui';
 import type { MessageKey } from '../i18n';
 import type { Phrase } from '../types';
 import { Icon } from '../components/Icon';
@@ -22,8 +22,8 @@ function PhraseCard({ phrase }: { phrase: Phrase }) {
         {loc(phrase.label)}
       </h2>
 
-      <div className="mt-3 rounded-xl bg-brand-50 p-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">{t('help.romanian')}</p>
+      <div className="mt-3 rounded-lg bg-brand-50 p-4">
+        <p className="text-sm font-semibold text-brand-800">{t('help.romanian')}</p>
         <p lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-lg font-semibold text-ink">
           {phrase.ro}
         </p>
@@ -31,7 +31,7 @@ function PhraseCard({ phrase }: { phrase: Phrase }) {
 
       {phrase.pron ? (
         <div className="mt-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t('help.pron')}</p>
+          <p className="text-sm font-semibold text-muted">{t('help.pron')}</p>
           <p dir="ltr" className="mt-1 text-base italic text-ink">
             {phrase.pron}
           </p>
@@ -39,7 +39,7 @@ function PhraseCard({ phrase }: { phrase: Phrase }) {
       ) : null}
 
       <div className="mt-3">
-        <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t('help.meaning')}</p>
+        <p className="text-sm font-semibold text-muted">{t('help.meaning')}</p>
         <p lang="en" dir="ltr" className="mt-1 whitespace-pre-wrap text-base">
           {english}
         </p>
@@ -146,8 +146,8 @@ function CustomMessage() {
 
       {result ? (
         <div className="mt-4 space-y-3" aria-live="polite">
-          <div className="rounded-xl bg-brand-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">{t('help.custom.result')}</p>
+          <div className="rounded-lg bg-brand-50 p-4">
+            <p className="text-sm font-semibold text-brand-800">{t('help.custom.result')}</p>
             <p lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-lg font-semibold">
               {result.romanian}
             </p>
@@ -181,15 +181,15 @@ function VoiceStudioBar() {
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-200 bg-gradient-to-r from-brand-50 via-white to-sun-100/60 px-4 py-3 shadow-sm">
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-brand-200 bg-white px-4 py-3">
       <div className="flex items-center gap-2.5">
-        <span className="inline-flex size-9 items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm">
+        <span className="inline-flex size-9 items-center justify-center rounded-lg bg-brand-700 text-white">
           <Icon name="volume" className="size-4" />
         </span>
         <p className="text-sm font-medium text-brand-900">{t('help.speech.elevenlabs')}</p>
       </div>
       <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('help.speech.voiceLabel')}>
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted">{t('help.speech.voiceLabel')}:</span>
+        <span className="text-sm font-semibold text-muted">{t('help.speech.voiceLabel')}:</span>
         {voices.map((v) => {
           const active = voice === v.key;
           return (
@@ -200,7 +200,7 @@ function VoiceStudioBar() {
               aria-pressed={active}
               className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
                 active
-                  ? 'bg-brand-700 text-white shadow-sm'
+                  ? 'bg-brand-700 text-white'
                   : 'border border-brand-200 bg-white text-brand-800 hover:bg-brand-50'
               }`}
             >
@@ -228,11 +228,9 @@ export function Helper() {
       ) : (
         <p className="text-sm text-muted">{t('help.speech.note')}</p>
       )}
-      <Link to="/practice" className={`${cardClass} card-lift flex items-center gap-3 font-semibold text-brand-900 hover:border-brand-500`}>
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700">
-          <Icon name="graduation" />
-        </span>
+      <Link to="/practice" className={`${cardClass} flex items-center justify-between gap-3 font-semibold text-brand-900 hover:border-brand-500`}>
         <span>{t('practice.helperLink')}</span>
+        <Arrow />
       </Link>
       <div className="grid gap-4 md:grid-cols-2">
         {phrases.map((phrase) => (

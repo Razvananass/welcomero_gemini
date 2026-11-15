@@ -124,8 +124,16 @@ body {
   background: var(--page-bg, #f6f9fb);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  line-height: 1.55;
+  /* A little larger than the browser default, with generous line spacing: easier to read in a second language. */
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Headings read as headings: tight line spacing, balanced wrapping. */
+h1, h2, h3 {
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
 /* Arabic reads better with slightly more line height. */
@@ -163,8 +171,8 @@ html[lang="ar"] body {
   0%, 100% { transform: scaleY(0.35); }
   50% { transform: scaleY(1); }
 }
-.animate-fade-up { animation: fade-up 0.35s ease-out both; }
-.animate-pop { animation: pop 0.45s ease-out; }
+/* The design is deliberately still: no entrance or pop animations. These names are kept so old markup does nothing odd. */
+.animate-fade-up, .animate-pop { animation: none; }
 .audio-wave-bar {
   display: inline-block;
   width: 2.5px;
@@ -177,27 +185,20 @@ html[lang="ar"] body {
 .audio-wave-bar:nth-child(2) { animation-delay: 0.14s; }
 .audio-wave-bar:nth-child(3) { animation-delay: 0.28s; }
 .audio-wave-bar:nth-child(4) { animation-delay: 0.42s; }
-.stagger > * { animation: fade-up 0.4s ease-out both; }
-.stagger > *:nth-child(2) { animation-delay: 0.06s; }
-.stagger > *:nth-child(3) { animation-delay: 0.12s; }
-.stagger > *:nth-child(4) { animation-delay: 0.18s; }
-.stagger > *:nth-child(5) { animation-delay: 0.24s; }
-.stagger > *:nth-child(n + 6) { animation-delay: 0.3s; }
 .skeleton {
   border-radius: 0.75rem;
   background: linear-gradient(90deg, #e4ecf1 25%, #f3f7f9 50%, #e4ecf1 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }
-.card-lift { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
-.card-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgb(10 51 80 / 0.35); }
+.card-lift { transition: border-color 0.15s ease; }
+.card-lift:hover { border-color: var(--color-brand-500); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
-  .card-lift:hover { transform: none; }
 }
 
 /* ---- Printing (appointment kit): plain black on white, no app chrome. ---- */

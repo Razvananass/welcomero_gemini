@@ -26,6 +26,8 @@ export const fr: Record<MessageKey, string> = {
   'nav.settings': 'Paramètres',
   'nav.skip': 'Aller au contenu principal',
   'nav.language': 'Langue',
+  'nav.more': 'Plus',
+  'nav.practice': 'Pratiquer le roumain',
   'nav.home': 'Accueil welcomeRo',
 
   'level.verified': 'D’une source officielle',

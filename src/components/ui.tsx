@@ -14,11 +14,11 @@ import {
 import type { Reliability, TaskStatus } from '../types';
 
 export const btnPrimary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-brand-700 px-5 py-2.5 text-base font-semibold text-white shadow-sm hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-50';
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-brand-700 px-5 py-2.5 text-base font-semibold text-white hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-50';
 export const btnSecondary =
   'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-brand-700 bg-white px-5 py-2.5 text-base font-semibold text-brand-800 hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-50';
 export const linkClass = 'font-medium text-brand-700 underline underline-offset-2 hover:text-brand-900';
-export const cardClass = 'rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6';
+export const cardClass = 'rounded-lg border border-slate-200 bg-white p-5 sm:p-6';
 export const inputClass =
   'block w-full rounded-lg border border-slate-400 bg-white px-3 py-2.5 text-base text-ink placeholder:text-slate-500';
 
@@ -29,9 +29,9 @@ export function Arrow() {
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <header className="mb-6">
+    <header className="mb-8">
       <h1 className="text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">{title}</h1>
-      {subtitle ? <p className="mt-2 max-w-3xl text-muted">{subtitle}</p> : null}
+      {subtitle ? <p className="mt-2 max-w-2xl text-lg text-muted">{subtitle}</p> : null}
     </header>
   );
 }
@@ -53,7 +53,7 @@ export function LevelBadge({ level, always = false }: { level: Reliability; alwa
   if (level === 'confirm' && !always) return null;
   const style = LEVEL_STYLES[level];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${style.box}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-sm font-medium ${style.box}`}>
       <span aria-hidden="true">{style.symbol}</span>
       {t(`level.${level}`)}
     </span>
@@ -70,7 +70,7 @@ export function StatusBadge({ status }: { status: TaskStatus }) {
   const { t } = useI18n();
   const symbol = status === 'completed' ? '✓ ' : status === 'in-progress' ? '… ' : '';
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${STATUS_STYLES[status]}`}>
+    <span className={`inline-flex items-center rounded px-2 py-0.5 text-sm font-medium ${STATUS_STYLES[status]}`}>
       {symbol}
       {t(`status.${status}`)}
     </span>
@@ -85,7 +85,7 @@ export function ProgressBar({ percent, label }: { percent: number; label: string
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label={label}
-      className="h-3 w-full overflow-hidden rounded-full bg-slate-200"
+      className="h-2 w-full overflow-hidden rounded-full bg-slate-200"
     >
       <div className="h-full rounded-full bg-brand-700 transition-[width] duration-300" style={{ width: `${percent}%` }} />
     </div>
@@ -122,17 +122,18 @@ export function ProgressRing({ percent, label, size = 132 }: { percent: number; 
           style={{ transition: 'stroke-dashoffset 0.7s ease-out' }}
         />
       </svg>
-      <span aria-hidden="true" className="absolute inset-0 grid place-items-center text-3xl font-extrabold text-brand-900" dir="ltr">
+      <span aria-hidden="true" className="absolute inset-0 grid place-items-center text-3xl font-bold text-brand-900" dir="ltr">
         {percent}%
       </span>
     </div>
   );
 }
 
+// A quiet panel with a coloured edge on the reading-start side, instead of a fully tinted, bordered box.
 const NOTICE_STYLES = {
-  info: 'border-brand-200 bg-brand-50 text-brand-900',
-  warning: 'border-amber-300 bg-amber-50 text-amber-950',
-  error: 'border-red-300 bg-red-50 text-red-900',
+  info: 'border-slate-200 border-s-4 border-s-brand-600 bg-white text-ink',
+  warning: 'border-slate-200 border-s-4 border-s-amber-500 bg-white text-ink',
+  error: 'border-slate-200 border-s-4 border-s-red-700 bg-white text-ink',
 } as const;
 
 export function Notice({
@@ -147,7 +148,7 @@ export function Notice({
   role?: 'alert' | 'status';
 }) {
   return (
-    <div role={role} className={`rounded-xl border px-4 py-3 text-sm ${NOTICE_STYLES[tone]}`}>
+    <div role={role} className={`rounded-lg border px-4 py-3 text-base ${NOTICE_STYLES[tone]}`}>
       {title ? <p className="mb-1 font-semibold">{title}</p> : null}
       <div>{children}</div>
     </div>
@@ -233,7 +234,7 @@ export function SpeakButtons({ text }: { text: string }) {
     <>
       <button
         type="button"
-        className={`${normalActive ? `${btnPrimary} ring-2 ring-brand-200 animate-pop` : btnSecondary} transition-all active:scale-95`}
+        className={`${normalActive ? `${btnPrimary} ring-2 ring-brand-200` : btnSecondary} transition-all active:scale-95`}
         onClick={() => void play(false)}
         disabled={disabled}
         aria-pressed={normalActive}
@@ -252,7 +253,7 @@ export function SpeakButtons({ text }: { text: string }) {
       </button>
       <button
         type="button"
-        className={`${slowActive ? `${btnPrimary} ring-2 ring-brand-200 animate-pop` : btnSecondary} transition-all active:scale-95`}
+        className={`${slowActive ? `${btnPrimary} ring-2 ring-brand-200` : btnSecondary} transition-all active:scale-95`}
         onClick={() => void play(true)}
         disabled={disabled}
         aria-pressed={slowActive}
@@ -306,7 +307,7 @@ export function LevelLegend() {
   const { t } = useI18n();
   const levels: Reliability[] = ['verified', 'recommended', 'confirm'];
   return (
-    <details className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+    <details className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm">
       <summary className="cursor-pointer font-semibold text-brand-900">{t('level.legend')}</summary>
       <ul className="mt-3 space-y-2">
         {levels.map((level) => (

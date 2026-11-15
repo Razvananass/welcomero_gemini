@@ -38,7 +38,7 @@ function InstitutionCard({ institution, selected }: { institution: Institution; 
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="flex items-start gap-3">
           <span
-            className={`mt-0.5 inline-flex size-10 shrink-0 items-center justify-center rounded-xl border ${visual.badgeClass}`}
+            className={`mt-0.5 inline-flex size-10 shrink-0 items-center justify-center rounded-lg border ${visual.badgeClass}`}
           >
             <Icon name={visual.icon} className="size-5" />
           </span>

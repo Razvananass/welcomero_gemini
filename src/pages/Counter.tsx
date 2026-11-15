@@ -199,9 +199,9 @@ export function Counter() {
         </form>
 
         {latestToRo ? (
-          <div className="mt-4 rounded-xl border-2 border-brand-700 bg-brand-50 p-4" aria-live="polite">
-            <p className="text-xs font-bold uppercase tracking-wide text-brand-800">{t('counter.showClerk')}</p>
-            <p lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-2xl font-extrabold leading-snug text-ink">
+          <div className="mt-4 rounded-lg border-2 border-brand-700 bg-brand-50 p-4" aria-live="polite">
+            <p className="text-xs font-bold text-brand-800">{t('counter.showClerk')}</p>
+            <p lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-2xl font-bold leading-snug text-ink">
               {latestToRo.result}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -273,9 +273,9 @@ export function Counter() {
             {turns.map((turn) => (
               <li
                 key={turn.id}
-                className={`rounded-2xl border p-4 ${turn.direction === 'to_ro' ? 'border-brand-200 bg-brand-50' : 'border-slate-200 bg-white'}`}
+                className={`rounded-lg border p-4 ${turn.direction === 'to_ro' ? 'border-brand-200 bg-brand-50' : 'border-slate-200 bg-white'}`}
               >
-                <p className="text-xs font-bold uppercase tracking-wide text-muted">
+                <p className="text-xs font-bold text-muted">
                   {turn.direction === 'to_ro' ? t('counter.history.me') : t('counter.history.clerk')}
                 </p>
                 <p lang={turn.direction === 'to_ro' ? language : 'ro'} className="mt-1 text-sm text-muted">
@@ -297,7 +297,7 @@ export function Counter() {
           aria-label={t('counter.showClerk')}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-white p-6 text-center"
         >
-          <p lang="ro" dir="ltr" className="max-w-3xl whitespace-pre-wrap text-4xl font-extrabold leading-snug text-ink sm:text-5xl">
+          <p lang="ro" dir="ltr" className="max-w-3xl whitespace-pre-wrap text-4xl font-bold leading-snug text-ink sm:text-5xl">
             {fullscreenTurn.result}
           </p>
           <div className="flex flex-wrap justify-center gap-3">

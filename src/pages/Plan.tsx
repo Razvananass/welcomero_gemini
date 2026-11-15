@@ -139,10 +139,7 @@ export function Plan() {
 
       {plan.length === 0 ? (
         <div className={`${cardClass} text-center`}>
-          <span className="mx-auto grid size-12 place-items-center rounded-full bg-brand-50 text-brand-700">
-            <Icon name="calendar" className="size-6" />
-          </span>
-          <p className="mt-3 text-muted">{t('plan.empty')}</p>
+          <p className="text-muted">{t('plan.empty')}</p>
         </div>
       ) : (
         <>
@@ -154,7 +151,7 @@ export function Plan() {
             <p className="text-sm text-muted">{t('plan.export.note')}</p>
           </div>
 
-          <ol className="stagger space-y-4" data-testid="plan-list">
+          <ol className=" space-y-4" data-testid="plan-list">
             {plan.map((item) => {
               const done = item.status === 'completed';
               const urgent = item.latestBy && !done && daysBetween(today, item.latestBy) < 0;
@@ -164,9 +161,9 @@ export function Plan() {
                   data-date={item.date}
                   className={`${cardClass} flex flex-col gap-4 sm:flex-row ${done ? 'bg-slate-50 opacity-80' : ''} ${item.pastDue ? 'border-amber-400' : ''}`}
                 >
-                  <div className="shrink-0 rounded-xl bg-brand-50 px-4 py-3 text-center sm:w-44">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">{t('plan.target')}</p>
-                    <time dateTime={item.date} className="mt-0.5 block text-base font-extrabold text-brand-900">
+                  <div className="shrink-0 rounded-lg bg-brand-50 px-4 py-3 text-center sm:w-44">
+                    <p className="text-sm font-semibold text-brand-800">{t('plan.target')}</p>
+                    <time dateTime={item.date} className="mt-0.5 block text-base font-bold text-brand-900">
                       {formatDate(item.date, language)}
                     </time>
                     {!done ? <p className="text-sm text-muted">{when(item.daysLeft)}</p> : null}

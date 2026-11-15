@@ -106,7 +106,7 @@ function ActionChips({ content }: { content: string }) {
         <Link
           key={path}
           to={path}
-          className="inline-flex items-center gap-1 rounded-full border border-brand-200 bg-white px-3 py-1 text-xs font-semibold text-brand-800 shadow-xs hover:bg-brand-50"
+          className="inline-flex items-center gap-1 rounded-full border border-brand-200 bg-white px-3 py-1 text-sm font-semibold text-brand-800 hover:bg-brand-50"
         >
           <span>{t('ai.action.openPage', { path })}</span>
           <Arrow />
@@ -299,9 +299,9 @@ export function Assistant() {
           role="tab"
           aria-selected={tab === 'chat'}
           onClick={() => setTab('chat')}
-          className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors ${
+          className={`inline-flex min-h-10 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             tab === 'chat'
-              ? 'bg-brand-700 text-white shadow-sm'
+              ? 'bg-brand-700 text-white'
               : 'border border-slate-300 bg-white text-brand-900 hover:bg-brand-50'
           }`}
         >
@@ -313,9 +313,9 @@ export function Assistant() {
           role="tab"
           aria-selected={tab === 'document'}
           onClick={() => setTab('document')}
-          className={`inline-flex min-h-10 items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors ${
+          className={`inline-flex min-h-10 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             tab === 'document'
-              ? 'bg-brand-700 text-white shadow-sm'
+              ? 'bg-brand-700 text-white'
               : 'border border-slate-300 bg-white text-brand-900 hover:bg-brand-50'
           }`}
         >
@@ -328,13 +328,13 @@ export function Assistant() {
         <>
           {procedure ? <p className="text-sm font-semibold text-brand-800">{t('ai.aboutProcedure', { title: loc(procedure.title) })}</p> : null}
 
-          <section aria-label={t('ai.title')} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <section aria-label={t('ai.title')} className="rounded-lg border border-slate-200 bg-white p-4">
             <div className="max-h-[28rem] min-h-40 space-y-4 overflow-y-auto pe-1" aria-live="polite">
               {messages.length === 0 ? <p className="py-8 text-center text-muted">{t('ai.empty')}</p> : null}
               {messages.map((message, index) => (
                 <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`max-w-[90%] whitespace-pre-wrap rounded-2xl px-4 py-3 text-base ${
+                    className={`max-w-[90%] whitespace-pre-wrap rounded-lg px-4 py-3 text-base ${
                       message.role === 'user' ? 'bg-brand-700 text-white' : 'bg-slate-100 text-ink'
                     }`}
                   >
@@ -500,7 +500,7 @@ export function Assistant() {
             </div>
 
             {docAttachment ? (
-              <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-2">
+              <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-2">
                 <img
                   src={docAttachment.previewUrl}
                   alt={docAttachment.name}
@@ -545,14 +545,14 @@ export function Assistant() {
 
           {formResult && typeof formResult !== 'string' ? <FormGuideView guide={formResult} /> : null}
           {typeof formResult === 'string' ? (
-            <div className="mt-5 rounded-2xl border border-brand-200 bg-brand-50/70 p-4" aria-live="polite">
+            <div className="mt-5 rounded-lg border border-brand-200 bg-brand-50/70 p-4" aria-live="polite">
               <div className="whitespace-pre-wrap text-base text-ink">{renderMessageContent(formResult)}</div>
             </div>
           ) : null}
 
           {docResult ? (
-            <div className="mt-5 rounded-2xl border border-brand-200 bg-brand-50/70 p-4" aria-live="polite">
-              <p className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-800">{t('ai.doc.result')}</p>
+            <div className="mt-5 rounded-lg border border-brand-200 bg-brand-50/70 p-4" aria-live="polite">
+              <p className="mb-2 text-xs font-bold text-brand-800">{t('ai.doc.result')}</p>
               <div className="whitespace-pre-wrap text-base text-ink">{renderMessageContent(docResult)}</div>
               <ActionChips content={docResult} />
             </div>

@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<Props, { failed: boolean }> {
   render() {
     if (!this.state.failed) return this.props.children;
     return (
-      <div role="alert" className="mx-auto mt-24 max-w-md rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+      <div role="alert" className="mx-auto mt-24 max-w-md rounded-lg border border-slate-200 bg-white p-6 text-center">
         <h1 className="text-xl font-bold text-brand-900">{this.props.title}</h1>
         <p className="mt-2 text-muted">{this.props.body}</p>
         <button type="button" className={`${btnPrimary} mt-4`} onClick={() => window.location.reload()}>
