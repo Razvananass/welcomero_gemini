@@ -1,6 +1,10 @@
 // AI provider layer. The rest of the server code only knows the `AiProvider` interface,
 // so switching to another model provider later means adding one object here and changing getProvider().
-import { GoogleGenAI, ThinkingLevel } from "@google/genai";
+import {
+  GoogleGenAI,
+  ThinkingLevel,
+  type GenerateContentConfig,
+} from "@google/genai";
 
 export interface ChatAttachment {
   mimeType: string;
@@ -37,6 +41,7 @@ export type FailureReason =
   | "timeout"
   | "network"
   | "upstream_5xx"
+  | "region_unsupported"
   | "unknown";
 
 export class ProviderError extends Error {
@@ -68,7 +73,8 @@ export function classifyFailure(
     msg.includes("permission_denied") ||
     msg.includes("unauthenticated") ||
     msg.includes("invalid api key") ||
-    msg.includes("invalid x-api-key")
+    msg.includes("invalid x-api-key") ||
+    msg.includes("api key expired")
   )
     return "invalid_key";
   if (
@@ -85,6 +91,7 @@ export function classifyFailure(
     msg.includes("does not exist")
   )
     return "model_unavailable";
+  if (msg.includes("location is not supported")) return "region_unsupported";
   if (status === 400) return "bad_request";
   if (status !== undefined && status >= 500) return "upstream_5xx";
   return "unknown";
@@ -172,6 +179,24 @@ function readEnvKey(name: string): string {
   return raw.trim().replace(/^["']|["']$/g, "");
 }
 
+/** Shared AI_MODEL is only used when it names a model of that provider, so a Claude id never reaches Gemini. */
+function sharedModelFor(prefix: string): string {
+  const shared = readEnvKey("AI_MODEL").replace(/^models\//, "");
+  return shared.toLowerCase().startsWith(prefix) ? shared : "";
+}
+
+function geminiModel(): string {
+  return (
+    readEnvKey("GEMINI_MODEL").replace(/^models\//, "") ||
+    sharedModelFor("gemini") ||
+    "gemini-3.8-flash"
+  );
+}
+
+function anthropicModel(): string {
+  return sharedModelFor("claude") || "claude-sonnet-5-5";
+}
+
 // ---- Anthropic (paid) ------------------------------------------------------------------------
 const anthropicProvider: AiProvider = {
   name: "anthropic",
@@ -182,7 +207,8 @@ const anthropicProvider: AiProvider = {
 
   async complete({ system, messages, maxTokens }) {
     const apiKey = readEnvKey("ANTHROPIC_API_KEY");
-    if (!apiKey) throw new ProviderError("Missing API key", "upstream", "invalid_key");
+    if (!apiKey)
+      throw new ProviderError("Missing API key", "upstream", "invalid_key");
     const mapped = messages.map((m) => ({
       role: m.role,
       content: m.attachment
@@ -203,7 +229,7 @@ const anthropicProvider: AiProvider = {
       ANTHROPIC_URL,
       { "x-api-key": apiKey, "anthropic-version": "2023-06-01" },
       {
-        model: process.env.AI_MODEL || "claude-sonnet-5-5",
+        model: anthropicModel(),
         max_tokens: maxTokens,
         system,
         messages: mapped,
@@ -230,9 +256,9 @@ const geminiProvider: AiProvider = {
 
   async complete({ system, messages, maxTokens }) {
     const apiKey = readEnvKey("GEMINI_API_KEY");
-    if (!apiKey) throw new ProviderError("Missing API key", "upstream", "invalid_key");
-    const model =
-      process.env.GEMINI_MODEL || process.env.AI_MODEL || "gemini-3.8-flash";
+    if (!apiKey)
+      throw new ProviderError("Missing API key", "upstream", "invalid_key");
+    const model = geminiModel();
     const ai = new GoogleGenAI({
       apiKey,
       httpOptions: {
@@ -246,55 +272,84 @@ const geminiProvider: AiProvider = {
     const isGemini4 = model.startsWith("gemini-4");
     const isGemini3 = model.startsWith("gemini-3");
 
-    try {
-      const response = await ai.models.generateContent({
+    const contents = messages.map((m) => {
+      const parts: Array<
+        { text: string } | { inlineData: { mimeType: string; data: string } }
+      > = [];
+      if (m.attachment) {
+        parts.push({
+          inlineData: {
+            mimeType: m.attachment.mimeType,
+            data: m.attachment.data,
+          },
+        });
+      }
+      parts.push({ text: m.content });
+      return {
+        role: m.role === "assistant" ? "model" : "user",
+        parts,
+      };
+    });
+
+    const tunedConfig: GenerateContentConfig = {
+      ...(isGemini4
+        ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
+        : isGemini3
+          ? {
+              // Thinking tokens count against maxOutputTokens, so leave room for them.
+              maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM,
+              // LOW works on every Gemini 3 model. MINIMAL is rejected by 3.8 Flash (the default model).
+              thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+            }
+          : model.startsWith("gemini-2.5-flash")
+            ? {
+                maxOutputTokens: maxTokens,
+                thinkingConfig: { thinkingBudget: 0 },
+              }
+            : { maxOutputTokens: maxTokens }),
+    };
+    // Used if the model rejects the tuned settings (e.g. a thinking level it does not support).
+    const plainConfig: GenerateContentConfig = isGemini4
+      ? {}
+      : { maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM };
+
+    const generate = (extra: GenerateContentConfig) =>
+      ai.models.generateContent({
         model,
-        contents: messages.map((m) => {
-          const parts: Array<
-            { text: string } | { inlineData: { mimeType: string; data: string } }
-          > = [];
-          if (m.attachment) {
-            parts.push({
-              inlineData: {
-                mimeType: m.attachment.mimeType,
-                data: m.attachment.data,
-              },
-            });
-          }
-          parts.push({ text: m.content });
-          return {
-            role: m.role === "assistant" ? "model" : "user",
-            parts,
-          };
-        }),
+        contents,
         config: {
           systemInstruction: system,
-          ...(isGemini4
-            ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
-            : isGemini3
-              ? {
-                  // Thinking tokens count against maxOutputTokens, so leave room for them.
-                  maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM,
-                  // LOW works on every Gemini 3 model. MINIMAL is rejected by 3.8 Flash (the default model).
-                  thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
-                }
-              : model.startsWith("gemini-2.5-flash")
-                ? {
-                    maxOutputTokens: maxTokens,
-                    thinkingConfig: { thinkingBudget: 0 },
-                  }
-                : { maxOutputTokens: maxTokens }),
+          ...extra,
           abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         },
       });
+
+    try {
+      let response;
+      try {
+        response = await generate(tunedConfig);
+      } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
+        const status = (error as { status?: unknown })?.status;
+        if (status !== 400 || classifyFailure(400, msg) !== "bad_request")
+          throw error;
+        console.warn(
+          `[gemini] ${model} rejected tuned config, retrying with defaults: ${msg}`,
+        );
+        response = await generate(plainConfig);
+      }
       const text = (response.text ?? "").trim();
       if (!text) {
         const blocked =
           Boolean(response.promptFeedback?.blockReason) ||
           (response.candidates ?? []).some((c) =>
-            ["SAFETY", "PROHIBITED_CONTENT", "BLOCKLIST", "SPII", "RECITATION"].includes(
-              String(c?.finishReason ?? ""),
-            ),
+            [
+              "SAFETY",
+              "PROHIBITED_CONTENT",
+              "BLOCKLIST",
+              "SPII",
+              "RECITATION",
+            ].includes(String(c?.finishReason ?? "")),
           );
         if (blocked)
           throw new ProviderError("Response blocked", "upstream", "blocked");
@@ -341,12 +396,13 @@ const groqProvider: AiProvider = {
 
   async complete({ system, messages, maxTokens }) {
     const apiKey = readEnvKey("GROQ_API_KEY");
-    if (!apiKey) throw new ProviderError("Missing API key", "upstream", "invalid_key");
+    if (!apiKey)
+      throw new ProviderError("Missing API key", "upstream", "invalid_key");
     const model =
-      process.env.GROQ_MODEL ||
+      readEnvKey("GROQ_MODEL") ||
       (!readEnvKey("GEMINI_API_KEY") ||
       process.env.AI_PROVIDER?.trim().toLowerCase() === "groq"
-        ? process.env.AI_MODEL
+        ? readEnvKey("AI_MODEL")
         : undefined) ||
       "openai/gpt-oss-20b";
     const textMessages = messages.map((m) => ({
@@ -399,15 +455,14 @@ export function getProviders(): AiProvider[] {
 
 /** Effective model name for a provider (not secret). Mirrors the selection inside each provider. */
 export function effectiveModel(name: string): string | undefined {
-  if (name === "gemini")
-    return process.env.GEMINI_MODEL || process.env.AI_MODEL || "gemini-3.8-flash";
-  if (name === "anthropic") return process.env.AI_MODEL || "claude-sonnet-5-5";
+  if (name === "gemini") return geminiModel();
+  if (name === "anthropic") return anthropicModel();
   if (name === "groq")
     return (
-      process.env.GROQ_MODEL ||
+      readEnvKey("GROQ_MODEL") ||
       (!readEnvKey("GEMINI_API_KEY") ||
       process.env.AI_PROVIDER?.trim().toLowerCase() === "groq"
-        ? process.env.AI_MODEL
+        ? readEnvKey("AI_MODEL")
         : undefined) ||
       "openai/gpt-oss-20b"
     );
