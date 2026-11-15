@@ -107,6 +107,7 @@ function failureFor(
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const REQUEST_TIMEOUT_MS = 12_000;
+const GEMINI_THINKING_HEADROOM = 1024;
 
 /** Sends one JSON request and turns every failure into a ProviderError with a safe, generic message. */
 
@@ -272,8 +273,10 @@ const geminiProvider: AiProvider = {
             ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
             : isGemini3
               ? {
-                  maxOutputTokens: maxTokens,
-                  thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
+                  // Thinking tokens count against maxOutputTokens, so leave room for them.
+                  maxOutputTokens: maxTokens + GEMINI_THINKING_HEADROOM,
+                  // LOW works on every Gemini 3 model. MINIMAL is rejected by 3.8 Flash (the default model).
+                  thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
                 }
               : model.startsWith("gemini-2.5-flash")
                 ? {
