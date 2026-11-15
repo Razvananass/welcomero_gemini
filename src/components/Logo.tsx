@@ -25,7 +25,7 @@ export function Wordmark({ className = '' }: { className?: string }) {
 export function Logo() {
   const { t } = useI18n();
   return (
-    <Link to="/" aria-label={t('nav.home')} className="flex items-center gap-2.5 text-xl text-brand-900">
+    <Link to="/" aria-label={t('nav.home')} className="flex min-w-0 items-center gap-2 text-xl text-brand-900 sm:gap-2.5">
       <LogoMark />
       <Wordmark />
     </Link>

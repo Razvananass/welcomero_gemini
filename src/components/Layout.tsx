@@ -108,7 +108,7 @@ function Header() {
 
   return (
     <header className="no-print sticky top-0 z-20 border-b border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-3 sm:px-4">
         <Logo />
         {profile ? (
           <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
@@ -120,9 +120,9 @@ function Header() {
             <MoreMenu />
           </nav>
         ) : null}
-        <div className="flex items-center gap-2">
+        <div className="ms-auto flex min-w-0 items-center gap-1.5 sm:gap-2">
           <ThemeToggle className={profile ? 'hidden sm:inline-flex' : 'inline-flex'} />
-          <LanguageSwitcher />
+          <LanguageSwitcher className="min-h-10 w-auto min-w-0 max-w-28 rounded-lg border border-slate-400 bg-white px-2 py-1.5 text-sm font-medium text-ink sm:max-w-none" />
           {authReady && user ? (
             <Link
               to="/settings"
@@ -138,10 +138,11 @@ function Header() {
               type="button"
               onClick={signInWithGoogle}
               disabled={authLoading}
+              aria-label={authLoading ? t('auth.signingIn') : t('auth.navSignIn')}
               className="inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-lg border border-brand-700 bg-white px-3 text-sm font-semibold text-brand-800 hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Icon name="user" className="size-4" />
-              <span>{authLoading ? t('auth.signingIn') : t('auth.navSignIn')}</span>
+              <span className="hidden sm:inline">{authLoading ? t('auth.signingIn') : t('auth.navSignIn')}</span>
             </button>
           ) : null}
           {profile ? (
