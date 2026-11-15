@@ -12,7 +12,7 @@ import type { Localized } from '../types';
 /** One Romanian sentence with how to say it and what it means in the reader's language. */
 function RoLine({ ro, pron, meaning }: { ro: string; pron: string | null; meaning: string }) {
   return (
-    <div className="print-card rounded-xl border border-slate-300 bg-white p-4">
+    <div className="print-card rounded-lg border border-slate-300 bg-white p-4">
       <p lang="ro" dir="ltr" className="text-xl font-bold leading-snug text-ink">
         {ro}
       </p>
@@ -33,7 +33,7 @@ function RoLine({ ro, pron, meaning }: { ro: string; pron: string | null; meanin
 function KitSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="print-card space-y-3">
-      <h2 className="border-b-2 border-brand-700 pb-1 text-lg font-extrabold text-brand-900">{title}</h2>
+      <h2 className="border-b-2 border-brand-700 pb-1 text-lg font-bold text-brand-900">{title}</h2>
       {children}
     </section>
   );
@@ -82,7 +82,7 @@ export function Kit() {
           <p className="text-sm font-semibold text-muted">
             <Wordmark className="text-brand-900" /> · {t('kit.title')}
           </p>
-          <h1 className="text-2xl font-extrabold leading-tight text-brand-900 sm:text-3xl">{loc(procedure.title)}</h1>
+          <h1 className="text-2xl font-bold leading-tight text-brand-900 sm:text-3xl">{loc(procedure.title)}</h1>
           {language !== 'ro' ? (
             <p lang="ro" dir="ltr" className="text-sm text-muted">
               {procedureRo}
@@ -104,7 +104,7 @@ export function Kit() {
 
       <KitSection title={t('kit.whereTitle')}>
         {institution && (institution.address || institution.phone || institution.hours) ? (
-          <div className="rounded-xl border border-slate-300 bg-white p-4 text-sm">
+          <div className="rounded-lg border border-slate-300 bg-white p-4 text-sm">
             <p className="font-bold text-ink">{loc(institution.name)}</p>
             {institution.address ? <p className="mt-1">{institution.address}</p> : null}
             {institution.phone ? (

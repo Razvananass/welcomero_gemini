@@ -28,6 +28,8 @@ export const ne: Record<MessageKey, string> = {
   'nav.settings': 'सेटिङ',
   'nav.skip': 'मुख्य सामग्रीमा जानुहोस्',
   'nav.language': 'भाषा',
+  'nav.more': 'थप',
+  'nav.practice': 'रोमानियाली अभ्यास',
   'nav.home': 'welcomeRo को गृहपृष्ठ',
 
   // ---- labels

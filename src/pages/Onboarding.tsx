@@ -41,7 +41,7 @@ function Choice({
 }) {
   return (
     <label
-      className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 ${
+      className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 ${
         checked ? 'border-brand-700 bg-brand-50' : 'border-slate-300 bg-white hover:border-brand-500'
       }`}
     >

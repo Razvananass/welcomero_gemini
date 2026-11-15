@@ -172,7 +172,7 @@ export function Practice() {
               type="button"
               aria-pressed={active}
               onClick={() => chooseDeck(d.id)}
-              className={`rounded-xl border px-3 py-2 text-start text-sm font-semibold ${
+              className={`rounded-lg border px-3 py-2 text-start text-sm font-semibold ${
                 active ? 'border-brand-700 bg-brand-700 text-white' : 'border-slate-300 bg-white text-brand-900 hover:bg-brand-50'
               }`}
             >
@@ -208,12 +208,12 @@ export function Practice() {
 
       {mode === 'cards' && card ? (
         <article className={cardClass} aria-labelledby="practice-card-title">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+          <p className="text-sm font-semibold text-muted">
             {t('practice.cardOf', { current: Math.min(index, deck.cards.length - 1) + 1, total: deck.cards.length })}
           </p>
-          <div className="mt-2 rounded-xl bg-brand-50 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand-800">{t('help.romanian')}</p>
-            <p id="practice-card-title" lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-2xl font-extrabold text-ink">
+          <div className="mt-2 rounded-lg bg-brand-50 p-5">
+            <p className="text-sm font-semibold text-brand-800">{t('help.romanian')}</p>
+            <p id="practice-card-title" lang="ro" dir="ltr" className="mt-1 whitespace-pre-wrap text-2xl font-bold text-ink">
               {card.ro}
             </p>
             {card.pron ? (
@@ -230,7 +230,7 @@ export function Practice() {
           <div className="mt-4">
             {showMeaning ? (
               <>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t('help.meaning')}</p>
+                <p className="text-sm font-semibold text-muted">{t('help.meaning')}</p>
                 <Meaning card={card} />
               </>
             ) : (
@@ -295,14 +295,14 @@ export function Practice() {
 
       {mode === 'quiz' && question ? (
         <article className={cardClass} aria-labelledby="practice-quiz-title">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+          <p className="text-sm font-semibold text-muted">
             {t('practice.cardOf', { current: step + 1, total: questions.length })}
           </p>
           <h2 id="practice-quiz-title" className="mt-1 text-base font-bold text-brand-900">
             {t('practice.quiz.question')}
           </h2>
-          <div className="mt-2 rounded-xl bg-brand-50 p-5">
-            <p lang="ro" dir="ltr" className="whitespace-pre-wrap text-2xl font-extrabold text-ink">
+          <div className="mt-2 rounded-lg bg-brand-50 p-5">
+            <p lang="ro" dir="ltr" className="whitespace-pre-wrap text-2xl font-bold text-ink">
               {question.card.ro}
             </p>
           </div>
@@ -327,7 +327,7 @@ export function Practice() {
                     type="button"
                     disabled={revealed}
                     onClick={() => answer(optionIndex)}
-                    className={`w-full rounded-xl border p-4 text-start text-base ${style}`}
+                    className={`w-full rounded-lg border p-4 text-start text-base ${style}`}
                   >
                     {revealed && isCorrect ? <span aria-hidden="true">✓ </span> : null}
                     {revealed && isPicked && !isCorrect ? <span aria-hidden="true">✗ </span> : null}
@@ -359,7 +359,7 @@ export function Practice() {
 
       {finished ? (
         <section className={`${cardClass} text-center`} aria-live="polite">
-          <p className="text-2xl font-extrabold text-brand-900">{t('practice.quiz.score', { score, total: questions.length })}</p>
+          <p className="text-2xl font-bold text-brand-900">{t('practice.quiz.score', { score, total: questions.length })}</p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <button type="button" className={btnPrimary} onClick={restartQuiz}>
               {t('practice.quiz.again')}

@@ -26,6 +26,8 @@ export const ar: Record<MessageKey, string> = {
   'nav.settings': 'الإعدادات',
   'nav.skip': 'انتقل إلى المحتوى الرئيسي',
   'nav.language': 'اللغة',
+  'nav.more': 'المزيد',
+  'nav.practice': 'تدرّب على الرومانية',
   'nav.home': 'الصفحة الرئيسية لـ welcomeRo',
 
   'level.verified': 'من مصدر رسمي',

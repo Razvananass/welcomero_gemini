@@ -7,8 +7,8 @@ export function FormGuideView({ guide }: { guide: FormGuide }) {
   const { t } = useI18n();
   return (
     <div className="mt-5 space-y-4" aria-live="polite">
-      <div className="rounded-2xl border border-brand-200 bg-brand-50/70 p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand-800">{t('ai.form.result')}</p>
+      <div className="rounded-lg border border-brand-200 bg-brand-50/70 p-4">
+        <p className="text-xs font-bold text-brand-800">{t('ai.form.result')}</p>
         {guide.form ? (
           <p lang="ro" className="mt-1 text-lg font-bold text-brand-900">
             {guide.form}
@@ -20,7 +20,7 @@ export function FormGuideView({ guide }: { guide: FormGuide }) {
       {guide.fields.length > 0 ? (
         <ol className="space-y-3">
           {guide.fields.map((field, index) => (
-            <li key={`${index}-${field.label}`} className="rounded-xl border border-slate-200 bg-white p-4">
+            <li key={`${index}-${field.label}`} className="rounded-lg border border-slate-200 bg-white p-4">
               <div className="flex items-start gap-3">
                 <span className="grid size-7 shrink-0 place-items-center rounded-full bg-brand-700 text-sm font-bold text-white">
                   {index + 1}
@@ -52,7 +52,7 @@ export function FormGuideView({ guide }: { guide: FormGuide }) {
       ) : null}
 
       {guide.skip.length > 0 ? (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm">
           <p className="font-semibold text-brand-900">{t('ai.form.skip')}</p>
           <ul className="mt-1 list-disc ps-5" lang="ro">
             {guide.skip.map((item) => (
@@ -63,7 +63,7 @@ export function FormGuideView({ guide }: { guide: FormGuide }) {
       ) : null}
 
       {guide.tips.length > 0 ? (
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm">
+        <div className="rounded-lg border border-slate-200 bg-white p-4 text-sm">
           <p className="font-semibold text-brand-900">{t('ai.form.tips')}</p>
           <ul className="mt-1 list-disc space-y-1 ps-5">
             {guide.tips.map((item) => (

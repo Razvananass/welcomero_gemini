@@ -26,6 +26,8 @@ export const uk: Record<MessageKey, string> = {
   'nav.settings': 'Налаштування',
   'nav.skip': 'Перейти до основного вмісту',
   'nav.language': 'Мова',
+  'nav.more': 'Більше',
+  'nav.practice': 'Практика румунської',
   'nav.home': 'Головна сторінка welcomeRo',
 
   'level.verified': 'З офіційного джерела',

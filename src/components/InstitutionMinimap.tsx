@@ -414,7 +414,7 @@ export function InstitutionMinimap({
                 onMouseEnter={() => setHoveredId(inst.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 aria-pressed={isSelected}
-                className={`inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-start text-sm font-medium transition-colors ${
+                className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-start text-sm font-medium transition-colors ${
                   isSelected
                     ? 'border-brand-700 bg-brand-50 text-brand-900 ring-2 ring-brand-200'
                     : 'border-slate-200 bg-white text-ink hover:border-brand-300 hover:bg-slate-50'
@@ -447,12 +447,12 @@ export function InstitutionMinimap({
 
       <div
         ref={mapContainerRef}
-        className="relative z-0 h-[340px] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-[380px]"
+        className="relative z-0 h-[340px] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100 sm:h-[380px]"
       />
 
       {unverifiedInstitutions.length > 0 ? (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5">
-          <h3 className="text-xs font-bold uppercase tracking-wide text-muted">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3.5">
+          <h3 className="text-xs font-bold text-muted">
             {t('inst.minimap.unverifiedTitle')}
           </h3>
           <div className="mt-2.5 grid gap-3 sm:grid-cols-2">

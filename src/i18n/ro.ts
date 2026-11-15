@@ -26,6 +26,8 @@ export const ro: Record<MessageKey, string> = {
   'nav.settings': 'Setări',
   'nav.skip': 'Sari la conținutul principal',
   'nav.language': 'Limba',
+  'nav.more': 'Mai multe',
+  'nav.practice': 'Exersează româna',
   'nav.home': 'Pagina principală welcomeRo',
 
   'level.verified': 'Dintr-o sursă oficială',

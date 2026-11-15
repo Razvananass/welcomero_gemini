@@ -17,17 +17,10 @@ export function HumanHelpCard() {
 
   return (
     <section aria-labelledby="human-help-title" className={cardClass}>
-      <div className="flex items-start gap-3">
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700">
-          <Icon name="community" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h2 id="human-help-title" className="text-lg font-bold text-brand-900">
-            {t('human.title')}
-          </h2>
-          <p className="mt-1 text-sm text-muted">{t('human.body', { org: loc(org.name) })}</p>
-        </div>
-      </div>
+      <h2 id="human-help-title" className="text-lg font-bold text-brand-900">
+        {t('human.title')}
+      </h2>
+      <p className="mt-2 text-muted">{t('human.body', { org: loc(org.name) })}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {org.email ? (
@@ -44,7 +37,7 @@ export function HumanHelpCard() {
         <CopyButton text={message} />
       </div>
 
-      <details className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+      <details className="mt-4 rounded-lg border border-slate-200 px-4 py-3 text-base">
         <summary className="cursor-pointer font-semibold text-brand-900">{t('human.preview')}</summary>
         <p className="mt-2 text-muted">{t('human.preview.hint')}</p>
         <pre lang="ro" dir="ltr" className="mt-2 whitespace-pre-wrap break-words font-sans text-ink">
@@ -52,7 +45,7 @@ export function HumanHelpCard() {
         </pre>
       </details>
 
-      <p className="mt-3 text-xs text-muted">
+      <p className="mt-3 text-sm text-muted">
         {org.address ? <span>{org.address} · </span> : null}
         <a href={org.website} target="_blank" rel="noreferrer noopener" className={linkClass}>
           {t('human.website')}

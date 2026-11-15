@@ -27,6 +27,8 @@ export const en = {
   'nav.settings': 'Settings',
   'nav.skip': 'Skip to main content',
   'nav.language': 'Language',
+  'nav.more': 'More',
+  'nav.practice': 'Practise Romanian',
   'nav.home': 'welcomeRo home',
 
   // ---- labels

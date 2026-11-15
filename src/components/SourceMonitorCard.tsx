@@ -77,7 +77,7 @@ export function SourceMonitorCard() {
       </div>
 
       {updatedList.length > 0 ? (
-        <div className="space-y-2 rounded-xl border border-amber-300 bg-amber-50 p-4">
+        <div className="space-y-2 rounded-lg border border-amber-300 bg-amber-50 p-4">
           <h3 className="text-sm font-bold text-amber-950">{t('monitor.updatesTitle')}</h3>
           <ul className="space-y-2">
             {updatedList.map((item) => (
@@ -94,7 +94,7 @@ export function SourceMonitorCard() {
         <Notice tone="info">{t('monitor.noUpdates')}</Notice>
       )}
 
-      <details className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+      <details className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
         <summary className="cursor-pointer font-semibold text-brand-900">
           {t('monitor.viewSources', { count: list.length })}
         </summary>
