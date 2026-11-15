@@ -1,10 +1,11 @@
 // Serverless endpoint used by the AI assistant, document explainer, and custom Romanian message feature.
 //
-//   GET  /api/chat  -> { configured: boolean, provider?: string }
+//   GET  /api/chat  -> { configured: boolean, provider?: string, model?: string }
 //   POST /api/chat  -> { reply: string, citations?: curated source metadata[] }
 //
 // The API key is read from process.env on the SERVER only. It is never sent to the browser.
 import {
+  effectiveModel,
   getProviders,
   ProviderError,
   type ChatAttachment,
@@ -115,7 +116,9 @@ export function GET(): Response {
   const providers = getProviders();
   return json({
     configured: providers.length > 0,
-    ...(providers[0] ? { provider: providers[0].name } : {}),
+    ...(providers[0]
+      ? { provider: providers[0].name, model: effectiveModel(providers[0].name) }
+      : {}),
   });
 }
 
@@ -202,7 +205,7 @@ export async function POST(request: Request): Promise<Response> {
                 : 500,
   };
 
-  let lastError: unknown;
+  let firstError: unknown;
 
   for (const provider of eligibleProviders) {
     try {
@@ -210,20 +213,23 @@ export async function POST(request: Request): Promise<Response> {
       const citations = citationsInReply(reply);
       return json({ reply, ...(citations.length > 0 ? { citations } : {}) });
     } catch (error) {
-      lastError = error;
-      const kind = error instanceof ProviderError ? error.kind : "upstream";
+      if (firstError === undefined) firstError = error;
+      const failure = error instanceof ProviderError ? error : undefined;
 
+      // Full detail stays in the server log only.
       console.error(
-        `[api/chat] ${provider.name} failed:`,
-        error instanceof Error ? error.message : kind,
+        `[api/chat] ${provider.name} failed: status=${failure?.status ?? "n/a"} reason=${failure?.reason ?? "unknown"} detail=${error instanceof Error ? error.message : "n/a"}`,
       );
     }
   }
 
-  const kind = lastError instanceof ProviderError ? lastError.kind : "upstream";
+  // The reason of the first (primary) provider is reported.
+  const primary = firstError instanceof ProviderError ? firstError : undefined;
+  const kind = primary?.kind ?? "upstream";
+  const reason = primary?.reason ?? "unknown";
 
-  if (kind === "rate_limited") return json({ error: "rate_limited" }, 429);
-  if (kind === "timeout") return json({ error: "upstream_timeout" }, 504);
+  if (kind === "rate_limited") return json({ error: "rate_limited", reason }, 429);
+  if (kind === "timeout") return json({ error: "upstream_timeout", reason }, 504);
 
-  return json({ error: "upstream_error" }, 502);
+  return json({ error: "upstream_error", reason }, 502);
 }

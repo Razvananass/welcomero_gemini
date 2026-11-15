@@ -28,7 +28,11 @@ export interface UserContextSummary {
 export type AiErrorCode = 'not_configured' | 'unreachable' | 'rate_limited' | 'failed';
 
 export class AiError extends Error {
-  constructor(public readonly code: AiErrorCode) {
+  constructor(
+    public readonly code: AiErrorCode,
+    /** Safe technical category from the server (e.g. "invalid_key"), when provided. */
+    public readonly reason?: string,
+  ) {
     super(code);
   }
 }
@@ -73,9 +77,10 @@ async function post(body: unknown): Promise<string> {
   }
   const data = await readJson(response);
   if (!data) throw new AiError('unreachable');
+  const reason = typeof data.reason === 'string' && /^[a-z0-9_]{1,40}$/.test(data.reason) ? data.reason : undefined;
   if (response.status === 503) throw new AiError('not_configured');
-  if (response.status === 429) throw new AiError('rate_limited');
-  if (!response.ok || typeof data.reply !== 'string') throw new AiError('failed');
+  if (response.status === 429) throw new AiError('rate_limited', reason);
+  if (!response.ok || typeof data.reply !== 'string') throw new AiError('failed', reason);
   return data.reply;
 }
 

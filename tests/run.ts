@@ -972,7 +972,7 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     const box = capture({ candidates: [{ content: { parts: [{ text: 'The CNP is ' }, { text: 'a personal code.' }] } }] });
     try {
       const { GET, POST } = await import('../api/chat');
-      assert.deepEqual(await GET().json(), { configured: true, provider: 'gemini' });
+      assert.deepEqual(await GET().json(), { configured: true, provider: 'gemini', model: 'gemini-3.8-flash' });
       const res = await POST(post(goodBody));
       assert.equal(res.status, 200);
       assert.deepEqual(await res.json(), { reply: 'The CNP is a personal code.' });
@@ -1053,6 +1053,67 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
       assert.equal(res.status, 502);
       assert.ok(!(await res.text()).includes('API key not valid'), 'upstream error text is not leaked');
     } finally { restore(); }
+  });
+
+  it('Gemini: failures are classified into safe reasons without leaking upstream text', async () => {
+    setup({ GEMINI_API_KEY: 'g' });
+    const origError = console.error;
+    const logged: string[] = [];
+    console.error = (...args: unknown[]) => { logged.push(args.join(' ')); };
+    try {
+      const { POST } = await import('../api/chat');
+      const cases: Array<[string, unknown, number, number, string]> = [
+        ['invalid key 403', { error: { message: 'secret-detail permission' } }, 403, 502, 'invalid_key'],
+        ['invalid key 401', { error: { message: 'secret-detail' } }, 401, 502, 'invalid_key'],
+        ['invalid key 400', { error: { message: 'API key not valid. secret-detail' } }, 400, 502, 'invalid_key'],
+        ['model 404', { error: { message: 'secret-detail models/x is not found' } }, 404, 502, 'model_unavailable'],
+        ['bad request 400', { error: { message: 'secret-detail' } }, 400, 502, 'bad_request'],
+        ['quota 429', { error: { message: 'secret-detail' } }, 429, 429, 'quota_exceeded'],
+        ['server 503', { error: { message: 'secret-detail' } }, 503, 502, 'upstream_5xx'],
+        ['empty 200', { candidates: [] }, 200, 502, 'empty_response'],
+      ];
+      for (const [label, reply, status, expectedStatus, reason] of cases) {
+        capture(reply, status);
+        logged.length = 0;
+        const res = await POST(post(goodBody));
+        const text = await res.text();
+        assert.equal(res.status, expectedStatus, label);
+        assert.equal(JSON.parse(text).reason, reason, label);
+        assert.ok(!text.includes('secret-detail') && !text.includes('API key not valid'), `${label}: no upstream text`);
+        assert.ok(logged.some((l) => l.includes('gemini') && l.includes(`reason=${reason}`)), `${label}: log has provider and reason`);
+        if (status !== 200) assert.ok(logged.some((l) => l.includes(`status=${status}`)), `${label}: log has status`);
+      }
+      globalThis.fetch = (async () => { throw new TypeError('fetch failed'); }) as typeof fetch;
+      let res = await POST(post(goodBody));
+      assert.deepEqual(await res.json(), { error: 'upstream_error', reason: 'network' });
+      globalThis.fetch = (async () => { throw Object.assign(new Error('slow'), { name: 'TimeoutError' }); }) as typeof fetch;
+      res = await POST(post(goodBody));
+      assert.equal(res.status, 504);
+      assert.deepEqual(await res.json(), { error: 'upstream_timeout', reason: 'timeout' });
+    } finally { console.error = origError; restore(); }
+  });
+
+  it('GET reports the effective model of the primary provider', async () => {
+    setup({ GEMINI_API_KEY: 'g', GEMINI_MODEL: 'gemini-test-model' } as never);
+    try {
+      const { GET } = await import('../api/chat');
+      assert.deepEqual(await GET().json(), { configured: true, provider: 'gemini', model: 'gemini-test-model' });
+    } finally { restore(); delete process.env.GEMINI_MODEL; }
+  });
+
+  it('Failures report the reason of the primary provider', async () => {
+    setup({ GEMINI_API_KEY: 'g', GROQ_API_KEY: 'q' });
+    const origError = console.error;
+    console.error = () => {};
+    try {
+      const { POST } = await import('../api/chat');
+      globalThis.fetch = (async (input: string | URL | Request) => {
+        const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+        return new Response(JSON.stringify({ error: { message: 'x' } }), { status: url.includes('groq') ? 500 : 403 });
+      }) as typeof fetch;
+      const res = await POST(post(goodBody));
+      assert.deepEqual(await res.json(), { error: 'upstream_error', reason: 'invalid_key' });
+    } finally { console.error = origError; restore(); }
   });
 
   it('Groq: OpenAI-style request with a Bearer key and the system prompt first', async () => {

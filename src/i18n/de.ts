@@ -267,6 +267,7 @@ export const de: Record<MessageKey, string> = {
   'ai.unavailable.body': 'Auf dem Server ist kein KI-Schlüssel eingerichtet. Der Rest von WelcomeRO funktioniert auch ohne ihn.',
   'ai.unreachable.body': 'Der KI-Dienst war nicht erreichbar. Wenn Sie die App auf Ihrem Computer ausführen, starten Sie sie mit „npm run dev“, damit die /api-Route funktioniert. Der Rest von WelcomeRO funktioniert auch ohne ihn.',
   'ai.error': 'Etwas ist schiefgegangen. Bitte versuchen Sie es erneut.',
+  'ai.errorDetail': 'Details: {reason}',
   'ai.rateLimited': 'Zu viele Anfragen. Bitte warten Sie einen Moment und versuchen Sie es erneut.',
   'ai.newChat': 'Neues Gespräch',
   'ai.empty': 'Noch keine Nachrichten. Wählen Sie ein Beispiel oder schreiben Sie Ihre eigene Frage.',

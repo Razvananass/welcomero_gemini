@@ -256,6 +256,7 @@ export const es: Record<MessageKey, string> = {
   'ai.unavailable.body': 'No hay ninguna clave de IA configurada en el servidor. El resto de WelcomeRO funciona sin ella.',
   'ai.unreachable.body': 'No se pudo contactar con el servicio de IA. Si ejecutas la aplicación en tu ordenador, inícialo con “npm run dev” para que funcione la ruta /api. El resto de WelcomeRO funciona sin ella.',
   'ai.error': 'Algo salió mal. Inténtalo de nuevo.',
+  'ai.errorDetail': 'Detalles: {reason}',
   'ai.rateLimited': 'Demasiadas solicitudes. Espera un momento e inténtalo de nuevo.',
   'ai.newChat': 'Nueva conversación',
   'ai.empty': 'Todavía no hay mensajes. Elige un ejemplo o escribe tu propia pregunta.',

@@ -256,6 +256,7 @@ export const ar: Record<MessageKey, string> = {
   'ai.unavailable.body': 'لم يتم ضبط مفتاح للذكاء الاصطناعي على الخادم. بقية WelcomeRO تعمل بدونه.',
   'ai.unreachable.body': 'تعذّر الوصول إلى خدمة الذكاء الاصطناعي. إذا كنت تشغّل التطبيق على جهازك فابدأه بالأمر «npm run dev» حتى يعمل المسار /api. بقية WelcomeRO تعمل بدونه.',
   'ai.error': 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+  'ai.errorDetail': 'التفاصيل: {reason}',
   'ai.rateLimited': 'طلبات كثيرة جدًا. انتظر قليلًا ثم حاول مجددًا.',
   'ai.newChat': 'محادثة جديدة',
   'ai.empty': 'لا توجد رسائل بعد. اختر مثالًا أو اكتب سؤالك.',
