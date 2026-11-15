@@ -45,7 +45,7 @@ Copy `.env.example` to `.env.local` and add only the services you intend to use.
 
 | Service | Variable | Notes |
 |---|---|---|
-| Google Gemini | `GEMINI_API_KEY` | Recommended AI provider; default model is `gemini-3.8-flash` |
+| Google Gemini | `GEMINI_API_KEY` | Recommended AI provider; default model is `gemini-3.8-flash`. On server errors (5xx) it retries once, then tries `GEMINI_FALLBACK_MODEL` (default `gemini-3.6-flash`, `none` to disable) |
 | Groq | `GROQ_API_KEY` | Text-only fallback unless configured explicitly |
 | Anthropic | `ANTHROPIC_API_KEY` | Supports text and images |
 | ElevenLabs | `ELEVENLABS_API_KEY` | Optional Romanian speech; browser speech remains available |
