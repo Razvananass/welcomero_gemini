@@ -301,7 +301,7 @@ export const en = {
   'plan.latestBy': 'Latest day to apply if the 30-day rule applies: {date}',
   'plan.expiryUrgent': 'This date has already passed. If your visa or permit may expire soon, contact IGI or your university’s international office now.',
   'plan.export': 'Add to calendar (.ics)',
-  'plan.export.note': 'Downloads a file you can open in Google Calendar, Outlook or Apple Calendar. Completed tasks are left out.',
+  'plan.export.note': 'Downloads a file you can open in Google Calendar, Outlook or Apple Calendar, with a reminder 3 days before and on the day. Completed tasks are left out.',
   'plan.event.summary': 'welcomeRo: {title}',
   'plan.event.desc': 'Suggested date from welcomeRo, not an official deadline. Confirm with the institution.',
   'plan.open': 'Open plan',

@@ -290,7 +290,7 @@ export const fr: Record<MessageKey, string> = {
   'plan.latestBy': 'Dernier jour pour déposer si la règle des 30 jours s’applique : {date}',
   'plan.expiryUrgent': 'Cette date est déjà passée. Si votre visa ou titre de séjour peut expirer bientôt, contactez dès maintenant l’IGI ou le bureau international de votre université.',
   'plan.export': 'Ajouter au calendrier (.ics)',
-  'plan.export.note': 'Télécharge un fichier à ouvrir dans Google Agenda, Outlook ou Apple Calendrier. Les tâches terminées sont exclues.',
+  'plan.export.note': 'Télécharge un fichier à ouvrir dans Google Agenda, Outlook ou Apple Calendrier, avec un rappel 3 jours avant et le jour même. Les tâches terminées sont exclues.',
   'plan.event.summary': 'welcomeRo : {title}',
   'plan.event.desc': 'Date suggérée par welcomeRo, pas un délai officiel. Confirmez auprès de l’institution.',
   'plan.open': 'Ouvrir le planning',

@@ -290,7 +290,7 @@ export const ro: Record<MessageKey, string> = {
   'plan.latestBy': 'Ultima zi recomandată pentru depunere dacă se aplică regula de 30 de zile: {date}',
   'plan.expiryUrgent': 'Această dată a trecut deja. Dacă viza sau permisul tău expiră curând, contactează urgent IGI sau biroul internațional al universității.',
   'plan.export': 'Adaugă în calendar (.ics)',
-  'plan.export.note': 'Descarcă un fișier pe care îl poți importa în Google Calendar, Outlook sau Apple Calendar. Pașii deja finalizați sunt omiși.',
+  'plan.export.note': 'Descarcă un fișier pe care îl poți importa în Google Calendar, Outlook sau Apple Calendar, cu un memento cu 3 zile înainte și în ziua respectivă. Pașii deja finalizați sunt omiși.',
   'plan.event.summary': 'welcomeRo: {title}',
   'plan.event.desc': 'Dată orientativă din welcomeRo, nu un termen legal oficial. Confirmă cu instituția.',
   'plan.open': 'Deschide planul',

@@ -600,6 +600,14 @@ describe('plan: calendar file (.ics)', () => {
     assert.ok(ics.includes('DTSTAMP:20261114T080000Z'));
   });
 
+  it('adds two phone reminders inside each event (3 days before and on the morning)', () => {
+    assert.equal((ics.match(/BEGIN:VALARM/g) ?? []).length, 2);
+    assert.equal((ics.match(/END:VALARM/g) ?? []).length, 2);
+    assert.ok(ics.includes('TRIGGER:-P3D'));
+    assert.ok(ics.includes('TRIGGER:PT9H'));
+    assert.ok(ics.indexOf('END:VALARM') < ics.indexOf('END:VEVENT'), 'alarms are nested in the event');
+  });
+
   it('escapes commas, semicolons and newlines, and folds long lines', () => {
     assert.ok(ics.includes('Permit\\, with comma\\; and semicolon'));
     assert.ok(ics.includes('Line one\\nLine two'));

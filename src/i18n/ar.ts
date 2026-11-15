@@ -290,7 +290,7 @@ export const ar: Record<MessageKey, string> = {
   'plan.latestBy': 'آخر يوم للتقديم إذا انطبقت قاعدة الثلاثين يومًا: {date}',
   'plan.expiryUrgent': 'انقضى هذا التاريخ بالفعل. إذا كانت تأشيرتك أو تصريحك قد ينتهي قريبًا، فتواصل الآن مع IGI أو مكتب الطلاب الدوليين في جامعتك.',
   'plan.export': 'أضف إلى التقويم (.ics)',
-  'plan.export.note': 'ينزّل ملفًا يمكنك فتحه في تقويم Google أو Outlook أو تقويم Apple. تُستثنى المهام المكتملة.',
+  'plan.export.note': 'ينزّل ملفًا يمكنك فتحه في تقويم Google أو Outlook أو تقويم Apple، مع تذكير قبل 3 أيام وفي اليوم نفسه. تُستثنى المهام المكتملة.',
   'plan.event.summary': 'welcomeRo: {title}',
   'plan.event.desc': 'تاريخ مقترح من welcomeRo وليس موعدًا رسميًا. تأكد لدى المؤسسة.',
   'plan.open': 'افتح الخطة',
