@@ -861,5 +861,613 @@
     "audience": [{ "situations": ["student", "worker", "refugee", "other"], "citizenships": ["eu", "non-eu"], "relevance": "verify" }],
     "sourceIds": ["anaf-home", "anaf-timis-contact"],
     "lastVerified": "2026-11-13"
+  },
+  {
+    "id": "international-protection",
+    "order": 5,
+    "completedKey": "residence",
+    "institutionId": "igi-dai-timisoara",
+    "title": {
+      "en": "Asking for asylum (international protection)",
+      "ro": "Cererea de azil (protecție internațională)",
+      "fr": "Demander l’asile (protection internationale)",
+      "ar": "طلب اللجوء (الحماية الدولية)",
+      "uk": "Звернення по притулок (міжнародний захист)",
+      "ne": "शरणको माग (अन्तर्राष्ट्रिय संरक्षण)"
+    },
+    "summary": {
+      "en": "If you fled persecution or serious harm, you can ask Romania for international protection (refugee status or subsidiary protection). IGI registers your request, interviews you and decides. While you wait, you get a temporary identity document.",
+      "ro": "Dacă ai fugit de persecuție sau de un pericol grav, poți cere României protecție internațională (statut de refugiat sau protecție subsidiară). IGI înregistrează cererea, te intervievează și decide. Cât aștepți, primești un document temporar de identitate.",
+      "fr": "Si vous avez fui des persécutions ou des atteintes graves, vous pouvez demander à la Roumanie une protection internationale (statut de réfugié ou protection subsidiaire). L’IGI enregistre votre demande, vous interroge et décide. Pendant l’attente, vous recevez un document d’identité temporaire.",
+      "ar": "إذا هربت من الاضطهاد أو من خطر جسيم، يمكنك أن تطلب من رومانيا الحماية الدولية (صفة اللاجئ أو الحماية الفرعية). تسجل IGI طلبك وتجري معك مقابلات ثم تقرر. وخلال الانتظار تحصل على وثيقة هوية مؤقتة.",
+      "uk": "Якщо ви втекли від переслідування або серйозної небезпеки, можете попросити Румунію про міжнародний захист (статус біженця або додатковий захист). IGI реєструє заяву, проводить співбесіди та ухвалює рішення. Поки ви чекаєте, вам видають тимчасовий посвідчувальний документ.",
+      "ne": "सताइ वा गम्भीर खतराबाट भागेर आउनुभएको छ भने रोमानियासँग अन्तर्राष्ट्रिय संरक्षण (शरणार्थी हैसियत वा सहायक संरक्षण) माग्न सक्नुहुन्छ। IGI ले आवेदन दर्ता गर्छ, अन्तर्वार्ता लिन्छ र निर्णय गर्छ। पर्खिँदा अस्थायी परिचय कागजात पाउनुहुन्छ।"
+    },
+    "why": {
+      "en": "It gives you the right to stay in Romania legally while your request is examined, and protects you from being sent back.",
+      "ro": "Îți dă dreptul să rămâi legal în România cât timp cererea este analizată și te protejează de returnare.",
+      "fr": "Elle vous donne le droit de rester légalement en Roumanie pendant l’examen de votre demande et vous protège contre un renvoi.",
+      "ar": "يمنحك الحق في البقاء في رومانيا بشكل قانوني أثناء دراسة طلبك، ويحميك من الإعادة.",
+      "uk": "Це дає право законно перебувати в Румунії, поки розглядають вашу заяву, і захищає від повернення.",
+      "ne": "आवेदन जाँच हुँदासम्म रोमानियामा कानुनी रूपमा बस्ने अधिकार दिन्छ र फर्काइनबाट जोगाउँछ।"
+    },
+    "whoNeeds": {
+      "en": "People from outside the EU, including stateless people, who cannot return home because they fear persecution or serious harm.",
+      "ro": "Persoanele din afara UE, inclusiv apatrizii, care nu se pot întoarce acasă de teama persecuției sau a unui pericol grav.",
+      "fr": "Les personnes hors UE, y compris apatrides, qui ne peuvent pas rentrer chez elles par crainte de persécutions ou d’atteintes graves.",
+      "ar": "الأشخاص من خارج الاتحاد الأوروبي، بمن فيهم عديمو الجنسية، الذين لا يستطيعون العودة إلى بلدهم خوفًا من الاضطهاد أو الخطر الجسيم.",
+      "uk": "Люди з-поза ЄС, зокрема особи без громадянства, які не можуть повернутися додому через страх переслідування або серйозної небезпеки.",
+      "ne": "सताइ वा गम्भीर खतराको डरले घर फर्कन नसक्ने EU बाहिरका मानिस, राज्यविहीन मानिससमेत।"
+    },
+    "whoDoesNot": {
+      "en": "EU citizens. People fleeing the war in Ukraine can usually get temporary protection instead (see that guide).",
+      "ro": "Cetățenii UE. Persoanele care fug de războiul din Ucraina pot primi de obicei protecție temporară (vezi acel ghid).",
+      "fr": "Les citoyens de l’UE. Les personnes fuyant la guerre en Ukraine peuvent généralement obtenir plutôt la protection temporaire (voir ce guide).",
+      "ar": "مواطنو الاتحاد الأوروبي. ويمكن للفارين من الحرب في أوكرانيا عادةً الحصول على الحماية المؤقتة بدلًا من ذلك (انظر ذلك الدليل).",
+      "uk": "Громадяни ЄС. Люди, які тікають від війни в Україні, зазвичай можуть натомість отримати тимчасовий захист (дивіться ту інструкцію).",
+      "ne": "EU का नागरिक। युक्रेनको युद्धबाट भागेका मानिसले सामान्यतया यसको सट्टा अस्थायी संरक्षण पाउन सक्छन् (त्यो गाइड हेर्नुहोस्)।"
+    },
+    "submitWhere": {
+      "en": "At IGI’s Regional Centre for Procedures and Accommodation for Asylum Seekers in Timișoara. You can also tell the Border Police or the police that you want asylum; they pass your request to IGI.",
+      "ro": "La Centrul Regional de Proceduri și Cazare pentru Solicitanții de Azil al IGI din Timișoara. Poți spune și Poliției de Frontieră sau poliției că vrei azil; ele transmit cererea la IGI.",
+      "fr": "Au centre régional de procédures et d’hébergement pour demandeurs d’asile de l’IGI à Timișoara. Vous pouvez aussi dire à la police aux frontières ou à la police que vous voulez demander l’asile ; elles transmettent la demande à l’IGI.",
+      "ar": "في المركز الإقليمي للإجراءات وإيواء طالبي اللجوء التابع لـ IGI في تيميشوارا. ويمكنك أيضًا إبلاغ شرطة الحدود أو الشرطة بأنك تريد اللجوء، فتحيل طلبك إلى IGI.",
+      "uk": "У Регіональному центрі процедур і розміщення шукачів притулку IGI в Тімішоарі. Також можна сказати прикордонній поліції або поліції, що ви хочете попросити притулку; вони передадуть заяву до IGI.",
+      "ne": "तिमिशोरामा रहेको IGI को शरण माग्नेहरूका लागि प्रक्रिया र आवासको क्षेत्रीय केन्द्रमा। सीमा प्रहरी वा प्रहरीलाई शरण चाहिएको भन्न पनि सक्नुहुन्छ; उनीहरूले आवेदन IGI मा पठाउँछन्।"
+    },
+    "documents": [
+      {
+        "name": {
+          "en": "Any identity or travel document you have (passport, ID card), even if it has expired"
+        },
+        "whereToGet": {
+          "en": "Your own documents. You can still ask for asylum without them."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-asylum"
+        ]
+      },
+      {
+        "name": {
+          "en": "Any evidence of why you left (letters, photos, reports, medical papers)"
+        },
+        "whereToGet": {
+          "en": "Your own documents; bring what you have"
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-asylum"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "text": {
+          "en": "Say clearly that you want asylum (in Romanian: “Vreau să cer azil”) at the IGI regional centre, to the Border Police or to the police."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "aida-ro-registration"
+        ]
+      },
+      {
+        "text": {
+          "en": "IGI registers your request (within 3 working days if you go to IGI directly, 6 days through other authorities), takes your photo and fingerprints, and gives you a temporary identity document with a personal numeric code (CNP)."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "aida-ro-registration",
+          "aida-ro-overview"
+        ]
+      },
+      {
+        "text": {
+          "en": "You have two interviews: a short one about your journey, then the main interview (2-3 hours) about why you left. Give as many details and proofs as you can. Ask for an interpreter if you need one."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-asylum"
+        ]
+      },
+      {
+        "text": {
+          "en": "Keep your temporary identity document valid. IGI extends it during the procedure."
+        },
+        "level": "verified",
+        "sourceIds": [
+          "igi-protection-docs"
+        ]
+      },
+      {
+        "text": {
+          "en": "Get free legal counselling, ideally before the main interview, and at once if you get a negative decision. UNHCR’s partners help in Romanian, Ukrainian, Russian and English; LOGS can also guide you."
+        },
+        "level": "recommended",
+        "sourceIds": [
+          "unhcr-ro-legal",
+          "logs-home"
+        ]
+      },
+      {
+        "text": {
+          "en": "If you are granted protection, ask IGI for your residence permit (it is issued free of charge) and about the integration programme."
+        },
+        "level": "verified",
+        "sourceIds": [
+          "igi-protection-docs",
+          "igi-integration"
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "text": {
+          "en": "Deadlines to appeal are short. If your request is rejected, get legal help immediately. After a final rejection, without another right to stay, you must leave Romania within 15 days."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-cash"
+        ]
+      },
+      {
+        "text": {
+          "en": "Tell the truth and keep your account consistent. Differences between interviews can harm your case."
+        },
+        "level": "recommended"
+      },
+      {
+        "text": {
+          "en": "This guide is based on IGI, UNHCR and independent legal reports. Check the details with IGI or a legal counsellor."
+        },
+        "level": "confirm"
+      }
+    ],
+    "processingTime": {
+      "text": {
+        "en": "In 2025 the first decision took about 36 days on average (1-2 months), according to the Asylum Information Database."
+      },
+      "level": "confirm",
+      "sourceIds": [
+        "aida-ro-regular"
+      ]
+    },
+    "deadline": null,
+    "priority": {
+      "level": "high",
+      "reason": {
+        "en": "It protects your right to stay. Ask for asylum as soon as possible after you arrive.",
+        "ro": "Îți protejează dreptul de ședere. Cere azil cât mai curând după ce ajungi.",
+        "fr": "Elle protège votre droit de séjour. Demandez l’asile le plus tôt possible après votre arrivée.",
+        "ar": "يحمي حقك في البقاء. اطلب اللجوء في أقرب وقت ممكن بعد وصولك.",
+        "uk": "Це захищає ваше право на перебування. Попросіть притулку якомога швидше після прибуття.",
+        "ne": "यसले तपाईंको बस्ने अधिकार जोगाउँछ। आइपुगेपछि सकेसम्म चाँडो शरण माग्नुहोस्।"
+      }
+    },
+    "audience": [
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "relevance": "core"
+      }
+    ],
+    "sourceIds": [
+      "igi-asylum-general",
+      "igi-protection-docs",
+      "aida-ro-registration",
+      "aida-ro-overview",
+      "unhcr-ro-asylum"
+    ],
+    "lastVerified": "2026-11-15"
+  },
+  {
+    "id": "temporary-protection-ukraine",
+    "order": 6,
+    "completedKey": "residence",
+    "institutionId": "igi-timis",
+    "title": {
+      "en": "Temporary protection (people fleeing Ukraine)",
+      "ro": "Protecție temporară (persoane care fug din Ucraina)",
+      "fr": "Protection temporaire (personnes fuyant l’Ukraine)",
+      "ar": "الحماية المؤقتة (الفارّون من أوكرانيا)",
+      "uk": "Тимчасовий захист (люди, які тікають з України)",
+      "ne": "अस्थायी संरक्षण (युक्रेनबाट भागेका मानिस)"
+    },
+    "summary": {
+      "en": "People displaced by the war in Ukraine can register with IGI for temporary protection. You get a residence permit and access to work, healthcare and school for your children. The EU has extended it until 4 March 2028.",
+      "ro": "Persoanele strămutate de războiul din Ucraina se pot înregistra la IGI pentru protecție temporară. Primești un permis de ședere și acces la muncă, la servicii medicale și la școală pentru copii. UE a prelungit-o până la 4 martie 2028.",
+      "fr": "Les personnes déplacées par la guerre en Ukraine peuvent s’enregistrer auprès de l’IGI pour la protection temporaire. Vous obtenez un titre de séjour et l’accès au travail, aux soins et à l’école pour vos enfants. L’UE l’a prolongée jusqu’au 4 mars 2028.",
+      "ar": "يمكن للنازحين بسبب الحرب في أوكرانيا التسجيل لدى IGI للحصول على الحماية المؤقتة. تحصل على تصريح إقامة وعلى حق العمل والرعاية الصحية والمدرسة لأطفالك. وقد مدّدها الاتحاد الأوروبي حتى 4 مارس 2028.",
+      "uk": "Люди, переміщені через війну в Україні, можуть зареєструватися в IGI для тимчасового захисту. Ви отримуєте дозвіл на проживання та доступ до роботи, медичної допомоги й школи для дітей. ЄС продовжив його до 4 березня 2028 року.",
+      "ne": "युक्रेनको युद्धका कारण विस्थापित मानिस अस्थायी संरक्षणका लागि IGI मा दर्ता हुन सक्छन्। तपाईंले बसोबास अनुमति र काम, स्वास्थ्य सेवा तथा बालबालिकाका लागि विद्यालयको पहुँच पाउनुहुन्छ। EU ले यसलाई 4 मार्च 2028 सम्म बढाएको छ।"
+    },
+    "why": {
+      "en": "It gives you a legal status for longer than the 90-day visa-free stay, with access to work, healthcare and education.",
+      "ro": "Îți dă un statut legal pentru mai mult decât șederea de 90 de zile fără viză, cu acces la muncă, servicii medicale și educație.",
+      "fr": "Elle vous donne un statut légal au-delà du séjour de 90 jours sans visa, avec accès au travail, aux soins et à l’éducation.",
+      "ar": "تمنحك وضعًا قانونيًا لمدة أطول من الإقامة دون تأشيرة لمدة 90 يومًا، مع حق العمل والرعاية الصحية والتعليم.",
+      "uk": "Він дає законний статус на довше, ніж 90 днів безвізового перебування, з доступом до роботи, медицини та освіти.",
+      "ne": "यसले 90 दिनको भिसाबिनाको बसाइभन्दा लामो कानुनी हैसियत दिन्छ, साथै काम, स्वास्थ्य सेवा र शिक्षाको पहुँच।"
+    },
+    "whoNeeds": {
+      "en": "Ukrainian citizens and other people covered by the EU temporary protection decision for Ukraine, such as some family members and refugees who lived in Ukraine.",
+      "ro": "Cetățenii ucraineni și alte persoane acoperite de decizia UE de protecție temporară pentru Ucraina, de exemplu unii membri de familie și refugiați care au locuit în Ucraina.",
+      "fr": "Les citoyens ukrainiens et les autres personnes couvertes par la décision de l’UE sur la protection temporaire pour l’Ukraine, par exemple certains membres de famille et réfugiés qui vivaient en Ukraine.",
+      "ar": "المواطنون الأوكرانيون وغيرهم ممن يشملهم قرار الاتحاد الأوروبي بشأن الحماية المؤقتة لأوكرانيا، مثل بعض أفراد الأسرة واللاجئين الذين عاشوا في أوكرانيا.",
+      "uk": "Громадяни України та інші люди, на яких поширюється рішення ЄС про тимчасовий захист для України, наприклад деякі члени родини та біженці, які жили в Україні.",
+      "ne": "युक्रेनी नागरिक र युक्रेनका लागि EU को अस्थायी संरक्षण निर्णयले समेटेका अरू मानिस, जस्तै केही परिवारका सदस्य र युक्रेनमा बसेका शरणार्थी।"
+    },
+    "whoDoesNot": {
+      "en": "Everyone else. Ukrainians with a biometric passport can stay up to 90 days in any 180 without it, but then do not have these rights.",
+      "ro": "Toți ceilalți. Ucrainenii cu pașaport biometric pot sta până la 90 de zile din 180 și fără ea, dar atunci nu au aceste drepturi.",
+      "fr": "Toutes les autres personnes. Les Ukrainiens titulaires d’un passeport biométrique peuvent rester jusqu’à 90 jours sur 180 sans elle, mais n’ont alors pas ces droits.",
+      "ar": "جميع الآخرين. يمكن للأوكرانيين الحاملين جواز سفر بيومتريًا البقاء حتى 90 يومًا خلال 180 يومًا دونها، لكن دون هذه الحقوق.",
+      "uk": "Усі інші. Українці з біометричним паспортом можуть перебувати до 90 днів у будь-якому 180-денному періоді без нього, але тоді не мають цих прав.",
+      "ne": "अरू सबै। बायोमेट्रिक राहदानी भएका युक्रेनी यसबिना 180 दिनभित्र 90 दिनसम्म बस्न सक्छन्, तर त्यसबेला यी अधिकार पाउँदैनन्।"
+    },
+    "submitWhere": {
+      "en": "At any IGI immigration office. For Timișoara: IGI Timiș, Str. Andrei Mocioni 8-10.",
+      "ro": "La orice birou de imigrări IGI. Pentru Timișoara: IGI Timiș, Str. Andrei Mocioni 8-10.",
+      "fr": "Dans n’importe quel bureau d’immigration de l’IGI. À Timișoara : IGI Timiș, Str. Andrei Mocioni 8-10.",
+      "ar": "في أي مكتب هجرة تابع لـ IGI. في تيميشوارا: IGI تيميش، Str. Andrei Mocioni 8-10.",
+      "uk": "У будь-якому імміграційному офісі IGI. У Тімішоарі: IGI Тіміш, Str. Andrei Mocioni 8-10.",
+      "ne": "IGI को जुनसुकै आप्रवासन कार्यालयमा। तिमिशोरामा: IGI Timiș, Str. Andrei Mocioni 8-10।"
+    },
+    "documents": [
+      {
+        "name": {
+          "en": "Ukrainian passport or ID card, or another identity document"
+        },
+        "whereToGet": {
+          "en": "Your own documents"
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-tp"
+        ]
+      },
+      {
+        "name": {
+          "en": "Birth certificates of your children"
+        },
+        "whereToGet": {
+          "en": "Your own documents"
+        },
+        "level": "confirm"
+      },
+      {
+        "name": {
+          "en": "Your full address in Romania"
+        },
+        "whereToGet": {
+          "en": "Your landlord or host. A full address on the permit makes social benefits easier to get."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-tp"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "text": {
+          "en": "Go to an IGI immigration office with your identity documents and register for temporary protection."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-tp"
+        ]
+      },
+      {
+        "text": {
+          "en": "You get a residence permit for temporary protection. Check that your full address in Romania is written on it."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-tp"
+        ]
+      },
+      {
+        "text": {
+          "en": "With the permit you can work, use healthcare and enrol your children in school. Check whether your document shows a personal numeric code (CNP); many services ask for it."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-tp"
+        ]
+      },
+      {
+        "text": {
+          "en": "Temporary protection in the EU now runs until 4 March 2028. If your permit shows an earlier date, ask IGI whether it is still valid or how to update it."
+        },
+        "level": "verified",
+        "sourceIds": [
+          "eu-tp-extension"
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "text": {
+          "en": "Before you leave Romania for a long time, ask IGI or UNHCR’s partners whether you keep your protection."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "unhcr-ro-returns"
+        ]
+      },
+      {
+        "text": {
+          "en": "This guide is based on UNHCR and EU pages, not on IGI’s own pages. Check the details with IGI."
+        },
+        "level": "confirm"
+      }
+    ],
+    "processingTime": null,
+    "deadline": null,
+    "audience": [
+      {
+        "situations": [
+          "refugee"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "relevance": "verify"
+      }
+    ],
+    "sourceIds": [
+      "unhcr-ro-tp",
+      "unhcr-ro-entry",
+      "eu-tp-extension",
+      "igi-timis-page"
+    ],
+    "lastVerified": "2026-11-15"
+  },
+  {
+    "id": "residence-permit-work",
+    "order": 40,
+    "completedKey": "residence",
+    "institutionId": "igi-timis",
+    "title": {
+      "en": "Residence permit for work (single permit, non-EU workers)",
+      "ro": "Permis de ședere în scop de muncă (permis unic, lucrători din afara UE)",
+      "fr": "Titre de séjour pour travail (permis unique, travailleurs hors UE)",
+      "ar": "تصريح الإقامة للعمل (التصريح الموحد، للعمال من خارج الاتحاد الأوروبي)",
+      "uk": "Дозвіл на проживання для роботи (єдиний дозвіл, працівники з країн поза ЄС)",
+      "ne": "कामका लागि बसोबास अनुमति (सिंगल परमिट, EU बाहिरका कामदार)"
+    },
+    "summary": {
+      "en": "Non-EU workers come with a long-stay work visa (D/AM) after their employer applies for them. In Romania you then get a single permit (permis unic) from IGI, which proves your right to live and work here.",
+      "ro": "Lucrătorii din afara UE vin cu viză de lungă ședere pentru muncă (D/AM), după ce angajatorul depune cererea pentru ei. În România obții apoi de la IGI permisul unic, care dovedește dreptul de a locui și de a munci aici.",
+      "fr": "Les travailleurs hors UE arrivent avec un visa long séjour pour travail (D/AM) après la demande de leur employeur. En Roumanie, vous obtenez ensuite auprès de l’IGI un permis unique, qui prouve votre droit de vivre et de travailler ici.",
+      "ar": "يأتي العمال من خارج الاتحاد الأوروبي بتأشيرة عمل طويلة الأمد (D/AM) بعد أن يقدّم صاحب العمل الطلب لهم. ثم تحصل في رومانيا من IGI على التصريح الموحد الذي يثبت حقك في العيش والعمل هنا.",
+      "uk": "Працівники з країн поза ЄС приїжджають із довгостроковою робочою візою (D/AM) після того, як роботодавець подає за них заявку. У Румунії ви отримуєте в IGI єдиний дозвіл (permis unic), який підтверджує право жити й працювати тут.",
+      "ne": "EU बाहिरका कामदार रोजगारदाताले आवेदन दिएपछि कामको दीर्घकालीन भिसा (D/AM) लिएर आउँछन्। त्यसपछि रोमानियामा IGI बाट सिंगल परमिट (permis unic) लिनुहुन्छ, जसले यहाँ बस्ने र काम गर्ने अधिकार प्रमाणित गर्छ।"
+    },
+    "why": {
+      "en": "Your visa only covers the first period. The single permit lets you keep living and working in Romania legally.",
+      "ro": "Viza acoperă doar prima perioadă. Permisul unic îți permite să locuiești și să muncești legal în continuare în România.",
+      "fr": "Votre visa ne couvre que la première période. Le permis unique vous permet de continuer à vivre et travailler légalement en Roumanie.",
+      "ar": "تغطي التأشيرة الفترة الأولى فقط. يتيح لك التصريح الموحد الاستمرار في العيش والعمل في رومانيا بشكل قانوني.",
+      "uk": "Віза діє лише на перший період. Єдиний дозвіл дає змогу й далі законно жити та працювати в Румунії.",
+      "ne": "भिसाले पहिलो अवधि मात्र समेट्छ। सिंगल परमिटले रोमानियामा कानुनी रूपमा बस्न र काम गरिरहन दिन्छ।"
+    },
+    "whoNeeds": {
+      "en": "Non-EU citizens employed in Romania who entered with a long-stay visa for employment.",
+      "ro": "Cetățenii din afara UE angajați în România care au intrat cu viză de lungă ședere pentru angajare.",
+      "fr": "Les citoyens hors UE employés en Roumanie et entrés avec un visa long séjour pour emploi.",
+      "ar": "مواطنو الدول من خارج الاتحاد الأوروبي العاملون في رومانيا الذين دخلوا بتأشيرة عمل طويلة الأمد.",
+      "uk": "Громадяни країн поза ЄС, які працюють у Румунії та в’їхали за довгостроковою візою для працевлаштування.",
+      "ne": "रोमानियामा काम गर्ने र रोजगारीको दीर्घकालीन भिसामा आएका EU बाहिरका नागरिक।"
+    },
+    "whoDoesNot": {
+      "en": "EU/EEA/Swiss citizens (see the registration certificate guide), Romanian citizens, and people with refugee status, subsidiary protection or temporary protection, who have their own documents.",
+      "ro": "Cetățenii UE/SEE/Elveției (vezi ghidul despre certificatul de înregistrare), cetățenii români și persoanele cu statut de refugiat, protecție subsidiară sau protecție temporară, care au propriile documente.",
+      "fr": "Les citoyens de l’UE/EEE/Suisse (voir le guide du certificat d’enregistrement), les citoyens roumains et les personnes ayant le statut de réfugié, la protection subsidiaire ou la protection temporaire, qui ont leurs propres documents.",
+      "ar": "مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا (انظر دليل شهادة التسجيل)، والمواطنون الرومانيون، والأشخاص الحاصلون على صفة اللاجئ أو الحماية الفرعية أو الحماية المؤقتة، فلديهم وثائقهم الخاصة.",
+      "uk": "Громадяни ЄС/ЄЕЗ/Швейцарії (дивіться інструкцію про свідоцтво про реєстрацію), громадяни Румунії, а також люди зі статусом біженця, додатковим або тимчасовим захистом, які мають власні документи.",
+      "ne": "EU/EEA/स्विस नागरिक (दर्ता प्रमाणपत्रको गाइड हेर्नुहोस्), रोमानियन नागरिक, र शरणार्थी, सहायक संरक्षण वा अस्थायी संरक्षण पाएका मानिस, जसका आफ्नै कागजात हुन्छन्।"
+    },
+    "submitWhere": {
+      "en": "At the IGI office of the county where you live, in person. For Timișoara: IGI Timiș, Str. Andrei Mocioni 8-10. You can upload the documents online first on portaligi.mai.gov.ro.",
+      "ro": "Personal, la biroul IGI din județul în care locuiești. Pentru Timișoara: IGI Timiș, Str. Andrei Mocioni 8-10. Poți încărca mai întâi documentele online pe portaligi.mai.gov.ro.",
+      "fr": "En personne, au bureau de l’IGI du département où vous habitez. À Timișoara : IGI Timiș, Str. Andrei Mocioni 8-10. Vous pouvez d’abord téléverser les documents sur portaligi.mai.gov.ro.",
+      "ar": "حضوريًا في مكتب IGI في المقاطعة التي تسكن فيها. في تيميشوارا: IGI تيميش، Str. Andrei Mocioni 8-10. يمكنك أولًا رفع الوثائق عبر الإنترنت على portaligi.mai.gov.ro.",
+      "uk": "Особисто в офісі IGI повіту, де ви проживаєте. У Тімішоарі: IGI Тіміш, Str. Andrei Mocioni 8-10. Спершу документи можна завантажити онлайн на portaligi.mai.gov.ro.",
+      "ne": "तपाईं बस्ने जिल्लाको IGI कार्यालयमा आफैं गएर। तिमिशोरामा: IGI Timiș, Str. Andrei Mocioni 8-10। पहिले कागजात portaligi.mai.gov.ro मा अनलाइन अपलोड गर्न सकिन्छ।"
+    },
+    "documents": [
+      {
+        "name": {
+          "en": "IGI application form"
+        },
+        "whereToGet": {
+          "en": "IGI office or the forms section of the IGI website"
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-forms"
+        ]
+      },
+      {
+        "name": {
+          "en": "Passport with your long-stay visa for employment (D/AM), original and copy"
+        },
+        "whereToGet": {
+          "en": "Your home country; the visa from the Romanian embassy or consulate"
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-residence-permit"
+        ]
+      },
+      {
+        "name": {
+          "en": "Your employment contract (contract individual de muncă), registered by the employer"
+        },
+        "whereToGet": {
+          "en": "Your employer"
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-single-permit"
+        ]
+      },
+      {
+        "name": {
+          "en": "Proof of your address in Romania (rental contract or the owner’s written consent)"
+        },
+        "whereToGet": {
+          "en": "Your landlord; see the address registration guide"
+        },
+        "level": "confirm"
+      },
+      {
+        "name": {
+          "en": "Proof of health insurance"
+        },
+        "whereToGet": {
+          "en": "Ask your employer; see the health insurance guide"
+        },
+        "level": "confirm"
+      },
+      {
+        "name": {
+          "en": "Proof that you paid the permit fee"
+        },
+        "whereToGet": {
+          "en": "Ask IGI for the current amount and how to pay"
+        },
+        "level": "confirm"
+      }
+    ],
+    "steps": [
+      {
+        "text": {
+          "en": "Before you travel, your employer (or a licensed agency) applies for you. Since 8 August 2026 this is one online application on WorkinRomania.gov.ro, which replaced the separate work permit (aviz de muncă)."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "workinromania",
+          "igi-employment"
+        ]
+      },
+      {
+        "text": {
+          "en": "You get a long-stay visa for employment (D/AM) at a Romanian embassy or consulate, then travel to Romania."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-employment"
+        ]
+      },
+      {
+        "text": {
+          "en": "After you arrive, register your address and collect the documents above. Ask your employer which papers they will give you."
+        },
+        "level": "recommended"
+      },
+      {
+        "text": {
+          "en": "Apply in person at the IGI office of the county where you live, at least 30 days before the right to stay given by your visa ends. You can upload the documents online first."
+        },
+        "level": "verified",
+        "sourceIds": [
+          "igi-residence-permit",
+          "igi-single-permit"
+        ]
+      },
+      {
+        "text": {
+          "en": "Collect your single permit and note its expiry date. Renew it in time, again at least 30 days before it expires."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-residence-permit"
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "text": {
+          "en": "Your right to stay is tied to your job. If you change employer or lose your job, ask IGI right away what you must do."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "igi-employment"
+        ]
+      },
+      {
+        "text": {
+          "en": "Never pay anyone to “buy” a job or a permit, and do not give your passport to an employer. If you are forced to work, not paid, or your documents are taken, contact LOGS or call 112."
+        },
+        "level": "recommended",
+        "sourceIds": [
+          "logs-home"
+        ]
+      },
+      {
+        "text": {
+          "en": "The 2026 reform changed how employers apply. Some details here may already be out of date; check with IGI or your employer."
+        },
+        "level": "confirm",
+        "sourceIds": [
+          "workinromania"
+        ]
+      }
+    ],
+    "processingTime": null,
+    "deadline": {
+      "text": {
+        "en": "Apply at least 30 days before the right to stay given by your visa expires.",
+        "ro": "Depune cererea cu cel puțin 30 de zile înainte de expirarea dreptului de ședere acordat prin viză.",
+        "fr": "Déposez votre demande au moins 30 jours avant l’expiration du droit de séjour accordé par votre visa.",
+        "ar": "قدّم طلبك قبل 30 يومًا على الأقل من انتهاء حق الإقامة الممنوح بتأشيرتك.",
+        "uk": "Подайте заяву щонайменше за 30 днів до закінчення права на перебування, наданого візою.",
+        "ne": "भिसाले दिएको बस्ने अधिकार सकिनुभन्दा कम्तीमा 30 दिन अगाडि आवेदन दिनुहोस्।"
+      },
+      "level": "verified",
+      "sourceIds": [
+        "igi-residence-permit"
+      ]
+    },
+    "priority": {
+      "level": "high",
+      "reason": {
+        "en": "Your right to stay and work depends on it. IGI says to apply at least 30 days before the right to stay from your visa ends.",
+        "ro": "Dreptul de ședere și de muncă depinde de el. IGI spune să depui cererea cu cel puțin 30 de zile înainte să expire dreptul de ședere din viză.",
+        "fr": "Votre droit de séjour et de travail en dépend. L’IGI demande de déposer la demande au moins 30 jours avant la fin du droit de séjour du visa.",
+        "ar": "يعتمد عليه حقك في الإقامة والعمل. تطلب IGI تقديم الطلب قبل 30 يومًا على الأقل من انتهاء حق الإقامة الذي تمنحه التأشيرة.",
+        "uk": "Від нього залежить ваше право перебувати й працювати. IGI вимагає подати заяву щонайменше за 30 днів до закінчення права на перебування за візою.",
+        "ne": "तपाईंको बस्ने र काम गर्ने अधिकार यसमै भर पर्छ। IGI ले भिसाको बस्ने अधिकार सकिनुभन्दा कम्तीमा 30 दिन अगाडि आवेदन दिन भन्छ।"
+      }
+    },
+    "dependsOn": [
+      "address-registration"
+    ],
+    "audience": [
+      {
+        "situations": [
+          "worker"
+        ],
+        "citizenships": [
+          "non-eu"
+        ],
+        "relevance": "core"
+      }
+    ],
+    "sourceIds": [
+      "igi-single-permit",
+      "igi-residence-permit",
+      "igi-employment",
+      "workinromania",
+      "igi-timis-page"
+    ],
+    "lastVerified": "2026-11-15"
   }
 ]

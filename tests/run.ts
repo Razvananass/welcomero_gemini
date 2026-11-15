@@ -90,20 +90,39 @@ describe('checklist: rules for every combination of answers', () => {
   it('EU citizens never get the non-EU permit; non-EU never get the EU certificate', () => {
     for (const p of combos) {
       const list = ids(p);
-      if (p.citizenship === 'eu') assert.ok(!list.includes('residence-permit-student'));
+      if (p.citizenship === 'eu') assert.ok(!list.includes('residence-permit-student') && !list.includes('residence-permit-work'));
       if (p.citizenship === 'non-eu') assert.ok(!list.includes('eu-registration-certificate'));
     }
   });
 
-  it('only students get the university task; non-students get "verify" labels and a coverage warning', () => {
+  it('only students get the university task; non-students get "verify" on shared tasks and a coverage warning', () => {
+    const ownGuides = ['residence-permit-work', 'international-protection'];
     for (const p of combos) {
       const tasks = buildChecklist(procedures, p);
       assert.equal(tasks.some((t) => t.procedure.id === 'university-enrolment'), p.situation === 'student');
       if (p.situation !== 'student') {
         assert.ok(hasLimitedCoverage(p));
-        assert.ok(tasks.every((t) => t.relevance === 'verify' && t.notes.includes('verifyApplies')));
+        for (const t of tasks.filter((x) => !ownGuides.includes(x.procedure.id))) {
+          assert.ok(t.relevance === 'verify' && t.notes.includes('verifyApplies'), `${p.situation}: ${t.procedure.id}`);
+        }
       }
     }
+  });
+
+  it('non-EU workers get the work permit guide; refugees get asylum and temporary protection', () => {
+    for (const p of combos) {
+      const list = ids(p);
+      assert.equal(list.includes('residence-permit-work'), p.situation === 'worker' && p.citizenship === 'non-eu', `work permit: ${JSON.stringify(p)}`);
+      assert.equal(list.includes('international-protection'), p.situation === 'refugee' && p.citizenship === 'non-eu');
+      assert.equal(list.includes('temporary-protection-ukraine'), p.situation === 'refugee' && p.citizenship === 'non-eu');
+      assert.ok(!(list.includes('residence-permit-work') && list.includes('residence-permit-student')), 'never two residence permits');
+    }
+    const worker = buildChecklist(procedures, profile({ situation: 'worker' }));
+    assert.equal(worker.find((t) => t.procedure.id === 'residence-permit-work')?.relevance, 'core');
+    assert.equal(worker.find((t) => t.procedure.id === 'residence-permit-work')?.priority?.level, 'high');
+    const refugee = buildChecklist(procedures, profile({ situation: 'refugee' }));
+    assert.equal(refugee[0].procedure.id, 'international-protection', 'asylum comes first');
+    assert.equal(refugee.find((t) => t.procedure.id === 'temporary-protection-ukraine')?.relevance, 'verify', 'temporary protection only applies to people from Ukraine');
   });
 
   it('CNP and tax number are always labelled "verify whether this applies"', () => {
@@ -219,8 +238,8 @@ describe('administrative data integrity', () => {
   const levels = ['verified', 'recommended', 'confirm'];
   const hasEn = (l: { en?: string } | undefined) => Boolean(l && typeof l.en === 'string' && l.en.length > 0);
 
-  it('has 5-8 procedures with unique ids', () => {
-    assert.ok(procedures.length >= 5 && procedures.length <= 8);
+  it('has 5-12 procedures with unique ids', () => {
+    assert.ok(procedures.length >= 5 && procedures.length <= 12);
     assert.equal(new Set(procedures.map((p) => p.id)).size, procedures.length);
   });
 
@@ -575,6 +594,21 @@ describe('plan: schedule', () => {
     assert.ok(noExpiry.every((i) => i.latestBy === undefined));
     const withExpiry = buildPlan(tasksA, {}, { arrival: '2026-11-01', expiry: '2027-09-30' }, today);
     assert.deepEqual(withExpiry.filter((i) => i.latestBy).map((i) => i.task.procedure.id), ['residence-permit-student']);
+  });
+
+  it('applies the same 30-day rule to the work permit for non-EU workers', () => {
+    const worker = buildChecklist(procedures, profile({ situation: 'worker' }));
+    const plan = buildPlan(worker, {}, { arrival: '2026-11-01', expiry: '2026-12-10' }, today);
+    const permit = plan.find((i) => i.task.procedure.id === 'residence-permit-work')!;
+    assert.equal(permit.latestBy, '2026-11-10');
+    assert.equal(permit.basis, 'expiry');
+  });
+
+  it('plans asylum first for refugees', () => {
+    const refugee = buildChecklist(procedures, profile({ situation: 'refugee' }));
+    const plan = buildPlan(refugee, {}, { arrival: '2026-11-01', expiry: '' }, today);
+    assert.equal(plan[0].task.procedure.id, 'international-protection');
+    assert.equal(plan[0].date, '2026-11-02');
   });
 
   it('EU checklist plans the registration certificate and no permit', () => {

@@ -142,7 +142,7 @@ export const ar: Record<MessageKey, string> = {
   'check.markDone': 'تحديد كمكتمل',
   'check.reopen': 'إعادة الفتح',
   'check.status': 'الحالة',
-  'check.coverage': 'تغطي بياناتنا حاليًا الطلاب الدوليين بالتفصيل. وبالنسبة لوضعك، هذه العناصر عامة ويجب التحقق منها.',
+  'check.coverage': 'تغطي بياناتنا الطلاب الدوليين بأكبر قدر من التفصيل. أدلة العمال واللاجئين أحدث وتعتمد على مصادر رسمية أقل، لذا تحقق من كل بند مُعلَّم بـ «يحتاج إلى تأكيد».',
   'check.doFirst': 'يُنصح أولًا بـ: {items}',
   'note.findAccommodationFirst': 'لم ترتّب السكن بعد. ابدأ بذلك لأن أوراق العنوان والإقامة تتطلبه عادةً.',
   'note.accommodationUnsure': 'لم تكن متأكدًا من وضع سكنك. تحقق مما إذا كان يجب تسجيل عنوانك.',
@@ -215,6 +215,7 @@ export const ar: Record<MessageKey, string> = {
   'inst.short.logs': 'مركز Casa LOGS',
   'inst.short.uvt': 'جامعة UVT',
   'inst.short.umft': 'جامعة UMFT الطبية',
+  'inst.short.asylum': 'مركز اللجوء IGI',
 
   'ai.title': 'المساعد الذكي',
   'ai.subtitle': 'اسأل عن الأوراق الرسمية في رومانيا بكلمات بسيطة.',

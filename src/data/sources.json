@@ -142,5 +142,122 @@
     "kind": "university",
     "retrieved": "2026-11-14",
     "note": "Official university website listing the main address at Piața Eftimie Murgu nr. 2, 300041 Timișoara."
+  },
+  "igi-residence-permit": {
+    "title": "IGI: Residence permit (how and when to apply)",
+    "url": "https://igi.mai.gov.ro/en/residence-permit/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official IGI page. Says documents must be submitted in person at least 30 days before the right to stay granted by the visa expires, and that documents can also be uploaded through the online service portaligi.mai.gov.ro. Read through a search excerpt; the full page could not be opened while preparing this data."
+  },
+  "igi-single-permit": {
+    "title": "IGI: Single permit / EU Blue Card",
+    "url": "https://igi.mai.gov.ro/en/single-permit/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official IGI page. After entering Romania, workers must obtain a single permit (or EU Blue Card) from the IGI unit of the county where they live. Read through a search excerpt."
+  },
+  "igi-employment": {
+    "title": "IGI: Employment and posting",
+    "url": "https://igi.mai.gov.ro/en/employment-and-posting/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official IGI page, written before the 2026 reform: the employer obtains the work authorisation and the worker can be employed by a single employer. Read through a search excerpt."
+  },
+  "workinromania": {
+    "title": "WorkinRomania.gov.ro (single online application for hiring non-EU workers)",
+    "url": "https://workinromania.gov.ro/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Platform introduced by Emergency Ordinance 32/2026. Several law and advisory firms report that from 8 August 2026 employers file one application here and the separate work permit (aviz de muncă) was abolished. The platform itself could not be opened while preparing this data."
+  },
+  "igi-asylum-general": {
+    "title": "IGI: Asylum and integration, general description",
+    "url": "https://igi.mai.gov.ro/en/general-description/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official IGI page. Asylum requests are received, registered and processed at regional centres for accommodation and procedures for asylum seekers, including one in Timișoara. Read through a search excerpt."
+  },
+  "igi-protection-docs": {
+    "title": "IGI: Identity and travel documents (asylum seekers and people with protection)",
+    "url": "https://igi.mai.gov.ro/en/identity-and-travel-documents/",
+    "kind": "government",
+    "retrieved": "2026-11-15",
+    "note": "Official IGI page. The temporary identity document of an asylum seeker is extended during the procedure; there are no fees for issuing the residence permit to people granted protection. Read through search excerpts."
+  },
+  "igi-integration": {
+    "title": "IGI: Integration programme for people granted protection",
+    "url": "https://igi.mai.gov.ro/en/integration-program/",
+    "kind": "government",
+    "retrieved": "2026-11-15"
+  },
+  "aida-ro-registration": {
+    "title": "Asylum Information Database (ECRE): Romania, registration of the asylum application",
+    "url": "https://asylumineurope.org/reports/country/romania/asylum-procedure/access-procedure-and-registration/registration-asylum-application/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Independent legal report. IGI registers a request within 3 working days if made directly to IGI, and within 6 days if made to other authorities such as the Border Police."
+  },
+  "aida-ro-overview": {
+    "title": "Asylum Information Database (ECRE): Romania, short overview of the asylum procedure",
+    "url": "https://asylumineurope.org/reports/country/romania/asylum-procedure/general/short-overview-asylum-procedure/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Applicants are photographed, fingerprinted and receive a temporary identity document that includes a personal numeric code."
+  },
+  "aida-ro-regular": {
+    "title": "Asylum Information Database (ECRE): Romania, regular procedure",
+    "url": "https://asylumineurope.org/reports/country/romania/asylum-procedure/procedures/regular-procedure/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Reports an average of about 35.6 days from application to first-instance decision in 2025."
+  },
+  "unhcr-ro-asylum": {
+    "title": "UNHCR Romania: How to apply for asylum",
+    "url": "https://help.unhcr.org/romania/applying-for-asylum/applying-for-asylum/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "UN Refugee Agency help site. Describes the preliminary interview and the longer main interview (2-3 hours)."
+  },
+  "unhcr-ro-legal": {
+    "title": "UNHCR Romania: Reliable information and legal counselling",
+    "url": "https://help.unhcr.org/romania/information-for-people-from-ukraine/legal-aid/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Lists free legal counselling partners that help in Romanian, Ukrainian, Russian and English."
+  },
+  "unhcr-ro-cash": {
+    "title": "UNHCR Romania: Cash assistance (asylum seekers)",
+    "url": "https://help.unhcr.org/romania/topics/cash-assistance",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Says that after a final rejection, without another right to stay, a person must leave Romania within 15 days."
+  },
+  "unhcr-ro-tp": {
+    "title": "UNHCR Romania: Temporary protection (people from Ukraine)",
+    "url": "https://help.unhcr.org/romania/information-for-people-from-ukraine/temporary-protection/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Registration at any IGI immigration office; gives a residence permit, access to work, healthcare and education for children."
+  },
+  "unhcr-ro-entry": {
+    "title": "UNHCR Romania: Entry requirements for people from Ukraine",
+    "url": "https://help.unhcr.org/romania/information-for-people-from-ukraine/entry-requirements/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15",
+    "note": "Ukrainian citizens with a biometric passport may stay up to 90 days in any 180-day period without registering for temporary protection."
+  },
+  "unhcr-ro-returns": {
+    "title": "UNHCR Romania: Questions and answers on returns to Ukraine",
+    "url": "https://help.unhcr.org/romania/qa-on-returns-to-ukraine/",
+    "kind": "ngo",
+    "retrieved": "2026-11-15"
+  },
+  "eu-tp-extension": {
+    "title": "Council of the EU: How the EU helps refugees from Ukraine (temporary protection until 4 March 2028)",
+    "url": "https://www.consilium.europa.eu/en/policies/ukraine-solidarity-refugee-from-ukraine/",
+    "kind": "eu",
+    "retrieved": "2026-11-15",
+    "note": "Official EU page: temporary protection was last extended until 4 March 2028 (Council Implementing Decision (EU) 2026/1912)."
   }
 }
