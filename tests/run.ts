@@ -17,6 +17,7 @@ import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanit
 import { docCounts, sanitizeDocs, toggleDoc } from '../src/lib/docs';
 import { buildHelpMessage, HELP_ORG_ID, helpMailto } from '../src/lib/helpRequest';
 import { dataUrlBytes, fitWithin, MAX_RESULT_BYTES, MAX_SIDE } from '../src/lib/image';
+import { ALL_CARDS, buildQuiz, DECKS, normalizeForCompare, rateAttempt, sanitizeKnown, similarity, toggleKnown, totalProgress } from '../src/lib/practice';
 import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
 import { speakableText } from '../src/lib/speech';
@@ -1147,5 +1148,69 @@ describe('photo upload: shrinking', () => {
   it('the largest result we send fits under the server limit (5.5M base64 characters)', () => {
     assert.ok(Math.ceil((MAX_RESULT_BYTES * 4) / 3) < 5_500_000);
     assert.ok(MAX_SIDE >= 1600);
+  });
+});
+
+describe('Romanian practice', () => {
+  it('has decks with cards that are complete in every language', () => {
+    assert.ok(DECKS.length >= 4);
+    assert.equal(new Set(ALL_CARDS.map((c) => c.id)).size, ALL_CARDS.length, 'card ids are unique across decks');
+    for (const deck of DECKS) {
+      assert.ok(deck.cards.length >= 5, `${deck.id} has enough cards for a quiz`);
+      for (const lang of LANGUAGES) assert.ok(deck.title[lang.code], `${deck.id} title ${lang.code}`);
+      for (const card of deck.cards) {
+        assert.ok(card.ro.trim().length > 0);
+        for (const lang of LANGUAGES) assert.ok(card.meaning[lang.code] || lang.code === 'ro', `${card.id} meaning ${lang.code}`);
+      }
+    }
+  });
+
+  it('reuses the helper phrases and office questions but not the long email', () => {
+    const office = DECKS.find((d) => d.id === 'office')!;
+    assert.ok(office.cards.some((c) => c.id === 'appointment') && office.cards.some((c) => c.id === 'fee'));
+    assert.ok(!ALL_CARDS.some((c) => c.id === 'email-documents'));
+  });
+
+  it('ignores accents, case, punctuation and [placeholders] when comparing speech', () => {
+    assert.equal(normalizeForCompare('Bună ziua, [numele meu]!'), 'buna ziua');
+    assert.equal(similarity('Vă mulțumesc!', 'va multumesc'), 1);
+    assert.equal(rateAttempt('Nu înțeleg.', 'nu inteleg'), 'great');
+    assert.equal(rateAttempt('Puteți repeta, vă rog?', 'puteti repeta va rog'), 'great');
+  });
+
+  it('rates close and wrong attempts', () => {
+    assert.equal(rateAttempt('Puteți repeta, vă rog?', 'puteti repeta'), 'close', 'only part of the phrase');
+    assert.equal(rateAttempt('Aveți nevoie de o copie?', 'aveti nevoie de copie'), 'great');
+    assert.equal(rateAttempt('Cât costă taxa?', 'hello how are you'), 'again');
+    assert.equal(rateAttempt('Nu înțeleg.', ''), 'again');
+  });
+
+  it('keeps saved progress clean and toggles cards', () => {
+    assert.deepEqual(sanitizeKnown(['hello', 'hello', 'not-a-card', 5, null]), ['hello']);
+    assert.deepEqual(sanitizeKnown('nope'), []);
+    assert.deepEqual(toggleKnown([], 'hello'), ['hello']);
+    assert.deepEqual(toggleKnown(['hello'], 'hello'), []);
+    assert.deepEqual(toggleKnown(['hello'], 'hello', true), ['hello'], 'setting true twice does not duplicate');
+    assert.equal(totalProgress([]).percent, 0);
+    assert.equal(totalProgress(ALL_CARDS.map((c) => c.id)).percent, 100);
+  });
+
+  it('builds quiz questions with one correct answer among distinct wrong ones', () => {
+    let seed = 7;
+    const random = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    for (const deck of DECKS) {
+      for (const q of buildQuiz(deck, [], 5, random)) {
+        assert.equal(q.options.length, 4);
+        assert.equal(q.options[q.correctIndex].id, q.card.id);
+        assert.equal(new Set(q.options.map((o) => o.meaning.en)).size, 4, 'options have different meanings');
+      }
+    }
+  });
+
+  it('puts cards the learner does not know yet first in a quiz', () => {
+    const deck = DECKS[0];
+    const known = deck.cards.slice(0, deck.cards.length - 2).map((c) => c.id);
+    const quiz = buildQuiz(deck, known, 2, () => 0.5);
+    assert.deepEqual(quiz.map((q) => q.card.id).sort(), deck.cards.slice(-2).map((c) => c.id).sort());
   });
 });

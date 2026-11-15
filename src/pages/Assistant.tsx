@@ -27,7 +27,7 @@ import { prepareImage } from '../lib/image';
 const EXAMPLES: MessageKey[] = ['ai.ex.1', 'ai.ex.2', 'ai.ex.3', 'ai.ex.4', 'ai.ex.5'];
 
 const LINK_TOKEN_RE =
-  /(https:\/\/[^\s<>()]+|\/(?:dashboard|checklist|guides(?:\/[a-z0-9-]+)?|plan|kit\/[a-z0-9-]+|institutions|helper|counter|settings)\b)/g;
+  /(https:\/\/[^\s<>()]+|\/(?:dashboard|checklist|guides(?:\/[a-z0-9-]+)?|plan|kit\/[a-z0-9-]+|institutions|helper|counter|practice|settings)\b)/g;
 
 function splitTrailingPunctuation(token: string): { target: string; trailing: string } {
   const match = token.match(/^(.+?)([.,;:!?)\]]*)$/);
