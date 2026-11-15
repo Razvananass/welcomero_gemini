@@ -967,7 +967,7 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     return box;
   };
 
-  it('Gemini: uses gemini-3.8-flash via @google/genai with key in header, MINIMAL thinking, output cap, and User-Agent', async () => {
+  it('Gemini: uses gemini-3.8-flash via @google/genai with key in header, LOW thinking, output cap, and User-Agent', async () => {
     setup({ GEMINI_API_KEY: 'g-secret' });
     const box = capture({ candidates: [{ content: { parts: [{ text: 'The CNP is ' }, { text: 'a personal code.' }] } }] });
     try {
@@ -984,8 +984,8 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
       assert.deepEqual(s.body.contents.map((c: any) => c.role), ['user', 'model', 'user']);
       const sysText = s.body.systemInstruction.parts[0].text;
       assert.ok(sysText.includes('Residence permit for studies'));
-      assert.deepEqual(s.body.generationConfig.thinkingConfig, { thinkingLevel: 'MINIMAL' });
-      assert.equal(s.body.generationConfig.maxOutputTokens, 500);
+      assert.deepEqual(s.body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
+      assert.equal(s.body.generationConfig.maxOutputTokens, 500 + 1024);
     } finally { restore(); }
   });
 
