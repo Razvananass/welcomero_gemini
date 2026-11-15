@@ -78,8 +78,8 @@ export const ro: Record<MessageKey, string> = {
 
   'onb.title': 'Spune-ne despre tine',
   'onb.editing': 'Îți actualizezi răspunsurile.',
-  'onb.step1.title': 'Despre tine',
-  'onb.step2.title': 'Limba',
+  'onb.step1.title': 'Limba',
+  'onb.step2.title': 'Despre tine',
   'onb.step3.title': 'Cazare',
   'onb.step4.title': 'Progresul tău',
   'onb.q.situation': 'Care opțiune descrie cel mai bine situația ta?',

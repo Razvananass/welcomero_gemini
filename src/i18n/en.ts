@@ -83,8 +83,8 @@ export const en = {
   // ---- onboarding
   'onb.title': 'Tell us about yourself',
   'onb.editing': 'You are editing your answers.',
-  'onb.step1.title': 'About you',
-  'onb.step2.title': 'Language',
+  'onb.step1.title': 'Language',
+  'onb.step2.title': 'About you',
   'onb.step3.title': 'Accommodation',
   'onb.step4.title': 'Your progress',
   'onb.q.situation': 'What best describes your situation?',

@@ -52,9 +52,9 @@ export type OnboardingError = 'onb.error.required' | 'onb.error.completed';
 export function validateStep(step: number, draft: ProfileDraft): OnboardingError | null {
   switch (step) {
     case 1:
-      return draft.situation && draft.citizenship ? null : 'onb.error.required';
-    case 2:
       return null; // a language is always selected
+    case 2:
+      return draft.situation && draft.citizenship ? null : 'onb.error.required';
     case 3:
       return draft.accommodation ? null : 'onb.error.required';
     case 4:

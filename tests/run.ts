@@ -182,10 +182,10 @@ describe('onboarding rules', () => {
   });
 
   it('rejects empty or incomplete steps', () => {
-    assert.equal(validateStep(1, { completed: [] }), 'onb.error.required');
-    assert.equal(validateStep(1, { situation: 'student', completed: [] }), 'onb.error.required');
-    assert.equal(validateStep(1, { situation: 'student', citizenship: 'eu', completed: [] }), null);
-    assert.equal(validateStep(2, { completed: [] }), null);
+    assert.equal(validateStep(1, { completed: [] }), null);
+    assert.equal(validateStep(2, { completed: [] }), 'onb.error.required');
+    assert.equal(validateStep(2, { situation: 'student', completed: [] }), 'onb.error.required');
+    assert.equal(validateStep(2, { situation: 'student', citizenship: 'eu', completed: [] }), null);
     assert.equal(validateStep(3, { completed: [] }), 'onb.error.required');
     assert.equal(validateStep(4, { completed: [] }), 'onb.error.completed');
     assert.equal(validateStep(4, { completed: ['none'] }), null);
