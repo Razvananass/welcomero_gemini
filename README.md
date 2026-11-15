@@ -2,7 +2,7 @@
 
 A web app that helps newcomers in Timișoara (students first) work through their first month of
 Romanian paperwork: a personal checklist, plain-language guides, an optional AI assistant,
-Romanian phrases and an institutions directory. Languages: English, Română, Français, العربية (RTL).
+Romanian phrases and an institutions directory. Languages: English, Română, Français, العربية (RTL), Українська, नेपाली.
 
 **Important:** welcomeRo is an independent information tool, not a government service and not legal advice.
 Most procedure details are marked **"Needs confirmation"** on purpose. Always check with the official institution.

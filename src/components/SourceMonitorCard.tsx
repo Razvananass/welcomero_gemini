@@ -14,7 +14,7 @@ const STATUS_BADGE: Record<SourceMonitorStatus, string> = {
 function formatTime(iso: string | null, lang: string): string | null {
   if (!iso) return null;
   try {
-    const locale = lang === 'ro' ? 'ro-RO' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar' : 'en-GB';
+    const locale = lang === 'ro' ? 'ro-RO' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar' : lang === 'uk' ? 'uk-UA' : lang === 'ne' ? 'ne-NP' : 'en-GB';
     return new Intl.DateTimeFormat(locale, {
       dateStyle: 'medium',
       timeStyle: 'short',

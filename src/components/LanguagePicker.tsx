@@ -3,14 +3,14 @@ import { LANGUAGES } from '../i18n';
 
 /**
  * Shown at the very top of the landing page. A new visitor sees it first, large, with the
- * question written in all four languages (so it can be understood before choosing).
+ * question written in every supported language (so it can be understood before choosing).
  * After a choice it shrinks to a compact row.
  */
 export function LanguagePicker() {
   const { language, setLanguage, languageChosen } = useApp();
   return (
     <section
-      aria-label="Language / Limba / Langue / اللغة"
+      aria-label="Language / Limba / Langue / اللغة / Мова / भाषा"
       className={`rounded-2xl border border-brand-200 bg-brand-50 ${languageChosen ? 'p-3' : 'p-6 sm:p-8'}`}
     >
       {languageChosen ? null : (
@@ -20,7 +20,7 @@ export function LanguagePicker() {
           </h2>
           <p className="mt-2 text-muted" dir="auto">
             <span lang="ro">Alege limba</span> · <span lang="fr">Choisissez votre langue</span> ·{' '}
-            <span lang="ar">اختر لغتك</span>
+            <span lang="ar">اختر لغتك</span> · <span lang="uk">Оберіть мову</span> · <span lang="ne">आफ्नो भाषा छान्नुहोस्</span>
           </p>
         </div>
       )}

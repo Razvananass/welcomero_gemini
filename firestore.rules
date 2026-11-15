@@ -65,7 +65,7 @@ service cloud.firestore {
         && isValidId(data.ownerId)
         && data.ownerId == request.auth.uid
         && data.language is string
-        && data.language in ['en', 'ro', 'ar', 'fr']
+        && data.language in ['en', 'ro', 'ar', 'fr', 'uk', 'ne']
         && data.hasProfile is bool
         && (
           (data.hasProfile == true && ('profile' in data) && isValidProfileMap(data.profile))

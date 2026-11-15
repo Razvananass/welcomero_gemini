@@ -3,6 +3,8 @@ import { en, type MessageKey } from './en';
 import { ro } from './ro';
 import { fr } from './fr';
 import { ar } from './ar';
+import { uk } from './uk';
+import { ne } from './ne';
 
 export type { MessageKey };
 
@@ -18,11 +20,13 @@ export const LANGUAGES: LanguageInfo[] = [
   { code: 'ro', nativeName: 'Română', dir: 'ltr' },
   { code: 'fr', nativeName: 'Français', dir: 'ltr' },
   { code: 'ar', nativeName: 'العربية', dir: 'rtl' },
+  { code: 'uk', nativeName: 'Українська', dir: 'ltr' },
+  { code: 'ne', nativeName: 'नेपाली', dir: 'ltr' },
 ];
 
 export const DEFAULT_LANG: Lang = 'en';
 
-export const dictionaries: Record<Lang, Record<MessageKey, string>> = { en, ro, fr, ar };
+export const dictionaries: Record<Lang, Record<MessageKey, string>> = { en, ro, fr, ar, uk, ne };
 
 export function isLang(value: unknown): value is Lang {
   return typeof value === 'string' && LANGUAGES.some((l) => l.code === value);
