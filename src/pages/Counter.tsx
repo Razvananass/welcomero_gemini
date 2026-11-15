@@ -6,6 +6,7 @@ import { listenOnce, speechInputSupported, type Listener } from '../lib/speechIn
 import { speakRomanianAsync, stopSpeaking } from '../lib/speech';
 import { btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHeader, SpeakButtons } from '../components/ui';
 import { Icon } from '../components/Icon';
+import { AiErrorNotice, aiErrorReason } from '../components/AiErrorNotice';
 import type { MessageKey } from '../i18n';
 
 interface Turn {
@@ -58,6 +59,7 @@ export function Counter() {
   const [busy, setBusy] = useState<InterpretDirection | null>(null);
   const [listening, setListening] = useState<InterpretDirection | null>(null);
   const [error, setError] = useState<MessageKey | null>(null);
+  const [errorReason, setErrorReason] = useState<string | null>(null);
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [fullscreen, setFullscreen] = useState<number | null>(null);
   const listenerRef = useRef<Listener | null>(null);
@@ -85,6 +87,7 @@ export function Counter() {
     if (!clean || busy) return;
     setBusy(direction);
     setError(null);
+    setErrorReason(null);
     try {
       const result = await interpret({ text: clean, language, direction });
       const turn: Turn = { id: nextId.current++, direction, source: clean, result };
@@ -99,7 +102,10 @@ export function Counter() {
       const code = caught instanceof AiError ? caught.code : 'failed';
       if (code === 'not_configured') setAvailability('not_configured');
       else if (code === 'unreachable') setAvailability('unreachable');
-      else setError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+      else {
+        setError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+        setErrorReason(aiErrorReason(caught));
+      }
     } finally {
       setBusy(null);
     }
@@ -112,6 +118,7 @@ export function Counter() {
     }
     stopSpeaking();
     setError(null);
+    setErrorReason(null);
     const setText = direction === 'to_ro' ? setUserText : setClerkText;
     const handle = listenOnce({
       // The clerk speaks Romanian; the user speaks their own language.
@@ -253,9 +260,7 @@ export function Counter() {
       </section>
 
       {error ? (
-        <Notice tone="error" role="alert">
-          {t(error)}
-        </Notice>
+        <AiErrorNotice messageKey={error} reason={errorReason} />
       ) : null}
 
       {/* The conversation, newest first. */}

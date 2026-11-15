@@ -267,6 +267,7 @@ export const zh: Record<MessageKey, string> = {
   'ai.unavailable.body': '服务器上没有配置 AI 密钥。WelcomeRO 的其他功能不受影响。',
   'ai.unreachable.body': '无法连接到 AI 服务。如果你在自己的电脑上运行此应用，请用“npm run dev”启动，以便 /api 路由正常工作。WelcomeRO 的其他功能不受影响。',
   'ai.error': '出了点问题。请再试一次。',
+  'ai.errorDetail': '详情: {reason}',
   'ai.rateLimited': '请求太多。请稍等片刻再试。',
   'ai.newChat': '新对话',
   'ai.empty': '还没有消息。选一个示例，或写下你自己的问题。',

@@ -16,6 +16,7 @@ import {
 } from '../lib/ai';
 import { sessionData, STORAGE_KEYS } from '../lib/storage';
 import { Icon } from '../components/Icon';
+import { AiErrorNotice, aiErrorReason } from '../components/AiErrorNotice';
 import { Arrow, btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHeader } from '../components/ui';
 import type { MessageKey } from '../i18n';
 
@@ -139,11 +140,13 @@ export function Assistant() {
   const [input, setInput] = useState(procedure ? t('ai.explainPrompt', { title: loc(procedure.title) }) : '');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<MessageKey | null>(null);
+  const [errorReason, setErrorReason] = useState<string | null>(null);
 
   const [docText, setDocText] = useState('');
   const [docAttachment, setDocAttachment] = useState<{ attachment: ChatAttachment; previewUrl: string; name: string } | null>(null);
   const [docResult, setDocResult] = useState<string | null>(null);
   const [docError, setDocError] = useState<MessageKey | null>(null);
+  const [docErrorReason, setDocErrorReason] = useState<string | null>(null);
   const [docBusy, setDocBusy] = useState(false);
   const [docKind, setDocKind] = useState<'explain' | 'form'>('explain');
   const [formResult, setFormResult] = useState<FormGuide | string | null>(null);
@@ -185,6 +188,7 @@ export function Assistant() {
     setMessages(next);
     setInput('');
     setError(null);
+    setErrorReason(null);
     setBusy(true);
     try {
       const reply = await sendChat({
@@ -197,7 +201,10 @@ export function Assistant() {
       const code = caught instanceof AiError ? caught.code : 'failed';
       if (code === 'not_configured') setAvailability('not_configured');
       else if (code === 'unreachable') setAvailability('unreachable');
-      else setError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+      else {
+        setError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+        setErrorReason(aiErrorReason(caught));
+      }
     } finally {
       inFlightRef.current = false;
       setBusy(false);
@@ -212,6 +219,7 @@ export function Assistant() {
   function newConversation() {
     setMessages([]);
     setError(null);
+    setErrorReason(null);
   }
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -219,6 +227,7 @@ export function Assistant() {
     event.target.value = '';
     if (!file) return;
     setDocError(null);
+    setDocErrorReason(null);
     setDocPreparing(true);
     try {
       // Phone photos are shrunk in the browser first, so a normal 5 MB photo works.
@@ -240,6 +249,7 @@ export function Assistant() {
     if ((!docText.trim() && !docAttachment) || docBusy) return;
     setDocBusy(true);
     setDocError(null);
+    setDocErrorReason(null);
     setDocResult(null);
     setFormResult(null);
     try {
@@ -250,7 +260,10 @@ export function Assistant() {
       const code = caught instanceof AiError ? caught.code : 'failed';
       if (code === 'not_configured') setAvailability('not_configured');
       else if (code === 'unreachable') setAvailability('unreachable');
-      else setDocError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+      else {
+        setDocError(code === 'rate_limited' ? 'ai.rateLimited' : 'ai.error');
+        setDocErrorReason(aiErrorReason(caught));
+      }
     } finally {
       setDocBusy(false);
     }
@@ -372,9 +385,7 @@ export function Assistant() {
 
             {error ? (
               <div className="mt-3">
-                <Notice tone="error" role="alert">
-                  {t(error)}
-                </Notice>
+                <AiErrorNotice messageKey={error} reason={errorReason} />
               </div>
             ) : null}
 
@@ -555,9 +566,7 @@ export function Assistant() {
 
           {docError ? (
             <div className="mt-4">
-              <Notice tone="error" role="alert">
-                {t(docError)}
-              </Notice>
+              <AiErrorNotice messageKey={docError} reason={docErrorReason} />
             </div>
           ) : null}
 

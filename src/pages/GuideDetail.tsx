@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { getInstitution, getProcedure, getSources } from '../data';
 import { effectiveStatus } from '../lib/checklist';
+import { AiErrorNotice, aiErrorReason } from '../components/AiErrorNotice';
 import { AiError, translateLines } from '../lib/ai';
 import { collectEnglishOnly, formatBatch, makeBatches, parseBatchReply } from '../lib/translate';
 import { sessionData, STORAGE_KEYS } from '../lib/storage';
@@ -53,6 +54,7 @@ export function GuideDetail() {
   const [showTranslated, setShowTranslated] = useState(() => Object.keys(readCachedTranslations(lang)).length > 0);
   const [translating, setTranslating] = useState(false);
   const [translateFailed, setTranslateFailed] = useState(false);
+  const [translateReason, setTranslateReason] = useState<string | null>(null);
   const inFlight = useRef(false);
   useEffect(() => {
     const cached = readCachedTranslations(lang);
@@ -102,6 +104,7 @@ export function GuideDetail() {
     inFlight.current = true;
     setTranslating(true);
     setTranslateFailed(false);
+    setTranslateReason(null);
     try {
       const merged: Record<string, string> = { ...translations };
       for (const batch of makeBatches(missing)) {
@@ -119,8 +122,9 @@ export function GuideDetail() {
       writeCachedTranslations(lang, merged);
       setShowTranslated(true);
       if (got < missing.length) setTranslateFailed(true);
-    } catch {
+    } catch (caught) {
       setTranslateFailed(true);
+      setTranslateReason(aiErrorReason(caught));
     } finally {
       inFlight.current = false;
       setTranslating(false);
@@ -211,9 +215,9 @@ export function GuideDetail() {
             </button>
           )}
           {translateFailed ? (
-            <p role="alert" className="text-sm font-semibold text-red-800">
-              {t('guide.translateError')}
-            </p>
+            <div className="w-full">
+              <AiErrorNotice messageKey="guide.translateError" reason={translateReason} />
+            </div>
           ) : null}
         </div>
       ) : null}

@@ -256,6 +256,7 @@ export const ro: Record<MessageKey, string> = {
   'ai.unavailable.body': 'Pe server nu este configurată nicio cheie AI. Restul aplicației funcționează normal și fără el.',
   'ai.unreachable.body': 'Serviciul AI nu a putut fi contactat. Dacă rulezi aplicația local, pornește-o cu „npm run dev” ca ruta /api să funcționeze. Restul site-ului funcționează normal și fără el.',
   'ai.error': 'Ceva nu a mers bine. Încearcă din nou.',
+  'ai.errorDetail': 'Detalii: {reason}',
   'ai.rateLimited': 'Prea multe cereri într-un timp scurt. Așteaptă puțin și încearcă din nou.',
   'ai.newChat': 'Conversație nouă',
   'ai.empty': 'Nu există mesaje încă. Alege un exemplu de mai jos sau scrie propria întrebare.',

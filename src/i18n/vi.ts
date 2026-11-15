@@ -267,6 +267,7 @@ export const vi: Record<MessageKey, string> = {
   'ai.unavailable.body': 'Máy chủ chưa được cấu hình khóa AI. Các phần còn lại của WelcomeRO vẫn hoạt động bình thường.',
   'ai.unreachable.body': 'Không kết nối được dịch vụ AI. Nếu bạn chạy ứng dụng trên máy tính của mình, hãy khởi động bằng “npm run dev” để đường dẫn /api hoạt động. Các phần còn lại của WelcomeRO vẫn hoạt động bình thường.',
   'ai.error': 'Đã có lỗi. Vui lòng thử lại.',
+  'ai.errorDetail': 'Chi tiết: {reason}',
   'ai.rateLimited': 'Quá nhiều yêu cầu. Vui lòng chờ một chút rồi thử lại.',
   'ai.newChat': 'Cuộc trò chuyện mới',
   'ai.empty': 'Chưa có tin nhắn. Hãy chọn một ví dụ hoặc viết câu hỏi của bạn.',

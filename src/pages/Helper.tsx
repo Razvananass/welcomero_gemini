@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { phrases } from '../data';
+import { AiErrorNotice, aiErrorReason } from '../components/AiErrorNotice';
 import { AiError, checkAvailability, generatePhrase, type AiAvailability, type GeneratedPhrase } from '../lib/ai';
 import { Arrow, btnPrimary, CopyButton, cardClass, inputClass, Notice, PageHeader, SpeakButtons, useSpeechSupport } from '../components/ui';
 import type { MessageKey } from '../i18n';
@@ -68,6 +69,7 @@ function CustomMessage() {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<GeneratedPhrase | null>(null);
   const [error, setError] = useState<MessageKey | null>(null);
+  const [errorReason, setErrorReason] = useState<string | null>(null);
   const inFlightRef = useRef(false);
 
   useEffect(() => {
@@ -87,13 +89,17 @@ function CustomMessage() {
     inFlightRef.current = true;
     setBusy(true);
     setError(null);
+    setErrorReason(null);
     setResult(null);
     try {
       setResult(await generatePhrase({ description: text, language }));
     } catch (caught) {
       const code = caught instanceof AiError ? caught.code : 'failed';
       if (code === 'not_configured' || code === 'unreachable') setAvailability(code);
-      else setError(code === 'rate_limited' ? 'ai.rateLimited' : 'help.custom.error');
+      else {
+        setError(code === 'rate_limited' ? 'ai.rateLimited' : 'help.custom.error');
+        setErrorReason(aiErrorReason(caught));
+      }
     } finally {
       inFlightRef.current = false;
       setBusy(false);
@@ -138,9 +144,7 @@ function CustomMessage() {
 
       {error ? (
         <div className="mt-3">
-          <Notice tone="error" role="alert">
-            {t(error)}
-          </Notice>
+          <AiErrorNotice messageKey={error} reason={errorReason} />
         </div>
       ) : null}
 

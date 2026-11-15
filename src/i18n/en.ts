@@ -266,6 +266,7 @@ export const en = {
   'ai.unavailable.body': 'No AI key is configured on the server. The rest of WelcomeRO works without it.',
   'ai.unreachable.body': 'The AI service could not be reached. If you are running the app on your computer, start it with “npm run dev” so the /api route works. The rest of WelcomeRO works without it.',
   'ai.error': 'Something went wrong. Please try again.',
+  'ai.errorDetail': 'Details: {reason}',
   'ai.rateLimited': 'Too many requests. Please wait a moment and try again.',
   'ai.newChat': 'New conversation',
   'ai.empty': 'No messages yet. Pick an example or write your own question.',

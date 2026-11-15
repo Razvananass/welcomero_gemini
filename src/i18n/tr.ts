@@ -256,6 +256,7 @@ export const tr: Record<MessageKey, string> = {
   'ai.unavailable.body': 'Sunucuda yapılandırılmış bir yapay zekâ anahtarı yok. WelcomeRO’nun geri kalanı onsuz çalışır.',
   'ai.unreachable.body': 'Yapay zekâ hizmetine ulaşılamadı. Uygulamayı kendi bilgisayarınızda çalıştırıyorsanız, /api yolunun çalışması için “npm run dev” ile başlatın. WelcomeRO’nun geri kalanı onsuz çalışır.',
   'ai.error': 'Bir şeyler ters gitti. Lütfen tekrar deneyin.',
+  'ai.errorDetail': 'Ayrıntılar: {reason}',
   'ai.rateLimited': 'Çok fazla istek. Lütfen biraz bekleyip tekrar deneyin.',
   'ai.newChat': 'Yeni sohbet',
   'ai.empty': 'Henüz mesaj yok. Bir örnek seçin veya kendi sorunuzu yazın.',
