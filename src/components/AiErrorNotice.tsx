@@ -8,7 +8,8 @@ import { Notice } from './ui';
 const EXPLANATIONS: Record<string, string> = {
   invalid_key: 'The AI key was rejected. Check GEMINI_API_KEY in Vercel and redeploy.',
   model_unavailable: 'The AI model was not found. Remove AI_MODEL/GEMINI_MODEL, or set a model your key can use.',
-  bad_request: 'The AI service rejected the request. Check the model settings.',
+  bad_request: 'The AI service rejected the request. Check GEMINI_MODEL / AI_MODEL in Vercel (or leave them empty) and redeploy. The exact reason is in the Vercel function log for /api/chat.',
+  region_unsupported: 'The AI service is not available from the server region. Change the Vercel function region (e.g. to an EU or US region).',
   quota_exceeded: 'The AI quota is used up. Wait a while or check the quota in Google AI Studio.',
   blocked: 'The AI blocked this answer for safety reasons. Try rephrasing.',
   empty_response: 'The AI returned an empty answer. Try again.',

@@ -1093,6 +1093,42 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     } finally { console.error = origError; restore(); }
   });
 
+  it('Gemini: retries once with default settings when the tuned config is rejected (400)', async () => {
+    setup({ GEMINI_API_KEY: 'g' });
+    const origWarn = console.warn;
+    console.warn = () => {};
+    const bodies: Array<Record<string, any>> = [];
+    globalThis.fetch = (async (input: string | URL | Request, init?: RequestInit) => {
+      const raw = typeof init?.body === 'string' ? init.body : input instanceof Request ? await input.clone().text() : '';
+      bodies.push(JSON.parse(raw));
+      const first = bodies.length === 1;
+      return new Response(
+        JSON.stringify(first ? { error: { message: 'Thinking level is not supported for this model.' } } : { candidates: [{ content: { parts: [{ text: 'OK answer' }] } }] }),
+        { status: first ? 400 : 200, headers: { 'content-type': 'application/json' } },
+      );
+    }) as unknown as typeof fetch;
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(post(goodBody));
+      assert.equal(res.status, 200);
+      assert.deepEqual(await res.json(), { reply: 'OK answer' });
+      assert.equal(bodies.length, 2);
+      assert.ok(bodies[0].generationConfig.thinkingConfig);
+      assert.equal(bodies[1].generationConfig.thinkingConfig, undefined);
+    } finally { console.warn = origWarn; restore(); }
+  });
+
+  it('Gemini: trims quotes from GEMINI_MODEL and ignores a non-Gemini AI_MODEL', async () => {
+    setup({ GEMINI_API_KEY: 'g', GEMINI_MODEL: ' "gemini-3.8-flash" ' });
+    try {
+      const { GET } = await import('../api/chat');
+      assert.equal((await GET().json()).model, 'gemini-3.8-flash');
+      delete process.env.GEMINI_MODEL;
+      process.env.AI_MODEL = 'claude-sonnet-5-5';
+      assert.equal((await GET().json()).model, 'gemini-3.8-flash');
+    } finally { restore(); }
+  });
+
   it('GET reports the effective model of the primary provider', async () => {
     setup({ GEMINI_API_KEY: 'g', GEMINI_MODEL: 'gemini-test-model' } as never);
     try {
