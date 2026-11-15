@@ -7,6 +7,8 @@ import { effectiveStatus } from '../lib/checklist';
 import {
   checkAvailability,
   explainDocument,
+  explainForm,
+  type FormGuide,
   sendChat,
   AiError,
   type AiAvailability,
@@ -18,6 +20,8 @@ import { sessionData, STORAGE_KEYS } from '../lib/storage';
 import { Icon } from '../components/Icon';
 import { Arrow, btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHeader } from '../components/ui';
 import type { MessageKey } from '../i18n';
+
+import { FormGuideView } from '../components/FormGuideView';
 
 const EXAMPLES: MessageKey[] = ['ai.ex.1', 'ai.ex.2', 'ai.ex.3', 'ai.ex.4', 'ai.ex.5'];
 const MAX_IMAGE_BYTES = 3_500_000;
@@ -142,6 +146,8 @@ export function Assistant() {
   const [docResult, setDocResult] = useState<string | null>(null);
   const [docError, setDocError] = useState<MessageKey | null>(null);
   const [docBusy, setDocBusy] = useState(false);
+  const [docKind, setDocKind] = useState<'explain' | 'form'>('explain');
+  const [formResult, setFormResult] = useState<FormGuide | string | null>(null);
 
   const endRef = useRef<HTMLDivElement>(null);
   const inFlightRef = useRef(false);
@@ -257,14 +263,11 @@ export function Assistant() {
     setDocBusy(true);
     setDocError(null);
     setDocResult(null);
+    setFormResult(null);
     try {
-      const reply = await explainDocument({
-        text: docText,
-        attachment: docAttachment?.attachment,
-        language,
-        userContext,
-      });
-      setDocResult(reply);
+      const request = { text: docText, attachment: docAttachment?.attachment, language, userContext };
+      if (docKind === 'form') setFormResult(await explainForm(request));
+      else setDocResult(await explainDocument(request));
     } catch (caught) {
       const code = caught instanceof AiError ? caught.code : 'failed';
       if (code === 'not_configured') setAvailability('not_configured');
@@ -434,6 +437,28 @@ export function Assistant() {
             <Notice tone="warning">{t('ai.doc.privacy')}</Notice>
           </div>
 
+          <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label={t('ai.form.kind')}>
+            {(['explain', 'form'] as const).map((kind) => (
+              <button
+                key={kind}
+                type="button"
+                aria-pressed={docKind === kind}
+                onClick={() => {
+                  setDocKind(kind);
+                  setDocResult(null);
+                  setFormResult(null);
+                }}
+                className={`inline-flex min-h-10 items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold ${
+                  docKind === kind ? 'border-brand-700 bg-brand-700 text-white' : 'border-slate-400 bg-white text-brand-900 hover:bg-brand-50'
+                }`}
+              >
+                <Icon name={kind === 'form' ? 'list' : 'file'} className="size-4" />
+                {kind === 'form' ? t('ai.form.kind.form') : t('ai.form.kind.explain')}
+              </button>
+            ))}
+          </div>
+          {docKind === 'form' ? <p className="mt-2 text-sm text-muted">{t('ai.form.hint')}</p> : null}
+
           <form onSubmit={handleDocumentSubmit} className="mt-4 space-y-4">
             <div className="flex flex-wrap items-center gap-3">
               <input
@@ -495,7 +520,7 @@ export function Assistant() {
               disabled={unavailable || docBusy || (!docText.trim() && !docAttachment)}
             >
               <Icon name="sparkles" className="size-4" />
-              {docBusy ? t('ai.thinking') : t('ai.doc.submit')}
+              {docBusy ? t('ai.thinking') : docKind === 'form' ? t('ai.form.submit') : t('ai.doc.submit')}
             </button>
           </form>
 
@@ -504,6 +529,13 @@ export function Assistant() {
               <Notice tone="error" role="alert">
                 {t(docError)}
               </Notice>
+            </div>
+          ) : null}
+
+          {formResult && typeof formResult !== 'string' ? <FormGuideView guide={formResult} /> : null}
+          {typeof formResult === 'string' ? (
+            <div className="mt-5 rounded-2xl border border-brand-200 bg-brand-50/70 p-4" aria-live="polite">
+              <div className="whitespace-pre-wrap text-base text-ink">{renderMessageContent(formResult)}</div>
             </div>
           ) : null}
 

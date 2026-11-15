@@ -138,7 +138,9 @@ export async function POST(request: Request): Promise<Response> {
       ? "phrase"
       : payload.mode === "document"
         ? "document"
-        : "chat";
+        : payload.mode === "form"
+          ? "form"
+          : "chat";
   const language = LANGUAGES.find((l) => l === payload.language);
   const messages = parseMessages(payload.messages);
   if (!language || !messages) return json({ error: "bad_request" }, 400);
@@ -170,7 +172,8 @@ export async function POST(request: Request): Promise<Response> {
       liveUpdates: getLiveUpdatesPromptBlock(),
     }),
     messages,
-    maxTokens: mode === "phrase" ? 200 : mode === "document" ? 700 : 500,
+    maxTokens:
+      mode === "phrase" ? 200 : mode === "document" ? 700 : mode === "form" ? 2000 : 500,
   };
 
   let lastError: unknown;

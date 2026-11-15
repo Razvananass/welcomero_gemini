@@ -12,7 +12,7 @@ import {
   ACCOMMODATIONS, CITIZENSHIPS, COMPLETED_KEYS, SITUATIONS,
   draftToProfile, isDraft, isProfile, normaliseCompleted, toggleCompleted, validateStep,
 } from '../src/lib/profile';
-import { parsePhraseReply } from '../src/lib/ai';
+import { parseFormReply, parsePhraseReply } from '../src/lib/ai';
 import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanitizeDates, validateDates } from '../src/lib/plan';
 import { docCounts, sanitizeDocs, toggleDoc } from '../src/lib/docs';
 import { buildHelpMessage, HELP_ORG_ID, helpMailto } from '../src/lib/helpRequest';
@@ -958,5 +958,64 @@ describe('human help: ready-made message for LOGS', () => {
     const link = helpMailto('a@b.ro', 'Bună\nziua');
     assert.ok(link.startsWith('mailto:a@b.ro?subject='));
     assert.ok(link.includes('body=Bun%C4%83%0Aziua'));
+  });
+});
+
+describe('form helper: field-by-field replies', () => {
+  const sample = {
+    form: 'Cerere pentru prelungirea dreptului de ședere',
+    about: 'This is the application to extend your residence permit, submitted at IGI.',
+    fields: [
+      { label: 'Nume', meaning: 'Surname', write: 'Your family name in capital letters, as in your passport.', example: 'POPESCU' },
+      { label: 'Data nașterii', meaning: 'Date of birth', write: 'DD.MM.YYYY', example: '01.01.2000' },
+      { label: '', meaning: 'no label: dropped' },
+      'not an object',
+    ],
+    skip: ['Rezervat autorității'],
+    tips: ['Sign and date the last page.'],
+  };
+
+  it('reads the JSON even inside code fences, and drops unusable fields', () => {
+    const guide = parseFormReply('```json\n' + JSON.stringify(sample) + '\n```');
+    assert.ok(guide);
+    assert.equal(guide?.form, sample.form);
+    assert.deepEqual(guide?.fields.map((f) => f.label), ['Nume', 'Data nașterii']);
+    assert.deepEqual(guide?.skip, ['Rezervat autorității']);
+    assert.equal(guide?.tips.length, 1);
+  });
+
+  it('caps the number of fields and rejects replies that are not form guides', () => {
+    const many = { ...sample, fields: Array.from({ length: 50 }, (_, i) => ({ label: `Câmp ${i}` })) };
+    assert.equal(parseFormReply(JSON.stringify(many))?.fields.length, 30);
+    assert.equal(parseFormReply('Sorry, I cannot read this image.'), null);
+    assert.equal(parseFormReply('{"fields": "nope"}'), null);
+    assert.equal(parseFormReply('{"fields": [], "about": ""}'), null);
+    assert.equal(parseFormReply('{"fields": [], "about": "Take a sharper photo."}')?.about, 'Take a sharper photo.');
+  });
+
+  it('the endpoint accepts form mode, asks for JSON field by field, and allows a longer answer', async () => {
+    const realFetch = globalThis.fetch;
+    const savedKey = process.env.ANTHROPIC_API_KEY;
+    for (const name of ['GEMINI_API_KEY', 'GROQ_API_KEY', 'AI_PROVIDER']) delete process.env[name];
+    process.env.ANTHROPIC_API_KEY = 'test-key';
+    let body: { system: string; max_tokens: number } | null = null;
+    globalThis.fetch = (async (_u: string, init: RequestInit) => {
+      body = JSON.parse(init.body as string);
+      return new Response(JSON.stringify({ content: [{ type: 'text', text: JSON.stringify(sample) }] }), { status: 200 });
+    }) as unknown as typeof fetch;
+    try {
+      const { POST } = await import('../api/chat');
+      const res = await POST(new Request('http://localhost/api/chat', { method: 'POST', body: JSON.stringify({ mode: 'form', language: 'fr', messages: [{ role: 'user', content: 'Nume: ____ Prenume: ____' }] }) }));
+      assert.equal(res.status, 200);
+      const seen = body as unknown as { system: string; max_tokens: number };
+      assert.ok(seen.system.includes('field by field'));
+      assert.ok(seen.system.includes('"fields"'));
+      assert.ok(seen.system.includes('in French'));
+      assert.ok(seen.system.includes('NEVER copy personal data'));
+      assert.equal(seen.max_tokens, 2000);
+    } finally {
+      globalThis.fetch = realFetch;
+      if (savedKey === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = savedKey;
+    }
   });
 });

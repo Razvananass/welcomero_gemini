@@ -111,6 +111,69 @@ export function explainDocument(args: {
   });
 }
 
+export interface FormField {
+  /** Romanian label as printed on the form. */
+  label: string;
+  meaning: string;
+  write: string;
+  example: string;
+}
+
+export interface FormGuide {
+  form: string;
+  about: string;
+  fields: FormField[];
+  skip: string[];
+  tips: string[];
+}
+
+/** Field-by-field help for a Romanian form (photo or pasted text). */
+export async function explainForm(args: {
+  text: string;
+  attachment?: ChatAttachment;
+  language: Lang;
+  userContext?: UserContextSummary;
+}): Promise<FormGuide | string> {
+  const reply = await post({
+    mode: 'form',
+    language: args.language,
+    messages: [
+      {
+        role: 'user',
+        content: args.text.trim() || 'Please help me fill in this Romanian form, field by field.',
+        ...(args.attachment ? { attachment: args.attachment } : {}),
+      },
+    ],
+    userContext: args.userContext,
+  });
+  // If the model did not return usable JSON, show its text instead of failing.
+  return parseFormReply(reply) ?? reply;
+}
+
+const str = (value: unknown, max = 400): string => (typeof value === 'string' ? value.trim().slice(0, max) : '');
+const strList = (value: unknown, limit: number): string[] =>
+  Array.isArray(value) ? value.map((v) => str(v)).filter(Boolean).slice(0, limit) : [];
+
+/** The model is asked for JSON. Be forgiving about code fences or text around it, strict about the shape. */
+export function parseFormReply(reply: string): FormGuide | null {
+  const start = reply.indexOf('{');
+  const end = reply.lastIndexOf('}');
+  if (start === -1 || end <= start) return null;
+  try {
+    const data = JSON.parse(reply.slice(start, end + 1)) as Record<string, unknown>;
+    if (!Array.isArray(data.fields)) return null;
+    const fields = data.fields
+      .filter((f): f is Record<string, unknown> => Boolean(f) && typeof f === 'object')
+      .map((f) => ({ label: str(f.label, 160), meaning: str(f.meaning), write: str(f.write), example: str(f.example, 120) }))
+      .filter((f) => f.label !== '')
+      .slice(0, 30);
+    const guide = { form: str(data.form, 200), about: str(data.about, 800), fields, skip: strList(data.skip, 10), tips: strList(data.tips, 5) };
+    return guide.fields.length > 0 || guide.about !== '' ? guide : null;
+  } catch {
+    return null;
+  }
+}
+
 export interface GeneratedPhrase {
   romanian: string;
   translation: string;
