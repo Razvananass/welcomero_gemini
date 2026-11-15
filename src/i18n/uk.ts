@@ -414,7 +414,11 @@ export const uk: Record<MessageKey, string> = {
   'ai.doc.submit': 'Пояснити повідомлення',
   'ai.doc.result': 'Пояснення простими словами',
   'ai.doc.privacy': 'Перед завантаженням обріжте або закрийте номери паспорта, CNP, IBAN і особисті адреси.',
-  'ai.doc.invalidImage': 'Завантажте зображення PNG, JPEG або WebP розміром до 3,5 МБ.',
+  'ai.doc.invalidImage': 'Виберіть зображення PNG, JPEG або WebP.',
+  'ai.doc.tooLarge': 'Це зображення завелике для надсилання, навіть після зменшення. Спробуйте фото лише формуляра або менший файл.',
+  'ai.doc.unreadable': 'Не вдалося прочитати це зображення. Спробуйте зробити фото ще раз.',
+  'ai.doc.takePhoto': 'Зробити фото',
+  'ai.doc.preparing': 'Підготовка фото…',
   'ai.action.openPage': 'Відкрити {path}',
 
   'monitor.title': 'Моніторинг офіційних джерел',

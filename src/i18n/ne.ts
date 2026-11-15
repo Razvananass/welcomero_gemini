@@ -430,7 +430,11 @@ export const ne: Record<MessageKey, string> = {
   'ai.doc.submit': 'सूचना बुझाइदिनुहोस्',
   'ai.doc.result': 'सरल भाषामा व्याख्या',
   'ai.doc.privacy': 'अपलोड गर्नुअघि पासपोर्ट नम्बर, CNP, IBAN र व्यक्तिगत ठेगाना काटेर हटाउनुहोस् वा छोप्नुहोस्।',
-  'ai.doc.invalidImage': 'कृपया 3.5 MB भन्दा सानो PNG, JPEG वा WebP फोटो अपलोड गर्नुहोस्।',
+  'ai.doc.invalidImage': 'PNG, JPEG वा WebP तस्बिर छान्नुहोस्।',
+  'ai.doc.tooLarge': 'सानो बनाएपछि पनि यो तस्बिर पठाउन धेरै ठूलो छ। फारम मात्र देखिने फोटो वा सानो फाइल प्रयास गर्नुहोस्।',
+  'ai.doc.unreadable': 'यो तस्बिर पढ्न सकिएन। फेरि फोटो खिच्नुहोस्।',
+  'ai.doc.takePhoto': 'फोटो खिच्नुहोस्',
+  'ai.doc.preparing': 'फोटो तयार गर्दै…',
   'ai.action.openPage': '{path} खोल्नुहोस्',
 
   // ---- official source monitor

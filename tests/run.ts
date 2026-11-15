@@ -16,6 +16,7 @@ import { parseFormReply, parsePhraseReply } from '../src/lib/ai';
 import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanitizeDates, validateDates } from '../src/lib/plan';
 import { docCounts, sanitizeDocs, toggleDoc } from '../src/lib/docs';
 import { buildHelpMessage, HELP_ORG_ID, helpMailto } from '../src/lib/helpRequest';
+import { dataUrlBytes, fitWithin, MAX_RESULT_BYTES, MAX_SIDE } from '../src/lib/image';
 import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
 import { speakableText } from '../src/lib/speech';
@@ -1120,5 +1121,31 @@ describe('counter mode: interpreter endpoint', () => {
       ]) assert.equal((await POST(request(body))).status, 400, JSON.stringify(body).slice(0, 70));
       assert.equal(calls, 0);
     } finally { restore(); }
+  });
+});
+
+describe('photo upload: shrinking', () => {
+  it('scales the longest side down to the limit and keeps the proportions', () => {
+    assert.deepEqual(fitWithin(4032, 3024, 2000), { width: 2000, height: 1500 });
+    assert.deepEqual(fitWithin(3024, 4032, 2000), { width: 1500, height: 2000 }, 'portrait photos');
+  });
+
+  it('never enlarges small images and never returns zero pixels', () => {
+    assert.deepEqual(fitWithin(800, 600, 2000), { width: 800, height: 600 });
+    assert.deepEqual(fitWithin(5000, 1, 2000), { width: 2000, height: 1 });
+    assert.deepEqual(fitWithin(0, 0, 2000), { width: 1, height: 1 });
+  });
+
+  it('measures the real size of a data URL', () => {
+    assert.equal(dataUrlBytes('data:image/jpeg;base64,'), 0);
+    assert.equal(dataUrlBytes('data:image/jpeg;base64,QUJD'), 3);
+    assert.equal(dataUrlBytes('data:image/jpeg;base64,QUI='), 2);
+    assert.equal(dataUrlBytes('data:image/jpeg;base64,QQ=='), 1);
+    assert.equal(dataUrlBytes('no comma'), 0);
+  });
+
+  it('the largest result we send fits under the server limit (5.5M base64 characters)', () => {
+    assert.ok(Math.ceil((MAX_RESULT_BYTES * 4) / 3) < 5_500_000);
+    assert.ok(MAX_SIDE >= 1600);
   });
 });

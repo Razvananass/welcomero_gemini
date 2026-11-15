@@ -22,10 +22,9 @@ import { Arrow, btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHea
 import type { MessageKey } from '../i18n';
 
 import { FormGuideView } from '../components/FormGuideView';
+import { prepareImage } from '../lib/image';
 
 const EXAMPLES: MessageKey[] = ['ai.ex.1', 'ai.ex.2', 'ai.ex.3', 'ai.ex.4', 'ai.ex.5'];
-const MAX_IMAGE_BYTES = 3_500_000;
-const ALLOWED_MIME = new Set<ChatAttachment['mimeType']>(['image/png', 'image/jpeg', 'image/webp']);
 
 const LINK_TOKEN_RE =
   /(https:\/\/[^\s<>()]+|\/(?:dashboard|checklist|guides(?:\/[a-z0-9-]+)?|plan|kit\/[a-z0-9-]+|institutions|helper|counter|settings)\b)/g;
@@ -152,6 +151,8 @@ export function Assistant() {
   const endRef = useRef<HTMLDivElement>(null);
   const inFlightRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const [docPreparing, setDocPreparing] = useState(false);
 
   const userContext = useMemo<UserContextSummary | undefined>(() => {
     if (!profile) return undefined;
@@ -228,33 +229,25 @@ export function Assistant() {
     setError(null);
   }
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
-    if (!ALLOWED_MIME.has(file.type as ChatAttachment['mimeType']) || file.size > MAX_IMAGE_BYTES) {
-      setDocError('ai.doc.invalidImage');
-      return;
-    }
     setDocError(null);
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = typeof reader.result === 'string' ? reader.result : '';
-      const comma = dataUrl.indexOf(',');
-      if (comma === -1) {
-        setDocError('ai.doc.invalidImage');
-        return;
-      }
+    setDocPreparing(true);
+    try {
+      // Phone photos are shrunk in the browser first, so a normal 5 MB photo works.
+      const image = await prepareImage(file);
       setDocAttachment({
-        attachment: {
-          mimeType: file.type as ChatAttachment['mimeType'],
-          data: dataUrl.slice(comma + 1),
-        },
-        previewUrl: dataUrl,
+        attachment: { mimeType: image.mimeType, data: image.base64 },
+        previewUrl: image.dataUrl,
         name: file.name,
       });
-    };
-    reader.readAsDataURL(file);
+    } catch (caught) {
+      setDocError(caught === 'tooLarge' ? 'ai.doc.tooLarge' : caught === 'unreadable' ? 'ai.doc.unreadable' : 'ai.doc.invalidImage');
+    } finally {
+      setDocPreparing(false);
+    }
   }
 
   async function handleDocumentSubmit(event: FormEvent) {
@@ -468,14 +461,32 @@ export function Assistant() {
                 className="sr-only"
                 onChange={handleFileChange}
               />
+              {/* On phones this opens the camera directly; on computers it falls back to the file picker. */}
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="sr-only"
+                onChange={handleFileChange}
+              />
               <button
                 type="button"
                 className={btnSecondary}
-                disabled={unavailable || docBusy}
+                disabled={unavailable || docBusy || docPreparing}
+                onClick={() => cameraInputRef.current?.click()}
+              >
+                <Icon name="locate" className="size-4" />
+                {t('ai.doc.takePhoto')}
+              </button>
+              <button
+                type="button"
+                className={btnSecondary}
+                disabled={unavailable || docBusy || docPreparing}
                 onClick={() => fileInputRef.current?.click()}
               >
                 <Icon name="upload" className="size-4" />
-                {t('ai.doc.upload')}
+                {docPreparing ? t('ai.doc.preparing') : t('ai.doc.upload')}
               </button>
               {docAttachment ? (
                 <button

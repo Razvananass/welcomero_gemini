@@ -429,7 +429,11 @@ export const en = {
   'ai.doc.submit': 'Explain notice',
   'ai.doc.result': 'Plain-language explanation',
   'ai.doc.privacy': 'Crop out or hide passport numbers, CNP, IBAN, and personal addresses before uploading.',
-  'ai.doc.invalidImage': 'Please upload a PNG, JPEG, or WebP image under 3.5 MB.',
+  'ai.doc.invalidImage': 'Please choose a PNG, JPEG or WebP image.',
+  'ai.doc.tooLarge': 'This image is too large to send, even after shrinking. Try a photo of just the form, or a smaller file.',
+  'ai.doc.unreadable': 'This image could not be read. Try taking the photo again.',
+  'ai.doc.takePhoto': 'Take a photo',
+  'ai.doc.preparing': 'Preparing photo…',
   'ai.action.openPage': 'Open {path}',
 
   // ---- official source monitor
