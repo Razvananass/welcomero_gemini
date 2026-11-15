@@ -42,6 +42,8 @@ export type FailureReason =
   | "network"
   | "upstream_5xx"
   | "region_unsupported"
+  | "key_blocked"
+  | "api_disabled"
   | "unknown";
 
 export class ProviderError extends Error {
@@ -65,6 +67,21 @@ export function classifyFailure(
   message: string,
 ): FailureReason {
   const msg = message.toLowerCase();
+  // Specific 403 causes first, so the owner gets a precise hint instead of a generic "key rejected".
+  if (
+    msg.includes("leaked") ||
+    msg.includes("suspended") ||
+    msg.includes("has been denied access") ||
+    msg.includes("consumer_suspended")
+  )
+    return "key_blocked";
+  if (
+    msg.includes("service_disabled") ||
+    msg.includes("has not been used in project") ||
+    msg.includes("api has not been enabled") ||
+    msg.includes("is disabled")
+  )
+    return "api_disabled";
   if (
     status === 401 ||
     status === 403 ||
@@ -179,7 +196,27 @@ function nonEmpty(text: string): string {
 function readEnvKey(name: string): string {
   const raw = process.env[name];
   if (!raw) return "";
-  return raw.trim().replace(/^["']|["']$/g, "");
+  let value = raw
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .trim();
+  // A common paste mistake: the whole line "NAME=value" ends up in the value field.
+  if (value.startsWith(`${name}=`)) {
+    value = value
+      .slice(name.length + 1)
+      .trim()
+      .replace(/^["']|["']$/g, "");
+  }
+  // API keys never contain whitespace; a stray space or line break from copying breaks them.
+  if (name.endsWith("_KEY")) value = value.replace(/\s+/g, "");
+  return value;
+}
+
+/** Non-secret facts about a key, for the server log only (never the key itself). */
+function describeKey(name: string): string {
+  const key = readEnvKey(name);
+  const rawLength = process.env[name]?.length ?? 0;
+  return `${name}: length=${key.length} rawLength=${rawLength} startsWith=${key.slice(0, 4) || "n/a"}`;
 }
 
 /** Shared AI_MODEL is only used when it names a model of that provider, so a Claude id never reaches Gemini. */
@@ -415,6 +452,14 @@ const geminiProvider: AiProvider = {
           : undefined;
       const msg = error instanceof Error ? error.message : String(error);
       const failure = failureFor(status, msg || "Upstream error");
+      if (
+        failure.reason === "invalid_key" ||
+        failure.reason === "key_blocked"
+      ) {
+        console.error(
+          `[gemini] key problem. ${describeKey("GEMINI_API_KEY")}. Google said: ${msg}`,
+        );
+      }
       if (failure.reason === "unknown" && status === undefined) {
         const lower = msg.toLowerCase();
         if (

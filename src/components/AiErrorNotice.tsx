@@ -6,7 +6,9 @@ import { Notice } from './ui';
 // Short English explanations for the site owner. The reason codes come from the server (api/chat.ts)
 // and are fixed strings, so they are shown as-is and not translated.
 const EXPLANATIONS: Record<string, string> = {
-  invalid_key: 'The AI key was rejected. Check GEMINI_API_KEY in Vercel and redeploy.',
+  invalid_key: 'The AI key was rejected. Create a new key in Google AI Studio, paste only the key into GEMINI_API_KEY in Vercel (no quotes, no spaces), and redeploy.',
+  key_blocked: 'Google blocked this key (leaked, suspended or denied). Create a new key in Google AI Studio, replace GEMINI_API_KEY in Vercel, and redeploy.',
+  api_disabled: 'The Gemini API is not enabled for the project that owns this key. Create the key in Google AI Studio, or enable the Generative Language API in Google Cloud.',
   model_unavailable: 'The AI model was not found. Remove AI_MODEL/GEMINI_MODEL, or set a model your key can use.',
   bad_request: 'The AI service rejected the request. Check GEMINI_MODEL / AI_MODEL in Vercel (or leave them empty) and redeploy. The exact reason is in the Vercel function log for /api/chat.',
   region_unsupported: 'The AI service is not available from the server region. Change the Vercel function region (e.g. to an EU or US region).',

@@ -1066,6 +1066,8 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
         ['invalid key 403', { error: { message: 'secret-detail permission' } }, 403, 502, 'invalid_key'],
         ['invalid key 401', { error: { message: 'secret-detail' } }, 401, 502, 'invalid_key'],
         ['invalid key 400', { error: { message: 'API key not valid. secret-detail' } }, 400, 502, 'invalid_key'],
+        ['leaked key 403', { error: { message: 'Your API key was reported as leaked. secret-detail' } }, 403, 502, 'key_blocked'],
+        ['api disabled 403', { error: { message: 'Generative Language API has not been used in project 1 secret-detail' } }, 403, 502, 'api_disabled'],
         ['model 404', { error: { message: 'secret-detail models/x is not found' } }, 404, 502, 'model_unavailable'],
         ['bad request 400', { error: { message: 'secret-detail' } }, 400, 502, 'bad_request'],
         ['quota 429', { error: { message: 'secret-detail' } }, 429, 429, 'quota_exceeded'],
@@ -1141,6 +1143,16 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
       assert.ok(urls[0].includes('gemini-3.8-flash') && urls[1].includes('gemini-3.8-flash'));
       assert.ok(urls[2].includes('gemini-3.6-flash'));
     } finally { console.warn = origWarn; restore(); }
+  });
+
+  it('Gemini: cleans a pasted key (NAME= prefix, quotes, whitespace) before sending it', async () => {
+    setup({ GEMINI_API_KEY: '  "GEMINI_API_KEY=AIza-test key\n" ' });
+    const box = capture({ candidates: [{ content: { parts: [{ text: 'ok' }] } }] });
+    try {
+      const { POST } = await import('../api/chat');
+      assert.equal((await POST(post(goodBody))).status, 200);
+      assert.equal((box.seen as Seen).headers['x-goog-api-key'], 'AIza-testkey');
+    } finally { restore(); }
   });
 
   it('Gemini: trims quotes from GEMINI_MODEL and ignores a non-Gemini AI_MODEL', async () => {
