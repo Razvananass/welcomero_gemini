@@ -212,6 +212,27 @@ function readEnvKey(name: string): string {
   return value;
 }
 
+/** Non-secret facts about a provider key, for the self-test page. Never includes the key. */
+export function keyFacts(provider: string): {
+  length: number;
+  looksValid: boolean;
+} {
+  const name =
+    provider === "gemini"
+      ? "GEMINI_API_KEY"
+      : provider === "groq"
+        ? "GROQ_API_KEY"
+        : "ANTHROPIC_API_KEY";
+  const key = readEnvKey(name);
+  const looksValid =
+    provider === "gemini"
+      ? /^AIza[0-9A-Za-z_-]{30,}$/.test(key)
+      : provider === "groq"
+        ? key.startsWith("gsk_")
+        : key.startsWith("sk-ant-");
+  return { length: key.length, looksValid };
+}
+
 /** Non-secret facts about a key, for the server log only (never the key itself). */
 function describeKey(name: string): string {
   const key = readEnvKey(name);
@@ -405,7 +426,10 @@ const geminiProvider: AiProvider = {
           // A failing fallback model should not hide the main model's error.
           if (i >= 2) throw firstError;
           const status = (error as { status?: unknown })?.status;
-          const retryable = typeof status === "number" && status >= 500;
+          // 5xx is transient. 403/404 can mean "this key has no access to this model", so try the other model too.
+          const retryable =
+            typeof status === "number" &&
+            (status >= 500 || status === 403 || status === 404);
           const last = i === attempts.length - 1;
           if (
             !retryable ||

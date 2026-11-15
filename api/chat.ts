@@ -7,11 +7,16 @@
 import {
   effectiveModel,
   getProviders,
+  keyFacts,
   ProviderError,
   type ChatAttachment,
   type ChatMessage,
 } from "./_lib/provider.js";
-import { buildKnowledge, citationsInReply, procedureTitle } from "./_lib/knowledge.js";
+import {
+  buildKnowledge,
+  citationsInReply,
+  procedureTitle,
+} from "./_lib/knowledge.js";
 import { checkRateLimit, rateLimitedResponse } from "./_lib/rateLimit.js";
 import {
   buildSystemPrompt,
@@ -26,7 +31,24 @@ const MAX_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 2_000;
 const MAX_ATTACHMENT_BASE64 = 5_500_000;
 const ALLOWED_MIME_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
-const LANGUAGES: Language[] = ["en", "ro", "fr", "ar", "uk", "ne", "ru", "es", "tr", "hi", "bn", "fa", "ur", "vi", "zh", "de"];
+const LANGUAGES: Language[] = [
+  "en",
+  "ro",
+  "fr",
+  "ar",
+  "uk",
+  "ne",
+  "ru",
+  "es",
+  "tr",
+  "hi",
+  "bn",
+  "fa",
+  "ur",
+  "vi",
+  "zh",
+  "de",
+];
 const DIRECTIONS: Direction[] = ["to_user", "to_ro"];
 
 function json(body: unknown, status = 200): Response {
@@ -102,7 +124,8 @@ function parseUserContext(value: unknown): UserContextSummary | null {
     arrival: safeStr(raw.arrival, 16),
     expiry: safeStr(raw.expiry, 16),
     completedCount:
-      typeof raw.completedCount === "number" && Number.isFinite(raw.completedCount)
+      typeof raw.completedCount === "number" &&
+      Number.isFinite(raw.completedCount)
         ? Math.max(0, Math.min(20, raw.completedCount))
         : undefined,
     totalCount:
@@ -112,19 +135,73 @@ function parseUserContext(value: unknown): UserContextSummary | null {
   };
 }
 
-export function GET(): Response {
+async function diagnose(request: Request): Promise<Response> {
+  const providers = getProviders();
+  const limit = checkRateLimit(request, "diagnose", 5, 10 * 60_000);
+  if (!limit.allowed) return rateLimitedResponse(limit.retryAfterSeconds);
+  const results = [];
+  for (const provider of providers) {
+    const started = Date.now();
+    const facts = keyFacts(provider.name);
+    try {
+      await provider.complete({
+        system: "Reply with the single word OK.",
+        messages: [{ role: "user", content: "ping" }],
+        maxTokens: 20,
+      });
+      results.push({
+        provider: provider.name,
+        model: effectiveModel(provider.name),
+        ok: true,
+        keyLength: facts.length,
+        keyLooksValid: facts.looksValid,
+        ms: Date.now() - started,
+      });
+    } catch (error) {
+      const failure = error instanceof ProviderError ? error : undefined;
+      console.error(
+        `[api/chat diagnose] ${provider.name} failed: status=${failure?.status ?? "n/a"} reason=${failure?.reason ?? "unknown"} detail=${error instanceof Error ? error.message : "n/a"}`,
+      );
+      results.push({
+        provider: provider.name,
+        model: effectiveModel(provider.name),
+        ok: false,
+        reason: failure?.reason ?? "unknown",
+        status: failure?.status ?? null,
+        keyLength: facts.length,
+        keyLooksValid: facts.looksValid,
+        ms: Date.now() - started,
+      });
+    }
+  }
+  return json({ configured: providers.length > 0, results });
+}
+
+export function GET(request?: undefined): Response;
+export function GET(request: Request): Response | Promise<Response>;
+export function GET(request?: Request): Response | Promise<Response> {
+  // Self-test: open /api/chat?diagnose=1 in a browser. Makes one tiny call per configured provider and
+  // reports a safe reason code. Never returns the key or upstream text.
+  if (request && new URL(request.url).searchParams.get("diagnose") === "1") {
+    return diagnose(request);
+  }
+
   const providers = getProviders();
   return json({
     configured: providers.length > 0,
     ...(providers[0]
-      ? { provider: providers[0].name, model: effectiveModel(providers[0].name) }
+      ? {
+          provider: providers[0].name,
+          model: effectiveModel(providers[0].name),
+        }
       : {}),
   });
 }
 
 export async function POST(request: Request): Promise<Response> {
-  const rateLimit = checkRateLimit(request, 'chat', 30, 10 * 60_000);
-  if (!rateLimit.allowed) return rateLimitedResponse(rateLimit.retryAfterSeconds);
+  const rateLimit = checkRateLimit(request, "chat", 30, 10 * 60_000);
+  if (!rateLimit.allowed)
+    return rateLimitedResponse(rateLimit.retryAfterSeconds);
 
   let payload: {
     mode?: unknown;
@@ -174,9 +251,9 @@ export async function POST(request: Request): Promise<Response> {
 
   const hasAttachment = messages.some((m) => Boolean(m.attachment));
   // Only vision-capable providers (Gemini / Anthropic) can inspect images; skip text-only Groq if image attached.
-  const eligibleProviders = (hasAttachment
-    ? providers.filter((p) => p.name !== "groq")
-    : providers).slice(0, 2);
+  const eligibleProviders = (
+    hasAttachment ? providers.filter((p) => p.name !== "groq") : providers
+  ).slice(0, 2);
   if (eligibleProviders.length === 0) {
     return json({ error: "not_configured" }, 503);
   }
@@ -228,8 +305,10 @@ export async function POST(request: Request): Promise<Response> {
   const kind = primary?.kind ?? "upstream";
   const reason = primary?.reason ?? "unknown";
 
-  if (kind === "rate_limited") return json({ error: "rate_limited", reason }, 429);
-  if (kind === "timeout") return json({ error: "upstream_timeout", reason }, 504);
+  if (kind === "rate_limited")
+    return json({ error: "rate_limited", reason }, 429);
+  if (kind === "timeout")
+    return json({ error: "upstream_timeout", reason }, 504);
 
   return json({ error: "upstream_error", reason }, 502);
 }

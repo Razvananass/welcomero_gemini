@@ -1155,6 +1155,27 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     } finally { restore(); }
   });
 
+  it('GET ?diagnose=1 reports ok or a safe reason, and never leaks the key', async () => {
+    setup({ GEMINI_API_KEY: 'AIza' + 'x'.repeat(35) });
+    const origError = console.error;
+    console.error = () => {};
+    try {
+      const { GET } = await import('../api/chat');
+      capture({ candidates: [{ content: { parts: [{ text: 'OK' }] } }] });
+      let body = await (await GET(new Request('http://localhost/api/chat?diagnose=1'))).json();
+      assert.equal(body.results[0].ok, true);
+      assert.equal(body.results[0].keyLength, 39);
+      assert.equal(body.results[0].keyLooksValid, true);
+      capture({ error: { message: 'API key not valid. secret-detail' } }, 400);
+      const res = await GET(new Request('http://localhost/api/chat?diagnose=1'));
+      const text = await res.text();
+      body = JSON.parse(text);
+      assert.equal(body.results[0].ok, false);
+      assert.equal(body.results[0].reason, 'invalid_key');
+      assert.ok(!text.includes('secret-detail') && !text.includes('xxxxxxxx'));
+    } finally { console.error = origError; restore(); }
+  });
+
   it('Gemini: trims quotes from GEMINI_MODEL and ignores a non-Gemini AI_MODEL', async () => {
     setup({ GEMINI_API_KEY: 'g', GEMINI_MODEL: ' "gemini-3.8-flash" ' });
     try {
