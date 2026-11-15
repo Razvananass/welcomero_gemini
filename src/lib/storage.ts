@@ -16,6 +16,7 @@ export const STORAGE_KEYS = {
   chat: 'chat',
   docs: 'docs',
   dates: 'dates',
+  theme: 'theme',
 } as const;
 
 const memoryFallback = new Map<string, string>();

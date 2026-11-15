@@ -10,6 +10,15 @@ import { sanitizeDates, type PlanDates } from '../lib/plan';
 import { isProfile } from '../lib/profile';
 import { clearAllData, localData, STORAGE_KEYS } from '../lib/storage';
 import {
+  applyTheme,
+  isThemePreference,
+  resolveTheme,
+  systemPrefersDark,
+  watchSystemTheme,
+  type ResolvedTheme,
+  type ThemePreference,
+} from '../lib/theme';
+import {
   createUserWorkspace,
   deleteUserWorkspace,
   loadUserWorkspace,
@@ -53,6 +62,11 @@ interface AppContextValue {
   syncStatus: SyncStatus;
   signInWithGoogle: () => Promise<void>;
   signOutUser: () => Promise<void>;
+  /** What the user picked: follow the device, or always light / always night mode. */
+  themePreference: ThemePreference;
+  /** The theme actually shown right now. */
+  theme: ResolvedTheme;
+  setThemePreference: (preference: ThemePreference) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -65,6 +79,11 @@ function loadLanguage(): Lang {
 function loadProfile(): Profile | null {
   const stored = localData.read<unknown>(STORAGE_KEYS.profile, null);
   return isProfile(stored) ? stored : null;
+}
+
+function loadThemePreference(): ThemePreference {
+  const stored = localData.read<unknown>(STORAGE_KEYS.theme, 'system');
+  return isThemePreference(stored) ? stored : 'system';
 }
 
 function writeWorkspaceToLocal(state: WorkspaceState): void {
@@ -92,6 +111,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<AuthErrorKind | null>(null);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('idle');
+  const [themePreference, setThemePreferenceState] = useState<ThemePreference>(loadThemePreference);
+  const [prefersDark, setPrefersDark] = useState<boolean>(systemPrefersDark);
+  const theme = resolveTheme(themePreference, prefersDark);
 
   const stateRef = useRef<WorkspaceState>({ language, profile, progress, docs, dates });
   const activeUidRef = useRef<string | null>(null);
@@ -103,6 +125,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = language;
     document.documentElement.dir = directionOf(language);
   }, [language]);
+
+  // Follow the device's light/dark setting live, and apply the resulting theme to the page.
+  useEffect(() => watchSystemTheme(setPrefersDark), []);
+  useEffect(() => applyTheme(theme), [theme]);
+
+  const setThemePreference = useCallback((preference: ThemePreference) => {
+    setThemePreferenceState(preference);
+    localData.write(STORAGE_KEYS.theme, preference);
+  }, []);
 
   const enqueueWrite = useCallback((uid: string, snapshot: WorkspaceState) => {
     setSyncStatus('syncing');
@@ -253,6 +284,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setDatesState({ arrival: '', expiry: '' });
     setLanguageState(DEFAULT_LANG);
     setLanguageChosen(false);
+    setThemePreferenceState('system');
 
     const uid = activeUidRef.current;
     if (uid) {
@@ -338,6 +370,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       syncStatus,
       signInWithGoogle,
       signOutUser,
+      themePreference,
+      theme,
+      setThemePreference,
     }),
     [
       language,
@@ -361,6 +396,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       syncStatus,
       signInWithGoogle,
       signOutUser,
+      themePreference,
+      theme,
+      setThemePreference,
     ],
   );
 

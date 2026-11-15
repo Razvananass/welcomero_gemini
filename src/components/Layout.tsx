@@ -6,6 +6,7 @@ import type { MessageKey } from '../i18n';
 import { Icon } from './Icon';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Logo } from './Logo';
+import { ThemeToggle } from './ThemeToggle';
 import { linkClass } from './ui';
 
 const NAV_ITEMS: Array<{ to: string; key: MessageKey }> = [
@@ -47,6 +48,7 @@ function Header() {
           </nav>
         ) : null}
         <div className="flex items-center gap-2">
+          <ThemeToggle className={profile ? 'hidden sm:inline-flex' : 'inline-flex'} />
           <LanguageSwitcher />
           {authReady && user ? (
             <Link
@@ -93,6 +95,9 @@ function Header() {
               </li>
             ))}
           </ul>
+          <div className="mx-auto mt-3 max-w-6xl border-t border-slate-200 pt-3 sm:hidden">
+            <ThemeToggle showLabel className="inline-flex gap-2 px-3 text-sm font-semibold" />
+          </div>
         </nav>
       ) : null}
     </header>

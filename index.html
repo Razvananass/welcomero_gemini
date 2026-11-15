@@ -7,6 +7,21 @@
     <meta name="theme-color" content="#0b5a86" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2036%2036'%3E%3Crect%20width='36'%20height='36'%20rx='8'%20fill='%230b5a86'/%3E%3Cpath%20d='M11%2026V16a7%207%200%200%201%2014%200v10'%20fill='none'%20stroke='%23ffffff'%20stroke-width='3'%20stroke-linecap='round'/%3E%3Crect%20x='10'%20y='27.5'%20width='16'%20height='3'%20rx='1.5'%20fill='%23fcd116'/%3E%3C/svg%3E" />
     <title>welcomeRo</title>
+    <script>
+      // Apply night mode before the page draws, so it never flashes white. Mirrors src/lib/theme.ts.
+      (function () {
+        try {
+          var raw = localStorage.getItem('welcomero.theme');
+          var pref = raw ? JSON.parse(raw).data : 'system';
+          var dark = pref === 'dark' || (pref !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f1821');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
