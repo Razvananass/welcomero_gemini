@@ -8,37 +8,49 @@
       "en": "University enrolment and student-status certificate",
       "ro": "Înscrierea la universitate și adeverința de student",
       "fr": "Inscription à l’université et attestation d’étudiant",
-      "ar": "التسجيل في الجامعة وشهادة إثبات صفة الطالب"
+      "ar": "التسجيل في الجامعة وشهادة إثبات صفة الطالب",
+      "uk": "Зарахування до університету та довідка про статус студента",
+      "ne": "विश्वविद्यालयमा भर्ना र विद्यार्थी हुनुको प्रमाणपत्र"
     },
     "summary": {
       "en": "Finish your enrolment and ask your university’s international office for a student-status certificate. Immigration offices usually ask for it.",
       "ro": "Finalizează înscrierea și cere biroului internațional al universității o adeverință de student. Oficiile de imigrări o cer de obicei.",
       "fr": "Terminez votre inscription et demandez à votre université une attestation d’étudiant. Les services d’immigration la demandent généralement.",
-      "ar": "أكمل تسجيلك واطلب من مكتب الطلاب الدوليين في جامعتك شهادة تثبت صفتك كطالب. غالبًا ما تطلبها دوائر الهجرة."
+      "ar": "أكمل تسجيلك واطلب من مكتب الطلاب الدوليين في جامعتك شهادة تثبت صفتك كطالب. غالبًا ما تطلبها دوائر الهجرة.",
+      "uk": "Завершіть зарахування та попросіть у міжнародному офісі вашого університету довідку про статус студента. Імміграційні служби зазвичай її вимагають.",
+      "ne": "आफ्नो भर्ना पूरा गर्नुहोस् र आफ्नो विश्वविद्यालयको अन्तर्राष्ट्रिय कार्यालयसँग विद्यार्थी हुनुको प्रमाणपत्र माग्नुहोस्। आप्रवासन कार्यालयहरूले सामान्यतया यो माग्छन्।"
     },
     "why": {
       "en": "Other procedures, such as your residence permit or registration, usually need proof that you are a student.",
       "ro": "Alte proceduri, precum permisul de ședere sau înregistrarea, cer de obicei dovada că ești student.",
       "fr": "D’autres démarches, comme le titre de séjour ou l’enregistrement, demandent généralement la preuve que vous êtes étudiant.",
-      "ar": "تتطلب إجراءات أخرى، مثل تصريح الإقامة أو التسجيل، عادةً إثباتًا بأنك طالب."
+      "ar": "تتطلب إجراءات أخرى، مثل تصريح الإقامة أو التسجيل، عادةً إثباتًا بأنك طالب.",
+      "uk": "Для інших процедур, наприклад дозволу на проживання чи реєстрації, зазвичай потрібне підтвердження, що ви студент.",
+      "ne": "बसोबास अनुमति वा दर्ताजस्ता अन्य प्रक्रियाहरूमा सामान्यतया तपाईं विद्यार्थी हुनुहुन्छ भन्ने प्रमाण चाहिन्छ।"
     },
     "whoNeeds": {
       "en": "International students admitted to a Romanian university, whether EU or non-EU.",
       "ro": "Studenții internaționali admiși la o universitate din România, din UE sau din afara UE.",
       "fr": "Les étudiants internationaux admis dans une université roumaine, qu’ils soient de l’UE ou non.",
-      "ar": "الطلاب الدوليون المقبولون في جامعة رومانية، سواء من الاتحاد الأوروبي أو من خارجه."
+      "ar": "الطلاب الدوليون المقبولون في جامعة رومانية، سواء من الاتحاد الأوروبي أو من خارجه.",
+      "uk": "Іноземні студенти, прийняті до румунського університету, незалежно від того, з ЄС вони чи ні.",
+      "ne": "रोमानियाको विश्वविद्यालयमा भर्ना भएका अन्तर्राष्ट्रिय विद्यार्थीहरू, चाहे EU का होऊन् वा EU बाहिरका।"
     },
     "whoDoesNot": {
       "en": "People who are not studying in Romania.",
       "ro": "Persoanele care nu studiază în România.",
       "fr": "Les personnes qui n’étudient pas en Roumanie.",
-      "ar": "الأشخاص الذين لا يدرسون في رومانيا."
+      "ar": "الأشخاص الذين لا يدرسون في رومانيا.",
+      "uk": "Люди, які не навчаються в Румунії.",
+      "ne": "रोमानियामा अध्ययन नगर्ने व्यक्तिहरू।"
     },
     "submitWhere": {
       "en": "You do not submit this to an authority. You ask for the certificate at your university’s international students office or student secretariat, then use it for other applications.",
       "ro": "Nu o depui la o autoritate. Soliciți adeverința la biroul de studenți internaționali sau la secretariatul universității, apoi o folosești la alte cereri.",
       "fr": "Vous ne la déposez pas auprès d’une autorité. Vous demandez l’attestation au bureau des étudiants internationaux ou à la scolarité, puis vous l’utilisez pour d’autres demandes.",
-      "ar": "لا تقدّمها إلى جهة رسمية. تطلب الشهادة من مكتب الطلاب الدوليين أو شؤون الطلاب في جامعتك ثم تستخدمها في طلبات أخرى."
+      "ar": "لا تقدّمها إلى جهة رسمية. تطلب الشهادة من مكتب الطلاب الدوليين أو شؤون الطلاب في جامعتك ثم تستخدمها في طلبات أخرى.",
+      "uk": "Її не подають до державного органу. Ви просите довідку в офісі для іноземних студентів або в студентському секретаріаті вашого університету, а потім використовуєте її для інших заяв.",
+      "ne": "तपाईंले यो कुनै सरकारी निकायमा बुझाउनुपर्दैन। तपाईंले प्रमाणपत्र आफ्नो विश्वविद्यालयको अन्तर्राष्ट्रिय विद्यार्थी कार्यालय वा विद्यार्थी सचिवालयमा माग्नुहुन्छ, अनि अन्य आवेदनहरूमा प्रयोग गर्नुहुन्छ।"
     },
     "documents": [
       {
@@ -91,7 +103,9 @@
         "en": "Varies by university. One Romanian medical university reports up to 10 working days. Ask your own university.",
         "ro": "Diferă în funcție de universitate. O universitate de medicină din România indică până la 10 zile lucrătoare. Întreabă universitatea ta.",
         "fr": "Varie selon l’université. Une université de médecine roumaine indique jusqu’à 10 jours ouvrables. Demandez à votre université.",
-        "ar": "تختلف المدة حسب الجامعة. تذكر جامعة طبية رومانية مدة تصل إلى 10 أيام عمل. اسأل جامعتك."
+        "ar": "تختلف المدة حسب الجامعة. تذكر جامعة طبية رومانية مدة تصل إلى 10 أيام عمل. اسأل جامعتك.",
+        "uk": "Залежить від університету. Один румунський медичний університет повідомляє про строк до 10 робочих днів. Запитайте у власному університеті.",
+        "ne": "विश्वविद्यालय अनुसार फरक हुन्छ। रोमानियाको एउटा मेडिकल विश्वविद्यालयले 10 कार्यदिनसम्म लाग्ने जनाएको छ। आफ्नै विश्वविद्यालयसँग सोध्नुहोस्।"
       },
       "level": "confirm",
       "sourceIds": ["umf-cluj-stay"]
@@ -103,7 +117,9 @@
         "en": "Other applications need the student-status certificate, so it unblocks the rest.",
         "ro": "Alte cereri au nevoie de adeverința de student, deci deblochează restul pașilor.",
         "fr": "D’autres demandes exigent l’attestation d’étudiant ; elle débloque donc le reste.",
-        "ar": "تحتاج طلبات أخرى إلى شهادة صفة الطالب، لذلك فهي تفتح الباب لبقية الإجراءات."
+        "ar": "تحتاج طلبات أخرى إلى شهادة صفة الطالب، لذلك فهي تفتح الباب لبقية الإجراءات.",
+        "uk": "Для інших заяв потрібна довідка про статус студента, тож вона відкриває шлях до решти кроків.",
+        "ne": "अन्य आवेदनहरूलाई विद्यार्थी हुनुको प्रमाणपत्र चाहिन्छ, त्यसैले यसले बाँकी काम खोल्छ।"
       }
     },
     "audience": [{ "situations": ["student"], "citizenships": ["eu", "non-eu"], "relevance": "core" }],
@@ -119,37 +135,49 @@
       "en": "Proof of accommodation and address registration",
       "ro": "Dovada locuinței și înregistrarea adresei",
       "fr": "Justificatif de logement et enregistrement de l’adresse",
-      "ar": "إثبات السكن وتسجيل العنوان"
+      "ar": "إثبات السكن وتسجيل العنوان",
+      "uk": "Підтвердження проживання та реєстрація адреси",
+      "ne": "बसोबासको प्रमाण र ठेगाना दर्ता"
     },
     "summary": {
       "en": "Immigration offices usually ask where you live. Arrange a written accommodation contract, then check with IGI how your address must be registered or reported.",
       "ro": "Oficiile de imigrări cer de obicei unde locuiești. Procură-ți un contract de cazare în scris, apoi verifică la IGI cum trebuie înregistrată sau comunicată adresa.",
       "fr": "Les services d’immigration demandent généralement où vous habitez. Obtenez un contrat de logement écrit, puis vérifiez auprès de l’IGI comment l’adresse doit être enregistrée ou déclarée.",
-      "ar": "تسأل دوائر الهجرة عادةً عن مكان سكنك. احصل على عقد سكن مكتوب ثم اسأل مفتشية الهجرة (IGI) كيف يجب تسجيل عنوانك أو الإبلاغ عنه."
+      "ar": "تسأل دوائر الهجرة عادةً عن مكان سكنك. احصل على عقد سكن مكتوب ثم اسأل مفتشية الهجرة (IGI) كيف يجب تسجيل عنوانك أو الإبلاغ عنه.",
+      "uk": "Імміграційні служби зазвичай питають, де ви живете. Оформіть письмовий договір про проживання, а потім уточніть в IGI, як потрібно зареєструвати або повідомити вашу адресу.",
+      "ne": "आप्रवासन कार्यालयहरूले सामान्यतया तपाईं कहाँ बस्नुहुन्छ भनेर सोध्छन्। लिखित बसोबास सम्झौता मिलाउनुहोस्, अनि तपाईंको ठेगाना कसरी दर्ता वा जानकारी गराउनुपर्छ भनेर IGI सँग जाँच गर्नुहोस्।"
     },
     "why": {
       "en": "A university guide lists proof of a legal right to your living space among the documents for a residence permit. The exact document IGI accepts must be confirmed.",
       "ro": "Un ghid universitar include dovada dreptului legal asupra locuinței printre actele pentru permisul de ședere. Documentul exact acceptat de IGI trebuie confirmat.",
       "fr": "Un guide universitaire cite la preuve du droit légal d’occuper le logement parmi les documents du titre de séjour. Le document exact accepté par l’IGI doit être confirmé.",
-      "ar": "يذكر دليل جامعي إثبات الحق القانوني في السكن ضمن مستندات تصريح الإقامة. يجب التأكد من المستند الذي تقبله IGI بالتحديد."
+      "ar": "يذكر دليل جامعي إثبات الحق القانوني في السكن ضمن مستندات تصريح الإقامة. يجب التأكد من المستند الذي تقبله IGI بالتحديد.",
+      "uk": "В університетському посібнику підтвердження законного права на житло входить до переліку документів для дозволу на проживання. Який саме документ приймає IGI, потрібно уточнити.",
+      "ne": "एउटा विश्वविद्यालयको गाइडले बसोबास अनुमतिका कागजातहरूमध्ये तपाईंको बस्ने ठाउँमाथिको कानुनी अधिकारको प्रमाण सूचीबद्ध गरेको छ। IGI ले स्वीकार गर्ने ठ्याक्कै कुन कागजात हो भनेर पुष्टि गर्नुपर्छ।"
     },
     "whoNeeds": {
       "en": "Anyone living in Romania, EU and non-EU alike. The exact rules depend on your citizenship and permit type and must be confirmed.",
       "ro": "Oricine locuiește în România, din UE sau din afara UE. Regulile exacte depind de cetățenie și de tipul permisului și trebuie confirmate.",
       "fr": "Toute personne qui vit en Roumanie, de l’UE ou non. Les règles exactes dépendent de votre nationalité et du type de titre, et doivent être confirmées.",
-      "ar": "كل من يعيش في رومانيا، من الاتحاد الأوروبي أو من خارجه. تعتمد القواعد الدقيقة على جنسيتك ونوع الإذن ويجب التأكد منها."
+      "ar": "كل من يعيش في رومانيا، من الاتحاد الأوروبي أو من خارجه. تعتمد القواعد الدقيقة على جنسيتك ونوع الإذن ويجب التأكد منها.",
+      "uk": "Усі, хто живе в Румунії, як громадяни ЄС, так і ні. Точні правила залежать від вашого громадянства та типу дозволу, їх потрібно уточнити.",
+      "ne": "रोमानियामा बस्ने जोसुकै, EU र EU बाहिरका दुवै। ठ्याक्कै नियमहरू तपाईंको नागरिकता र अनुमतिको प्रकारमा निर्भर हुन्छन् र पुष्टि गर्नुपर्छ।"
     },
     "whoDoesNot": {
       "en": "Romanian citizens register their residence through the city hall population-records service. Check whether anything applies to you as a foreign citizen.",
       "ro": "Cetățenii români își înregistrează reședința la serviciul de evidență a persoanelor din primărie. Verifică dacă aceste reguli se aplică și în cazul tău, ca cetățean străin.",
       "fr": "Les citoyens roumains enregistrent leur résidence auprès du service d’état civil de la mairie. Vérifiez ce qui s’applique à vous en tant que citoyen étranger.",
-      "ar": "يسجّل المواطنون الرومانيون إقامتهم لدى مصلحة سجلات السكان في البلدية. تحقق مما ينطبق عليك كمواطن أجنبي."
+      "ar": "يسجّل المواطنون الرومانيون إقامتهم لدى مصلحة سجلات السكان في البلدية. تحقق مما ينطبق عليك كمواطن أجنبي.",
+      "uk": "Громадяни Румунії реєструють місце проживання у службі обліку населення при мерії. Перевірте, чи щось із цього стосується вас як іноземного громадянина.",
+      "ne": "रोमानियन नागरिकहरूले नगरपालिकाको जनसंख्या अभिलेख सेवामार्फत आफ्नो बसोबास दर्ता गर्छन्। विदेशी नागरिकका रूपमा तपाईंलाई केही लागू हुन्छ कि हुँदैन जाँच गर्नुहोस्।"
     },
     "submitWhere": {
       "en": "For foreign citizens, proof of accommodation is usually handed in with the residence application at IGI. Confirm this with IGI or your university’s international office.",
       "ro": "Pentru cetățenii străini, dovada locuinței se depune de obicei împreună cu cererea de ședere la IGI. Confirmă la IGI sau la biroul internațional al universității.",
       "fr": "Pour les citoyens étrangers, le justificatif de logement est généralement remis avec la demande de séjour à l’IGI. Confirmez auprès de l’IGI ou du bureau international de votre université.",
-      "ar": "بالنسبة للأجانب، يُقدَّم إثبات السكن عادةً مع طلب الإقامة لدى IGI. تأكد من ذلك مع IGI أو مكتب الطلاب الدوليين في جامعتك."
+      "ar": "بالنسبة للأجانب، يُقدَّم إثبات السكن عادةً مع طلب الإقامة لدى IGI. تأكد من ذلك مع IGI أو مكتب الطلاب الدوليين في جامعتك.",
+      "uk": "Іноземні громадяни зазвичай подають підтвердження проживання разом із заявою про проживання в IGI. Підтвердьте це в IGI або в міжнародному офісі вашого університету.",
+      "ne": "विदेशी नागरिकहरूका लागि, बसोबासको प्रमाण सामान्यतया IGI मा बसोबासको आवेदनसँगै बुझाइन्छ। यो IGI वा आफ्नो विश्वविद्यालयको अन्तर्राष्ट्रिय कार्यालयसँग पक्का गर्नुहोस्।"
     },
     "documents": [
       {
@@ -202,7 +230,9 @@
         "en": "A City Hall report lists about 5 working days for registering a residence on an ID card. This may not apply to foreign citizens.",
         "ro": "Un raport al Primăriei indică aproximativ 5 zile lucrătoare pentru înregistrarea reședinței pe cartea de identitate. S-ar putea să nu se aplice cetățenilor străini.",
         "fr": "Un rapport de la mairie indique environ 5 jours ouvrables pour inscrire une résidence sur une carte d’identité. Cela peut ne pas s’appliquer aux citoyens étrangers.",
-        "ar": "يذكر تقرير للبلدية نحو 5 أيام عمل لتسجيل الإقامة على بطاقة الهوية. قد لا ينطبق ذلك على المواطنين الأجانب."
+        "ar": "يذكر تقرير للبلدية نحو 5 أيام عمل لتسجيل الإقامة على بطاقة الهوية. قد لا ينطبق ذلك على المواطنين الأجانب.",
+        "uk": "У звіті мерії вказано приблизно 5 робочих днів для реєстрації місця проживання у посвідченні особи. Для іноземних громадян це може не діяти.",
+        "ne": "नगरपालिकाको एउटा प्रतिवेदनमा परिचयपत्रमा बसोबास दर्ता गर्न लगभग 5 कार्यदिन लाग्ने उल्लेख छ। यो विदेशी नागरिकहरूमा लागू नहुन सक्छ।"
       },
       "level": "confirm",
       "sourceIds": ["primariatm-evidenta"]
@@ -224,37 +254,49 @@
       "en": "Health insurance",
       "ro": "Asigurarea de sănătate",
       "fr": "Assurance maladie",
-      "ar": "التأمين الصحي"
+      "ar": "التأمين الصحي",
+      "uk": "Медичне страхування",
+      "ne": "स्वास्थ्य बीमा"
     },
     "summary": {
       "en": "Find out which health cover you need. EU students may be able to use a card from their home country; others may need Romanian or private insurance. Confirm with your university and CNAS.",
       "ro": "Află de ce asigurare de sănătate ai nevoie. Studenții din UE pot folosi uneori cardul european din țara de origine; ceilalți pot avea nevoie de asigurare în România sau privată. Confirmă la universitate și la CNAS.",
       "fr": "Découvrez de quelle couverture santé vous avez besoin. Les étudiants de l’UE peuvent parfois utiliser une carte de leur pays ; les autres peuvent avoir besoin d’une assurance roumaine ou privée. Confirmez auprès de votre université et de la CNAS.",
-      "ar": "اعرف أي تأمين صحي تحتاج. قد يستطيع طلاب الاتحاد الأوروبي استخدام بطاقة من بلدهم، وقد يحتاج الآخرون إلى تأمين روماني أو خاص. تأكد من جامعتك ومن CNAS."
+      "ar": "اعرف أي تأمين صحي تحتاج. قد يستطيع طلاب الاتحاد الأوروبي استخدام بطاقة من بلدهم، وقد يحتاج الآخرون إلى تأمين روماني أو خاص. تأكد من جامعتك ومن CNAS.",
+      "uk": "З’ясуйте, яке медичне покриття вам потрібне. Студенти з ЄС можуть користуватися карткою зі своєї країни; іншим може знадобитися румунське або приватне страхування. Підтвердьте в університеті та в CNAS.",
+      "ne": "तपाईंलाई कस्तो स्वास्थ्य बीमा चाहिन्छ पत्ता लगाउनुहोस्। EU का विद्यार्थीहरूले आफ्नो देशको कार्ड प्रयोग गर्न सक्छन्; अरूलाई रोमानियन वा निजी बीमा चाहिन सक्छ। आफ्नो विश्वविद्यालय र CNAS सँग पक्का गर्नुहोस्।"
     },
     "why": {
       "en": "Health care can be expensive without cover, and some applications may ask for proof of insurance. This has not been confirmed for every case.",
       "ro": "Serviciile medicale pot fi costisitoare fără asigurare, iar pentru unele cereri ți se poate solicita dovada asigurării. Acest lucru nu a fost confirmat pentru toate cazurile.",
       "fr": "Les soins peuvent coûter cher sans couverture, et certaines demandes peuvent exiger une preuve d’assurance. Cela n’a pas été confirmé pour tous les cas.",
-      "ar": "قد تكون الرعاية الصحية باهظة دون تأمين، وقد تطلب بعض الطلبات إثباتًا للتأمين. لم يتم التأكد من ذلك في كل الحالات."
+      "ar": "قد تكون الرعاية الصحية باهظة دون تأمين، وقد تطلب بعض الطلبات إثباتًا للتأمين. لم يتم التأكد من ذلك في كل الحالات.",
+      "uk": "Медична допомога без страхування може бути дорогою, а для деяких заяв можуть вимагати підтвердження страхування. Це підтверджено не для кожного випадку.",
+      "ne": "बीमाबिना स्वास्थ्य सेवा महँगो हुन सक्छ, र केही आवेदनहरूले बीमाको प्रमाण माग्न सक्छन्। यो हरेक अवस्थाका लागि पुष्टि गरिएको छैन।"
     },
     "whoNeeds": {
       "en": "All newcomers. The kind of cover you need depends on your citizenship, any scholarship, and your permit type.",
       "ro": "Toți nou-veniții. Tipul de asigurare depinde de cetățenie, de o eventuală bursă și de tipul permisului.",
       "fr": "Tous les nouveaux arrivants. Le type de couverture dépend de votre nationalité, d’une éventuelle bourse et de votre type de titre.",
-      "ar": "جميع القادمين الجدد. يعتمد نوع التأمين على جنسيتك وعلى أي منحة دراسية ونوع الإذن."
+      "ar": "جميع القادمين الجدد. يعتمد نوع التأمين على جنسيتك وعلى أي منحة دراسية ونوع الإذن.",
+      "uk": "Усі новоприбулі. Який саме вид страхування потрібен, залежить від вашого громадянства, наявності стипендії та типу дозволу.",
+      "ne": "सबै नयाँ आउनेहरू। तपाईंलाई कस्तो बीमा चाहिन्छ भन्ने कुरा तपाईंको नागरिकता, छात्रवृत्ति र अनुमतिको प्रकारमा निर्भर हुन्छ।"
     },
     "whoDoesNot": {
       "en": "Some people may already be covered, for example through an employer or a scholarship. Ask your university or CNAS.",
       "ro": "Unele persoane pot fi deja asigurate, de exemplu prin angajator sau printr-o bursă. Întreabă la universitate sau la CNAS.",
       "fr": "Certaines personnes sont peut-être déjà couvertes, par exemple par un employeur ou une bourse. Demandez à votre université ou à la CNAS.",
-      "ar": "قد يكون بعض الأشخاص مشمولين بالفعل، مثلًا عبر صاحب العمل أو المنحة. اسأل جامعتك أو CNAS."
+      "ar": "قد يكون بعض الأشخاص مشمولين بالفعل، مثلًا عبر صاحب العمل أو المنحة. اسأل جامعتك أو CNAS.",
+      "uk": "Дехто може бути вже застрахований, наприклад через роботодавця або стипендію. Запитайте в університеті або в CNAS.",
+      "ne": "केही व्यक्तिहरू पहिल्यै बीमित हुन सक्छन्, उदाहरणका लागि रोजगारदाता वा छात्रवृत्तिमार्फत। आफ्नो विश्वविद्यालय वा CNAS सँग सोध्नुहोस्।"
     },
     "submitWhere": {
       "en": "Health insurance is arranged with your insurer, or with the national health insurance system through CNAS. You show the proof when an office asks for it.",
       "ro": "Asigurarea se face la asiguratorul tău sau în sistemul național de asigurări de sănătate prin CNAS. Dovada o prezinți când o cere o instituție.",
       "fr": "L’assurance se souscrit auprès de votre assureur ou du système national via la CNAS. Vous présentez la preuve quand un service la demande.",
-      "ar": "يتم التأمين لدى شركة التأمين الخاصة بك أو عبر نظام التأمين الصحي الوطني من خلال CNAS. تقدّم الإثبات عندما تطلبه جهة ما."
+      "ar": "يتم التأمين لدى شركة التأمين الخاصة بك أو عبر نظام التأمين الصحي الوطني من خلال CNAS. تقدّم الإثبات عندما تطلبه جهة ما.",
+      "uk": "Медичне страхування оформлюють у вашого страховика або в національній системі медичного страхування через CNAS. Підтвердження ви показуєте, коли його просить установа.",
+      "ne": "स्वास्थ्य बीमा तपाईंको बीमा कम्पनीसँग, वा CNAS मार्फत राष्ट्रिय स्वास्थ्य बीमा प्रणालीमा मिलाइन्छ। कुनै कार्यालयले माग्दा तपाईंले प्रमाण देखाउनुहुन्छ।"
     },
     "documents": [
       {
@@ -315,37 +357,49 @@
       "en": "Residence permit for studies (non-EU students)",
       "ro": "Permis de ședere pentru studii (studenți din afara UE)",
       "fr": "Titre de séjour pour études (étudiants hors UE)",
-      "ar": "تصريح الإقامة للدراسة (للطلاب من خارج الاتحاد الأوروبي)"
+      "ar": "تصريح الإقامة للدراسة (للطلاب من خارج الاتحاد الأوروبي)",
+      "uk": "Дозвіл на проживання для навчання (студенти з країн поза ЄС)",
+      "ne": "अध्ययनका लागि बसोबास अनुमति (EU बाहिरका विद्यार्थीहरू)"
     },
     "summary": {
       "en": "Non-EU students usually arrive with a long-stay study visa, then apply to IGI for a residence permit for studies, and renew it while they study.",
       "ro": "Studenții din afara UE vin de obicei cu viză de lungă ședere pentru studii, apoi cer la IGI un permis de ședere pentru studii și îl prelungesc cât timp studiază.",
       "fr": "Les étudiants hors UE arrivent généralement avec un visa long séjour pour études, puis demandent à l’IGI un titre de séjour pour études et le renouvellent pendant leurs études.",
-      "ar": "يصل الطلاب من خارج الاتحاد الأوروبي عادةً بتأشيرة دراسة طويلة الأمد، ثم يطلبون من IGI تصريح إقامة للدراسة ويجددونه أثناء دراستهم."
+      "ar": "يصل الطلاب من خارج الاتحاد الأوروبي عادةً بتأشيرة دراسة طويلة الأمد، ثم يطلبون من IGI تصريح إقامة للدراسة ويجددونه أثناء دراستهم.",
+      "uk": "Студенти з країн поза ЄС зазвичай приїжджають із довгостроковою студентською візою, потім подають до IGI заяву на дозвіл на проживання для навчання та продовжують його, поки навчаються.",
+      "ne": "EU बाहिरका विद्यार्थीहरू सामान्यतया अध्ययनको दीर्घकालीन बसाइ भिसा लिएर आउँछन्, त्यसपछि अध्ययनका लागि बसोबास अनुमतिका लागि IGI मा आवेदन दिन्छन्, र अध्ययन गरुन्जेल यसलाई नवीकरण गर्छन्।"
     },
     "why": {
       "en": "It is what lets you stay legally after your visa period ends.",
       "ro": "Îți permite să rămâi legal după încheierea perioadei vizei.",
       "fr": "Il vous permet de rester légalement après la fin de la période de votre visa.",
-      "ar": "هو ما يتيح لك البقاء بشكل قانوني بعد انتهاء مدة تأشيرتك."
+      "ar": "هو ما يتيح لك البقاء بشكل قانوني بعد انتهاء مدة تأشيرتك.",
+      "uk": "Саме він дає вам право законно залишатися після завершення терміну візи.",
+      "ne": "भिसाको अवधि सकिएपछि कानुनी रूपमा बस्न यसले नै अनुमति दिन्छ।"
     },
     "whoNeeds": {
       "en": "Non-EU students admitted to a Romanian university who entered on a long-stay study visa.",
       "ro": "Studenții din afara UE admiși la o universitate din România care au intrat cu viză de lungă ședere pentru studii.",
       "fr": "Les étudiants hors UE admis dans une université roumaine et entrés avec un visa long séjour pour études.",
-      "ar": "الطلاب من خارج الاتحاد الأوروبي المقبولون في جامعة رومانية والذين دخلوا بتأشيرة دراسة طويلة الأمد."
+      "ar": "الطلاب من خارج الاتحاد الأوروبي المقبولون في جامعة رومانية والذين دخلوا بتأشيرة دراسة طويلة الأمد.",
+      "uk": "Студенти з країн поза ЄС, прийняті до румунського університету, які в’їхали за довгостроковою студентською візою.",
+      "ne": "रोमानियाको विश्वविद्यालयमा भर्ना भएका र अध्ययनको दीर्घकालीन बसाइ भिसामा प्रवेश गरेका EU बाहिरका विद्यार्थीहरू।"
     },
     "whoDoesNot": {
       "en": "EU/EEA/Swiss citizens (see the registration certificate guide) and Romanian citizens.",
       "ro": "Cetățenii UE/SEE/Elveției (vezi ghidul despre certificatul de înregistrare) și cetățenii români.",
       "fr": "Les citoyens de l’UE/EEE/Suisse (voir le guide du certificat d’enregistrement) et les citoyens roumains.",
-      "ar": "مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا (انظر دليل شهادة التسجيل) والمواطنون الرومانيون."
+      "ar": "مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا (انظر دليل شهادة التسجيل) والمواطنون الرومانيون.",
+      "uk": "Громадяни ЄС/ЄЕЗ/Швейцарії (дивіться інструкцію про свідоцтво про реєстрацію) та громадяни Румунії.",
+      "ne": "EU/EEA/स्विस नागरिकहरू (दर्ता प्रमाणपत्रको गाइड हेर्नुहोस्) र रोमानियन नागरिकहरू।"
     },
     "submitWhere": {
       "en": "In person at an IGI immigration office. For Timișoara this is the Timiș county office, Str. Andrei Mocioni 8-10. A university page also mentions an online option through the IGI portal; confirm it with IGI.",
       "ro": "Personal, la un birou de imigrări IGI. Pentru Timișoara este biroul județului Timiș, Str. Andrei Mocioni 8-10. O pagină universitară menționează și o variantă online prin portalul IGI; confirmă-o la IGI.",
       "fr": "En personne dans un bureau d’immigration de l’IGI. À Timișoara : bureau du département de Timiș, Str. Andrei Mocioni 8-10. Une page universitaire mentionne aussi une option en ligne via le portail IGI ; confirmez-la auprès de l’IGI.",
-      "ar": "حضوريًا في أحد مكاتب الهجرة التابعة لـ IGI. في تيميشوارا هو مكتب مقاطعة تيميش، شارع أندريه موتشيوني 8-10. تذكر صفحة جامعية أيضًا خيارًا إلكترونيًا عبر بوابة IGI؛ تأكد منه مع IGI."
+      "ar": "حضوريًا في أحد مكاتب الهجرة التابعة لـ IGI. في تيميشوارا هو مكتب مقاطعة تيميش، شارع أندريه موتشيوني 8-10. تذكر صفحة جامعية أيضًا خيارًا إلكترونيًا عبر بوابة IGI؛ تأكد منه مع IGI.",
+      "uk": "Особисто в імміграційному офісі IGI. У Тімішоарі це офіс повіту Тіміш, вул. Андрея Мочоні, 8-10 (Str. Andrei Mocioni 8-10). На одній університетській сторінці також згадується онлайн-варіант через портал IGI; підтвердьте його в IGI.",
+      "ne": "IGI को आप्रवासन कार्यालयमा आफैं गएर। तिमिशोराका लागि यो तिमिश जिल्ला कार्यालय हो, Str. Andrei Mocioni 8-10। एउटा विश्वविद्यालयको पृष्ठमा IGI पोर्टल मार्फत अनलाइन विकल्प पनि उल्लेख छ; यसलाई IGI सँग पक्का गर्नुहोस्।"
     },
     "documents": [
       {
@@ -438,7 +492,9 @@
         "en": "Apply at least 30 days before your current visa or permit expires (reported by two university guides).",
         "ro": "Depune cererea cu cel puțin 30 de zile înainte de expirarea vizei sau a permisului actual (indicat de două ghiduri universitare).",
         "fr": "Déposez votre demande au moins 30 jours avant l’expiration de votre visa ou titre actuel (indiqué par deux guides universitaires).",
-        "ar": "قدّم طلبك قبل 30 يومًا على الأقل من انتهاء تأشيرتك أو تصريحك الحالي (ورد ذلك في دليلين جامعيين)."
+        "ar": "قدّم طلبك قبل 30 يومًا على الأقل من انتهاء تأشيرتك أو تصريحك الحالي (ورد ذلك في دليلين جامعيين).",
+        "uk": "Подайте заяву щонайменше за 30 днів до закінчення терміну дії вашої поточної візи чи дозволу (про це повідомляють два університетські посібники).",
+        "ne": "तपाईंको हालको भिसा वा अनुमति सकिनुभन्दा कम्तीमा 30 दिन अगाडि आवेदन दिनुहोस् (दुईवटा विश्वविद्यालयका गाइडले जनाएअनुसार)।"
       },
       "level": "confirm",
       "sourceIds": ["uav-permit", "umf-cluj-stay"]
@@ -449,7 +505,9 @@
         "en": "Your right to stay depends on it. University guides say to apply at least 30 days before your current visa or permit expires; confirm with IGI.",
         "ro": "Dreptul tău de ședere depinde de el. Ghidurile universitare spun să depui cererea cu cel puțin 30 de zile înainte de expirare; confirmă la IGI.",
         "fr": "Votre droit de séjour en dépend. Les guides universitaires indiquent de déposer la demande au moins 30 jours avant l’expiration ; confirmez auprès de l’IGI.",
-        "ar": "يعتمد حقك في الإقامة عليه. تذكر الأدلة الجامعية تقديم الطلب قبل 30 يومًا على الأقل من الانتهاء؛ تأكد من IGI."
+        "ar": "يعتمد حقك في الإقامة عليه. تذكر الأدلة الجامعية تقديم الطلب قبل 30 يومًا على الأقل من الانتهاء؛ تأكد من IGI.",
+        "uk": "Від нього залежить ваше право залишатися в країні. В університетських посібниках радять подавати заяву щонайменше за 30 днів до закінчення терміну дії поточної візи чи дозволу; підтвердьте це в IGI.",
+        "ne": "तपाईंको बस्न पाउने अधिकार यसैमा निर्भर छ। विश्वविद्यालयका गाइडहरूले हालको भिसा वा अनुमति सकिनुभन्दा कम्तीमा 30 दिन अगाडि आवेदन दिन भन्छन्; IGI सँग पक्का गर्नुहोस्।"
       }
     },
     "dependsOn": ["university-enrolment", "address-registration"],
@@ -466,37 +524,49 @@
       "en": "Registration certificate for EU/EEA/Swiss citizens",
       "ro": "Certificat de înregistrare pentru cetățenii UE/SEE/Elveția",
       "fr": "Certificat d’enregistrement pour les citoyens UE/EEE/Suisse",
-      "ar": "شهادة التسجيل لمواطني الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا"
+      "ar": "شهادة التسجيل لمواطني الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا",
+      "uk": "Свідоцтво про реєстрацію для громадян ЄС/ЄЕЗ/Швейцарії",
+      "ne": "EU/EEA/स्विस नागरिकहरूका लागि दर्ता प्रमाणपत्र"
     },
     "summary": {
       "en": "EU/EEA/Swiss citizens do not need a residence permit, but if you stay more than 3 months you will probably need to register your stay with IGI. Confirm the Romanian deadline and documents.",
       "ro": "Cetățenii UE/SEE/Elveției nu au nevoie de permis de ședere, dar dacă rămâi mai mult de 3 luni probabil trebuie să îți înregistrezi șederea la IGI. Confirmă termenul și actele din România.",
       "fr": "Les citoyens UE/EEE/Suisse n’ont pas besoin de titre de séjour, mais au-delà de 3 mois il faudra probablement enregistrer votre séjour auprès de l’IGI. Confirmez le délai et les documents en Roumanie.",
-      "ar": "لا يحتاج مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا إلى تصريح إقامة، لكن إذا بقيت أكثر من 3 أشهر فغالبًا ستحتاج إلى تسجيل إقامتك لدى IGI. تأكد من المهلة والمستندات في رومانيا."
+      "ar": "لا يحتاج مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا إلى تصريح إقامة، لكن إذا بقيت أكثر من 3 أشهر فغالبًا ستحتاج إلى تسجيل إقامتك لدى IGI. تأكد من المهلة والمستندات في رومانيا.",
+      "uk": "Громадянам ЄС/ЄЕЗ/Швейцарії дозвіл на проживання не потрібен, але якщо ви залишаєтеся довше ніж на 3 місяці, вам, імовірно, потрібно буде зареєструвати своє перебування в IGI. Уточніть румунський строк і документи.",
+      "ne": "EU/EEA/स्विस नागरिकहरूलाई बसोबास अनुमति चाहिँदैन, तर 3 महिनाभन्दा बढी बस्नुहुन्छ भने तपाईंले सम्भवतः आफ्नो बसाइ IGI मा दर्ता गर्नुपर्छ। रोमानियाको अन्तिम मिति र कागजात पुष्टि गर्नुहोस्।"
     },
     "why": {
       "en": "EU rules let you stay freely for 3 months. After that, registering your stay is the usual step. A university page reports that the certificate can be valid for up to 5 years.",
       "ro": "Regulile UE îți permit să stai liber 3 luni. După aceea, pasul obișnuit este înregistrarea șederii. O pagină universitară indică o valabilitate de până la 5 ani.",
       "fr": "Les règles de l’UE permettent de séjourner librement 3 mois. Ensuite, l’enregistrement du séjour est la démarche habituelle. Une page universitaire indique une validité allant jusqu’à 5 ans.",
-      "ar": "تتيح قواعد الاتحاد الأوروبي الإقامة بحرية لمدة 3 أشهر. بعد ذلك تكون الخطوة المعتادة هي تسجيل الإقامة. تذكر صفحة جامعية صلاحية تصل إلى 5 سنوات."
+      "ar": "تتيح قواعد الاتحاد الأوروبي الإقامة بحرية لمدة 3 أشهر. بعد ذلك تكون الخطوة المعتادة هي تسجيل الإقامة. تذكر صفحة جامعية صلاحية تصل إلى 5 سنوات.",
+      "uk": "Правила ЄС дозволяють вільно перебувати 3 місяці. Після цього звичайний крок — реєстрація перебування. На одній університетській сторінці вказано, що свідоцтво може бути чинним до 5 років.",
+      "ne": "EU का नियमहरूले तपाईंलाई 3 महिनासम्म स्वतन्त्र रूपमा बस्न दिन्छन्। त्यसपछि बसाइ दर्ता गर्नु सामान्य चरण हो। एउटा विश्वविद्यालयको पृष्ठमा प्रमाणपत्र 5 वर्षसम्म मान्य हुन सक्ने उल्लेख छ।"
     },
     "whoNeeds": {
       "en": "EU/EEA/Swiss citizens staying in Romania for more than 3 months, including students. Confirm your case with IGI.",
       "ro": "Cetățenii UE/SEE/Elveției care stau în România mai mult de 3 luni, inclusiv studenții. Confirmă cazul tău la IGI.",
       "fr": "Les citoyens UE/EEE/Suisse qui séjournent en Roumanie plus de 3 mois, y compris les étudiants. Confirmez votre cas auprès de l’IGI.",
-      "ar": "مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا المقيمون في رومانيا أكثر من 3 أشهر، ومنهم الطلاب. تأكد من حالتك مع IGI."
+      "ar": "مواطنو الاتحاد الأوروبي/المنطقة الاقتصادية الأوروبية/سويسرا المقيمون في رومانيا أكثر من 3 أشهر، ومنهم الطلاب. تأكد من حالتك مع IGI.",
+      "uk": "Громадяни ЄС/ЄЕЗ/Швейцарії, які перебувають у Румунії довше ніж 3 місяці, зокрема студенти. Уточніть свій випадок в IGI.",
+      "ne": "रोमानियामा 3 महिनाभन्दा बढी बस्ने EU/EEA/स्विस नागरिकहरू, विद्यार्थीहरू सहित। आफ्नो अवस्था IGI सँग पक्का गर्नुहोस्।"
     },
     "whoDoesNot": {
       "en": "Non-EU citizens (see the residence permit guide), Romanian citizens, and probably people staying less than 3 months.",
       "ro": "Cetățenii din afara UE (vezi ghidul despre permisul de ședere), cetățenii români și, probabil, persoanele care stau mai puțin de 3 luni.",
       "fr": "Les citoyens hors UE (voir le guide du titre de séjour), les citoyens roumains et probablement les personnes qui restent moins de 3 mois.",
-      "ar": "مواطنو الدول من خارج الاتحاد الأوروبي (انظر دليل تصريح الإقامة) والمواطنون الرومانيون وغالبًا من يقيمون أقل من 3 أشهر."
+      "ar": "مواطنو الدول من خارج الاتحاد الأوروبي (انظر دليل تصريح الإقامة) والمواطنون الرومانيون وغالبًا من يقيمون أقل من 3 أشهر.",
+      "uk": "Громадяни країн поза ЄС (дивіться інструкцію про дозвіл на проживання), громадяни Румунії та, імовірно, особи, які перебувають менше ніж 3 місяці.",
+      "ne": "EU बाहिरका नागरिकहरू (बसोबास अनुमतिको गाइड हेर्नुहोस्), रोमानियन नागरिकहरू, र सम्भवतः 3 महिनाभन्दा कम बस्ने व्यक्तिहरू।"
     },
     "submitWhere": {
       "en": "At an IGI immigration office. For Timișoara this is the Timiș county office, Str. Andrei Mocioni 8-10.",
       "ro": "La un birou de imigrări IGI. Pentru Timișoara este biroul județului Timiș, Str. Andrei Mocioni 8-10.",
       "fr": "Dans un bureau d’immigration de l’IGI. À Timișoara : bureau du département de Timiș, Str. Andrei Mocioni 8-10.",
-      "ar": "في أحد مكاتب الهجرة التابعة لـ IGI. في تيميشوارا هو مكتب مقاطعة تيميش، شارع أندريه موتشيوني 8-10."
+      "ar": "في أحد مكاتب الهجرة التابعة لـ IGI. في تيميشوارا هو مكتب مقاطعة تيميش، شارع أندريه موتشيوني 8-10.",
+      "uk": "В імміграційному офісі IGI. У Тімішоарі це офіс повіту Тіміш, вул. Андрея Мочоні, 8-10 (Str. Andrei Mocioni 8-10).",
+      "ne": "IGI को आप्रवासन कार्यालयमा। तिमिशोराका लागि यो तिमिश जिल्ला कार्यालय हो, Str. Andrei Mocioni 8-10।"
     },
     "documents": [
       {
@@ -567,7 +637,9 @@
         "en": "One university page reports the certificate can be issued the same day. Confirm with IGI.",
         "ro": "O pagină universitară indică faptul că certificatul poate fi eliberat în aceeași zi. Confirmă la IGI.",
         "fr": "Une page universitaire indique que le certificat peut être délivré le jour même. Confirmez auprès de l’IGI.",
-        "ar": "تذكر صفحة جامعية أن الشهادة قد تصدر في اليوم نفسه. تأكد من IGI."
+        "ar": "تذكر صفحة جامعية أن الشهادة قد تصدر في اليوم نفسه. تأكد من IGI.",
+        "uk": "На одній університетській сторінці вказано, що свідоцтво можуть видати в той самий день. Підтвердьте в IGI.",
+        "ne": "एउटा विश्वविद्यालयको पृष्ठमा प्रमाणपत्र सोही दिन जारी हुन सक्ने उल्लेख छ। IGI सँग पक्का गर्नुहोस्।"
       },
       "level": "confirm",
       "sourceIds": ["umf-cluj-stay"]
@@ -577,7 +649,9 @@
         "en": "EU rules refer to registering after 3 months of stay. Ask IGI for the exact Romanian deadline.",
         "ro": "Regulile UE vorbesc despre înregistrare după 3 luni de ședere. Cere la IGI termenul exact din România.",
         "fr": "Les règles de l’UE prévoient l’enregistrement après 3 mois de séjour. Demandez à l’IGI le délai exact en Roumanie.",
-        "ar": "تنص قواعد الاتحاد الأوروبي على التسجيل بعد 3 أشهر من الإقامة. اسأل IGI عن المهلة الدقيقة في رومانيا."
+        "ar": "تنص قواعد الاتحاد الأوروبي على التسجيل بعد 3 أشهر من الإقامة. اسأل IGI عن المهلة الدقيقة في رومانيا.",
+        "uk": "Правила ЄС говорять про реєстрацію після 3 місяців перебування. Запитайте в IGI точний румунський строк.",
+        "ne": "EU का नियमहरूले 3 महिना बसेपछि दर्ता गर्ने कुरा गर्छन्। रोमानियाको ठ्याक्कै अन्तिम मिति IGI सँग सोध्नुहोस्।"
       },
       "level": "confirm",
       "sourceIds": ["youreurope-registration"]
@@ -588,7 +662,9 @@
         "en": "There is a time limit: EU rules refer to registering after 3 months of stay. Confirm the Romanian deadline with IGI.",
         "ro": "Există un termen: regulile UE vorbesc despre înregistrare după 3 luni. Confirmă termenul din România la IGI.",
         "fr": "Il y a un délai : les règles de l’UE prévoient l’enregistrement après 3 mois. Confirmez le délai roumain auprès de l’IGI.",
-        "ar": "هناك مهلة زمنية: تنص قواعد الاتحاد الأوروبي على التسجيل بعد 3 أشهر. تأكد من المهلة في رومانيا لدى IGI."
+        "ar": "هناك مهلة زمنية: تنص قواعد الاتحاد الأوروبي على التسجيل بعد 3 أشهر. تأكد من المهلة في رومانيا لدى IGI.",
+        "uk": "Є часове обмеження: правила ЄС говорять про реєстрацію після 3 місяців перебування. Уточніть румунський строк в IGI.",
+        "ne": "त्यहाँ समयसीमा छ: EU का नियमहरूले 3 महिना बसेपछि दर्ता गर्ने कुरा गर्छन्। रोमानियाको अन्तिम मिति IGI सँग पक्का गर्नुहोस्।"
       }
     },
     "dependsOn": ["university-enrolment", "address-registration"],
@@ -608,37 +684,49 @@
       "en": "Personal numeric code (CNP)",
       "ro": "Cod numeric personal (CNP)",
       "fr": "Code numérique personnel (CNP)",
-      "ar": "الرقم الشخصي الرقمي (CNP)"
+      "ar": "الرقم الشخصي الرقمي (CNP)",
+      "uk": "Персональний цифровий код (CNP)",
+      "ne": "व्यक्तिगत अङ्कीय कोड (CNP)"
     },
     "summary": {
       "en": "The CNP is Romania’s personal identification number. Whether and when a foreign student receives one depends on the permit or registration type. Ask IGI.",
       "ro": "CNP-ul este codul numeric personal de identificare din România. Dacă și când îl primește un student străin depinde de tipul permisului sau al înregistrării. Întreabă la IGI.",
       "fr": "Le CNP est le numéro d’identification personnel roumain. Savoir si un étudiant étranger en reçoit un, et quand, dépend du type de titre ou d’enregistrement. Demandez à l’IGI.",
-      "ar": "الـ CNP هو رقم التعريف الشخصي في رومانيا. يعتمد حصول الطالب الأجنبي عليه وموعد ذلك على نوع التصريح أو التسجيل. اسأل IGI."
+      "ar": "الـ CNP هو رقم التعريف الشخصي في رومانيا. يعتمد حصول الطالب الأجنبي عليه وموعد ذلك على نوع التصريح أو التسجيل. اسأل IGI.",
+      "uk": "CNP — це особистий ідентифікаційний номер у Румунії. Чи отримує його іноземний студент і коли, залежить від типу дозволу або реєстрації. Запитайте в IGI.",
+      "ne": "CNP रोमानियाको व्यक्तिगत पहिचान नम्बर हो। विदेशी विद्यार्थीले यो पाउँछन् कि पाउँदैनन् र कहिले पाउँछन् भन्ने अनुमति वा दर्ताको प्रकारमा निर्भर हुन्छ। IGI सँग सोध्नुहोस्।"
     },
     "why": {
       "en": "Many Romanian offices and services ask for a CNP. Whether you need one for your situation has not been verified.",
       "ro": "Multe instituții și servicii din România cer un CNP. Nu a fost verificat dacă ai nevoie de unul în situația ta.",
       "fr": "De nombreux services roumains demandent un CNP. Il n’a pas été vérifié si vous en avez besoin dans votre situation.",
-      "ar": "تطلب جهات وخدمات رومانية كثيرة رقم CNP. لم يتم التحقق مما إذا كنت تحتاجه في حالتك."
+      "ar": "تطلب جهات وخدمات رومانية كثيرة رقم CNP. لم يتم التحقق مما إذا كنت تحتاجه في حالتك.",
+      "uk": "Багато румунських установ і служб просять CNP. Чи потрібен він у вашій ситуації, не перевірено.",
+      "ne": "रोमानियाका धेरै कार्यालय र सेवाहरूले CNP माग्छन्। तपाईंको अवस्थामा यो चाहिन्छ कि चाहिँदैन भन्ने पुष्टि गरिएको छैन।"
     },
     "whoNeeds": {
       "en": "It depends on your permit or registration type. This is not verified here.",
       "ro": "Depinde de tipul permisului sau al înregistrării. Nu este verificat aici.",
       "fr": "Cela dépend de votre type de titre ou d’enregistrement. Non vérifié ici.",
-      "ar": "يعتمد ذلك على نوع تصريحك أو تسجيلك. لم يتم التحقق منه هنا."
+      "ar": "يعتمد ذلك على نوع تصريحك أو تسجيلك. لم يتم التحقق منه هنا.",
+      "uk": "Залежить від типу вашого дозволу або реєстрації. Тут це не перевірено.",
+      "ne": "यो तपाईंको अनुमति वा दर्ताको प्रकारमा निर्भर हुन्छ। यहाँ यो पुष्टि गरिएको छैन।"
     },
     "whoDoesNot": {
       "en": "Possibly short-term visitors. This is not verified here.",
       "ro": "Posibil vizitatorii pe termen scurt. Nu este verificat aici.",
       "fr": "Peut-être les visiteurs de courte durée. Non vérifié ici.",
-      "ar": "ربما الزوار لفترات قصيرة. لم يتم التحقق منه هنا."
+      "ar": "ربما الزوار لفترات قصيرة. لم يتم التحقق منه هنا.",
+      "uk": "Можливо, особи, які приїхали на короткий строк. Тут це не перевірено.",
+      "ne": "सम्भवतः छोटो अवधिका पाहुनाहरू। यहाँ यो पुष्टि गरिएको छैन।"
     },
     "submitWhere": {
       "en": "Start by asking IGI when you submit your permit or registration application. The issuing office for your case was not verified.",
       "ro": "Începe prin a întreba la IGI când depui cererea pentru permis sau înregistrare. Instituția care îl emite în cazul tău nu a fost verificată.",
       "fr": "Commencez par demander à l’IGI lors du dépôt de votre demande de titre ou d’enregistrement. Le service émetteur pour votre cas n’a pas été vérifié.",
-      "ar": "ابدأ بالسؤال لدى IGI عند تقديم طلب التصريح أو التسجيل. لم يتم التحقق من الجهة المُصدِرة في حالتك."
+      "ar": "ابدأ بالسؤال لدى IGI عند تقديم طلب التصريح أو التسجيل. لم يتم التحقق من الجهة المُصدِرة في حالتك.",
+      "uk": "Почніть із запитання в IGI під час подання заяви на дозвіл або реєстрацію. Установу, яка видає його у вашому випадку, не перевірено.",
+      "ne": "अनुमति वा दर्ताको आवेदन बुझाउँदा IGI लाई सोधेर सुरु गर्नुहोस्। तपाईंको अवस्थामा जारी गर्ने कार्यालय पुष्टि गरिएको छैन।"
     },
     "documents": [
       {
@@ -683,37 +771,49 @@
       "en": "Tax identification number (only if needed)",
       "ro": "Număr de identificare fiscală (doar dacă e nevoie)",
       "fr": "Numéro d’identification fiscale (seulement si nécessaire)",
-      "ar": "رقم التعريف الضريبي (عند الحاجة فقط)"
+      "ar": "رقم التعريف الضريبي (عند الحاجة فقط)",
+      "uk": "Податковий ідентифікаційний номер (лише за потреби)",
+      "ne": "कर पहिचान नम्बर (आवश्यक परेमा मात्र)"
     },
     "summary": {
       "en": "Most students do not need a tax number right away. You may need one if you work, sign certain contracts, or the tax authority (ANAF) asks. Check before you go.",
       "ro": "Majoritatea studenților nu au nevoie imediat de un număr fiscal. Poate fi necesar dacă lucrezi, semnezi anumite contracte sau dacă ANAF îl solicită. Verifică înainte să mergi.",
       "fr": "La plupart des étudiants n’ont pas besoin tout de suite d’un numéro fiscal. Il peut être nécessaire si vous travaillez, signez certains contrats ou si l’ANAF le demande. Vérifiez avant d’y aller.",
-      "ar": "لا يحتاج معظم الطلاب إلى رقم ضريبي فورًا. قد تحتاجه إذا عملت أو وقّعت عقودًا معينة أو طلبته الإدارة الضريبية (ANAF). تحقق قبل أن تذهب."
+      "ar": "لا يحتاج معظم الطلاب إلى رقم ضريبي فورًا. قد تحتاجه إذا عملت أو وقّعت عقودًا معينة أو طلبته الإدارة الضريبية (ANAF). تحقق قبل أن تذهب.",
+      "uk": "Більшості студентів податковий номер одразу не потрібен. Він може знадобитися, якщо ви працюєте, підписуєте певні договори або його вимагає податковий орган (ANAF). Перевірте перед візитом.",
+      "ne": "धेरैजसो विद्यार्थीहरूलाई तुरुन्तै कर नम्बर चाहिँदैन। तपाईंले काम गर्नुभयो, केही सम्झौतामा हस्ताक्षर गर्नुभयो, वा कर अधिकारी निकाय (ANAF) ले माग्यो भने तपाईंलाई चाहिन सक्छ। जानुअघि जाँच गर्नुहोस्।"
     },
     "why": {
       "en": "Employers, banks or contracts may ask for a tax number. Whether you need one depends on what you plan to do. This has not been verified.",
       "ro": "Angajatorii, băncile sau anumite contracte pot cere un număr fiscal. Nevoia unui astfel de număr depinde de ce intenționezi să faci. Acest aspect nu a fost verificat.",
       "fr": "Employeurs, banques ou contrats peuvent demander un numéro fiscal. Le besoin dépend de ce que vous comptez faire. Non vérifié.",
-      "ar": "قد يطلب أصحاب العمل أو البنوك أو العقود رقمًا ضريبيًا. تعتمد حاجتك إليه على ما تنوي فعله. لم يتم التحقق من ذلك."
+      "ar": "قد يطلب أصحاب العمل أو البنوك أو العقود رقمًا ضريبيًا. تعتمد حاجتك إليه على ما تنوي فعله. لم يتم التحقق من ذلك.",
+      "uk": "Роботодавці, банки чи договори можуть вимагати податковий номер. Чи потрібен він вам, залежить від того, що ви плануєте робити. Це не перевірено.",
+      "ne": "रोजगारदाता, बैंक वा सम्झौताहरूले कर नम्बर माग्न सक्छन्। तपाईंलाई चाहिन्छ कि चाहिँदैन भन्ने तपाईंले के गर्ने योजना बनाउनुभएको छ त्यसमा निर्भर हुन्छ। यो पुष्टि गरिएको छैन।"
     },
     "whoNeeds": {
       "en": "Foreign citizens in certain situations, for example paid work. Confirm with ANAF or your employer.",
       "ro": "Cetățenii străini în anumite situații, de exemplu pentru muncă remunerată. Confirmă la ANAF sau la angajator.",
       "fr": "Les citoyens étrangers dans certaines situations, par exemple un travail rémunéré. Confirmez auprès de l’ANAF ou de votre employeur.",
-      "ar": "الأجانب في حالات معينة، مثل العمل بأجر. تأكد من ANAF أو صاحب العمل."
+      "ar": "الأجانب في حالات معينة، مثل العمل بأجر. تأكد من ANAF أو صاحب العمل.",
+      "uk": "Іноземні громадяни в певних ситуаціях, наприклад при оплачуваній роботі. Підтвердьте в ANAF або в роботодавця.",
+      "ne": "केही अवस्थामा रहेका विदेशी नागरिकहरू, उदाहरणका लागि पारिश्रमिक पाउने कामका लागि। ANAF वा आफ्नो रोजगारदातासँग पक्का गर्नुहोस्।"
     },
     "whoDoesNot": {
       "en": "Many students who do not work or sign tax-related contracts. This is not verified.",
       "ro": "Mulți studenți care nu lucrează și nu semnează contracte cu obligații fiscale. Acest lucru nu este verificat.",
       "fr": "De nombreux étudiants qui ne travaillent pas ni ne signent de contrats à effet fiscal. Non vérifié.",
-      "ar": "كثير من الطلاب الذين لا يعملون ولا يوقّعون عقودًا ذات أثر ضريبي. لم يتم التحقق من ذلك."
+      "ar": "كثير من الطلاب الذين لا يعملون ولا يوقّعون عقودًا ذات أثر ضريبي. لم يتم التحقق من ذلك.",
+      "uk": "Багато студентів, які не працюють і не підписують договорів із податковими наслідками. Це не перевірено.",
+      "ne": "काम नगर्ने वा करसँग जोडिएका सम्झौतामा हस्ताक्षर नगर्ने धेरै विद्यार्थीहरू। यो पुष्टि गरिएको छैन।"
     },
     "submitWhere": {
       "en": "At the county tax administration (for Timișoara: ANAF, Str. Gheorghe Lazăr 9B). Ask which form and documents apply to you.",
       "ro": "La administrația județeană a finanțelor publice (în Timișoara: ANAF, Str. Gheorghe Lazăr 9B). Întreabă ce formular și ce acte se aplică în cazul tău.",
       "fr": "À l’administration fiscale du département (à Timișoara : ANAF, Str. Gheorghe Lazăr 9B). Demandez quel formulaire et quels documents s’appliquent.",
-      "ar": "لدى الإدارة الضريبية للمقاطعة (في تيميشوارا: ANAF، شارع غيورغي لازار 9B). اسأل عن النموذج والمستندات المناسبة لحالتك."
+      "ar": "لدى الإدارة الضريبية للمقاطعة (في تيميشوارا: ANAF، شارع غيورغي لازار 9B). اسأل عن النموذج والمستندات المناسبة لحالتك.",
+      "uk": "У повітовій податковій адміністрації (у Тімішоарі: ANAF, вул. Георге Лазер, 9B, Str. Gheorghe Lazăr 9B). Запитайте, яка форма і які документи стосуються вас.",
+      "ne": "जिल्ला कर प्रशासनमा (तिमिशोराका लागि: ANAF, Str. Gheorghe Lazăr 9B)। तपाईंलाई कुन फारम र कागजात लागू हुन्छ भनेर सोध्नुहोस्।"
     },
     "documents": [
       {
@@ -753,7 +853,9 @@
         "en": "Most students do not need it at the start.",
         "ro": "Majoritatea studenților nu au nevoie de el la început.",
         "fr": "La plupart des étudiants n’en ont pas besoin au début.",
-        "ar": "لا يحتاجه معظم الطلاب في البداية."
+        "ar": "لا يحتاجه معظم الطلاب في البداية.",
+        "uk": "Більшості студентів він не потрібен на початку.",
+        "ne": "धेरैजसो विद्यार्थीहरूलाई सुरुमा यो चाहिँदैन।"
       }
     },
     "audience": [{ "situations": ["student", "worker", "refugee", "other"], "citizenships": ["eu", "non-eu"], "relevance": "verify" }],

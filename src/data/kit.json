@@ -6,7 +6,9 @@
     "meaning": {
       "en": "Which other documents are needed?",
       "fr": "De quels autres documents ai-je besoin ?",
-      "ar": "ما المستندات الأخرى المطلوبة؟"
+      "ar": "ما المستندات الأخرى المطلوبة؟",
+      "uk": "Які ще документи потрібні?",
+      "ne": "अरू कुन कागजात चाहिन्छ?"
     }
   },
   {
@@ -16,7 +18,9 @@
     "meaning": {
       "en": "How much is the fee and where can I pay it?",
       "fr": "Combien coûte la taxe et où puis-je la payer ?",
-      "ar": "كم الرسوم وأين يمكنني دفعها؟"
+      "ar": "كم الرسوم وأين يمكنني دفعها؟",
+      "uk": "Яка вартість збору і де його можна сплатити?",
+      "ne": "शुल्क कति हो र कहाँ तिर्न सकिन्छ?"
     }
   },
   {
@@ -26,7 +30,9 @@
     "meaning": {
       "en": "How long does the process usually take?",
       "fr": "Combien de temps dure généralement la procédure ?",
-      "ar": "كم تستغرق العملية عادةً؟"
+      "ar": "كم تستغرق العملية عادةً؟",
+      "uk": "Скільки зазвичай триває процедура?",
+      "ne": "यो प्रक्रियामा सामान्यतया कति समय लाग्छ?"
     }
   },
   {
@@ -36,7 +42,9 @@
     "meaning": {
       "en": "Can I come without an appointment, or do I need to make one?",
       "fr": "Puis-je venir sans rendez-vous, ou dois-je en prendre un ?",
-      "ar": "هل يمكنني الحضور دون موعد أم يجب أن أحجز موعدًا؟"
+      "ar": "هل يمكنني الحضور دون موعد أم يجب أن أحجز موعدًا؟",
+      "uk": "Чи можна прийти без запису, чи потрібно записатися?",
+      "ne": "के म अपोइन्टमेन्टबिना आउन सक्छु, कि अपोइन्टमेन्ट लिनुपर्छ?"
     }
   },
   {
@@ -46,7 +54,9 @@
     "meaning": {
       "en": "Could you please write down what I need to do next?",
       "fr": "Pourriez-vous m’écrire ce que je dois faire ensuite, s’il vous plaît ?",
-      "ar": "هل يمكنكم أن تكتبوا لي ما يجب أن أفعله بعد ذلك، من فضلكم؟"
+      "ar": "هل يمكنكم أن تكتبوا لي ما يجب أن أفعله بعد ذلك، من فضلكم؟",
+      "uk": "Чи не могли б ви записати, що мені потрібно зробити далі?",
+      "ne": "कृपया मैले अब के गर्नुपर्छ भनेर लेखिदिनुहुन्छ?"
     }
   }
 ]

@@ -1,7 +1,7 @@
 // The instructions given to the AI. Edit this file to change how the assistant behaves.
 
 export type Mode = 'chat' | 'phrase' | 'document' | 'form';
-export type Language = 'en' | 'ro' | 'fr' | 'ar';
+export type Language = 'en' | 'ro' | 'fr' | 'ar' | 'uk' | 'ne';
 
 export interface UserContextSummary {
   situation?: string;
@@ -18,6 +18,8 @@ const LANGUAGE_NAMES: Record<Language, string> = {
   ro: 'Romanian',
   fr: 'French',
   ar: 'Arabic (Modern Standard)',
+  uk: 'Ukrainian',
+  ne: 'Nepali (Devanagari script, simple everyday words)',
 };
 
 const SHARED_RULES = `You are the assistant inside welcomeRo, a free information tool that helps newcomers in Romania (international students, EU/EEA/Swiss citizens, non-EU citizens, workers, and residents) with immigration, residence permits, visas, administrative paperwork, public institutions, and practical integration in Romania (especially Timișoara).

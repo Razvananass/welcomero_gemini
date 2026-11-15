@@ -289,7 +289,7 @@ describe('administrative data integrity', () => {
       for (const lang of LANGUAGES) assert.ok(ph.meaning[lang.code] || lang.code === 'ro', `${ph.id} meaning ${lang.code}`);
       for (const lang of LANGUAGES) assert.ok(ph.label[lang.code], `${ph.id} label ${lang.code}`);
       const count = (s: string) => (s.match(/\[[^\]]+\]/g) ?? []).length;
-      for (const lang of ['en', 'fr', 'ar'] as const) assert.equal(count(ph.meaning[lang]!), count(ph.ro), `${ph.id}: placeholders match in ${lang}`);
+      for (const lang of ['en', 'fr', 'ar', 'uk', 'ne'] as const) assert.equal(count(ph.meaning[lang]!), count(ph.ro), `${ph.id}: placeholders match in ${lang}`);
     }
   });
 });
@@ -309,6 +309,12 @@ describe('translations', () => {
       assert.ok(value && value.trim().length > 0, `${lang.code}:${key} is empty`);
       assert.equal(placeholders(value), placeholders(dictionaries.en[key]), `${lang.code}:${key} placeholders differ`);
     }
+  });
+
+  it('Ukrainian is Cyrillic and Nepali is Devanagari', () => {
+    assert.ok(/[\u0400-\u04FF]/.test(dictionaries.uk['landing.cta']));
+    assert.ok(/[\u0900-\u097F]/.test(dictionaries.ne['landing.cta']));
+    assert.equal(dictionaries.uk['app.name'], 'welcomeRo');
   });
 
   it('Arabic text is actually Arabic and Romanian has diacritics', () => {
@@ -513,7 +519,7 @@ describe('plan: dates', () => {
   });
 
   it('formats dates in each language without crashing', () => {
-    for (const l of ['en', 'ro', 'fr', 'ar']) assert.ok(formatDate('2026-11-14', l).length > 5);
+    for (const l of ['en', 'ro', 'fr', 'ar', 'uk', 'ne']) assert.ok(formatDate('2026-11-14', l).length > 5);
     assert.equal(formatDate('garbage', 'en'), 'garbage');
     assert.ok(formatDate('2026-11-14', 'en').includes('14'));
   });
@@ -658,7 +664,7 @@ describe('appointment kit data and speech text', () => {
     assert.ok(kitQuestions.length >= 4);
     for (const q of kitQuestions) {
       assert.ok(q.ro.endsWith('?') && q.pron, q.id);
-      for (const l of ['en', 'fr', 'ar'] as const) assert.ok(q.meaning[l], `${q.id} ${l}`);
+      for (const l of ['en', 'fr', 'ar', 'uk', 'ne'] as const) assert.ok(q.meaning[l], `${q.id} ${l}`);
     }
     assert.equal(new Set(kitQuestions.map((q) => q.id)).size, kitQuestions.length);
   });

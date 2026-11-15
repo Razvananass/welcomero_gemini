@@ -59,7 +59,7 @@ export const fr: Record<MessageKey, string> = {
   'landing.feature.checklist.title': 'Liste personnalisée',
   'landing.feature.checklist.body': 'Seulement les démarches adaptées à votre situation, avec votre progression enregistrée.',
   'landing.feature.guides.title': 'Guides multilingues',
-  'landing.feature.guides.body': 'Anglais, roumain, français et arabe, avec affichage de droite à gauche.',
+  'landing.feature.guides.body': 'Anglais, roumain, français, arabe, ukrainien et népalais, avec affichage de droite à gauche.',
   'landing.feature.ai.title': 'Assistance par IA',
   'landing.feature.ai.body': 'Posez vos questions dans votre langue. Les réponses s’appuient sur nos informations vérifiées.',
   'landing.feature.helper.title': 'Aide à la communication en roumain',
