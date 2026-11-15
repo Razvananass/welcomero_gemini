@@ -52,9 +52,26 @@ Free-tier notes (from the providers' own pages, checked on 14 Nov 2026; they cha
 - Free tiers can be rate-limited or change at any time. When that happens the app shows a "try again later" message and everything else keeps working.
 - Without any key the app works fully; the assistant and the custom-message generator show a clear "not available" message (no fake answers).
 
-## Deploy to Vercel
-1. Push the folder to GitHub. 2. Vercel → Add New Project → import it (Vite is auto-detected).
-3. Add the environment variable above. 4. Deploy. `vercel.json` handles SPA routing and bundles `src/data` for the API.
+## Deploy to Vercel (and get a preview link for every change)
+One-time setup:
+1. Sign in at vercel.com with your GitHub account.
+2. **Add New → Project** → import this repository. Vite is auto-detected; keep the default build settings
+   (build command `vite build`, output folder `dist`).
+3. Before clicking Deploy, open **Environment Variables** and add the keys from `.env.example` that you use
+   (at least `GEMINI_API_KEY`; optionally `ELEVENLABS_API_KEY`, `GROQ_API_KEY`, `AI_PROVIDER`, `AI_MODEL`).
+   Tick both **Production** and **Preview** so preview links get the AI too. `.env.example` is not read by Vercel.
+4. Click **Deploy**. You get a production URL like `https://<project>.vercel.app`.
+5. Google sign-in only: in the Firebase console → Authentication → Settings → **Authorized domains**, add
+   `<project>.vercel.app` (preview URLs have their own domains; add those too if you test sign-in on them).
+
+After that, no manual steps:
+- Every push to `main` updates the production URL.
+- Every other branch and every pull request gets its own preview URL. Vercel posts it as a comment on the PR
+  and next to the commit on GitHub. Open it to check your change before merging.
+- Changed an environment variable? Redeploy (Deployments → ⋯ → Redeploy) for it to take effect.
+
+`vercel.json` sends every non-`/api` path to `index.html` (so refreshing `/dashboard` works), bundles `src/data`
+for the API functions and runs the official-sources check daily at 06:00 UTC.
 Note: the endpoint has input limits but **no rate limiting**; add one (e.g. Vercel firewall) before wide public use.
 
 ## What still needs a human
