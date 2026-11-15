@@ -7,6 +7,7 @@ import { effectiveStatus, nextUp, pendingDependencies, timeSensitive } from '../
 import { Arrow, btnSecondary, cardClass, LevelBadge, Notice, PageHeader, ProgressRing, StatusBadge } from '../components/ui';
 import { Icon, type IconName } from '../components/Icon';
 import { TaskCard } from '../components/TaskCard';
+import { HumanHelpCard } from '../components/HumanHelpCard';
 import type { MessageKey } from '../i18n';
 
 const QUICK_LINKS: Array<{ to: string; key: MessageKey; icon: IconName }> = [
@@ -176,6 +177,8 @@ export function Dashboard() {
           </ul>
         </section>
       ) : null}
+
+      <HumanHelpCard />
 
       <section aria-labelledby="quick-title">
         <h2 id="quick-title" className="text-xl font-bold text-brand-900">

@@ -331,6 +331,14 @@ export const en = {
   'help.custom.error': 'The message could not be created. Please try again.',
 
   // ---- settings
+  'human.title': 'Stuck? Get help from a person',
+  'human.body': '{org} helps migrants, refugees and students in Timișoara with paperwork, for free. Send them the ready-made message below: it explains your situation in Romanian, so you do not have to.',
+  'human.email': 'Send by email',
+  'human.call': 'Call {phone}',
+  'human.preview': 'See the message (in Romanian)',
+  'human.preview.hint': 'Built from your answers and checklist. Add what you need help with after "Am nevoie de ajutor cu:" (you can write it in English).',
+  'human.website': 'Website',
+  'human.note': 'welcomeRo is not part of this organisation. Contact them before you visit.',
   'set.title': 'Settings',
   'set.answers': 'Your answers',
   'set.none': 'No answers saved yet.',

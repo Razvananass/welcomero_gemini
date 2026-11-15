@@ -15,6 +15,8 @@ import {
 import { parsePhraseReply } from '../src/lib/ai';
 import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanitizeDates, validateDates } from '../src/lib/plan';
 import { docCounts, sanitizeDocs, toggleDoc } from '../src/lib/docs';
+import { buildHelpMessage, HELP_ORG_ID, helpMailto } from '../src/lib/helpRequest';
+import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
 import { speakableText } from '../src/lib/speech';
 import { dictionaries, LANGUAGES, localize, translate, type MessageKey } from '../src/i18n';
@@ -926,3 +928,35 @@ describe('Official Government Source Monitor allowlist & extraction', () => {
   });
 });
 
+describe('human help: ready-made message for LOGS', () => {
+  const p = profile({ situation: 'worker', citizenship: 'non-eu', accommodation: 'not-registered', completed: ['none'] });
+  const tasks = buildChecklist(procedures, p);
+  const first = tasks[0];
+  const progress = { [first.procedure.id]: 'completed' } as ProgressMap;
+
+  it('the support organisation exists in the institutions data with an email', () => {
+    const org = getInstitution(HELP_ORG_ID);
+    assert.ok(org, 'logs-timisoara institution');
+    assert.ok(org?.email?.includes('@'));
+  });
+
+  it('describes the situation in Romanian and splits done / to-do', () => {
+    const msg = buildHelpMessage(p, tasks, progress, 'ar');
+    assert.ok(msg.startsWith('Bună ziua,'));
+    assert.ok(msg.includes(translate('ro', 'onb.situation.worker')));
+    assert.ok(msg.includes(translate('ro', 'onb.citizenship.non-eu')));
+    const doneLine = msg.split('\n').find((l) => l.startsWith('Am făcut deja:'))!;
+    assert.ok(doneLine.includes(first.procedure.title.ro ?? first.procedure.title.en));
+    assert.ok(msg.includes('Prefer să comunic în: العربية.'));
+  });
+
+  it('does not ask for a language preference when the user already uses Romanian', () => {
+    assert.ok(!buildHelpMessage(p, tasks, {}, 'ro').includes('Prefer să comunic'));
+  });
+
+  it('encodes the email link so line breaks and diacritics survive', () => {
+    const link = helpMailto('a@b.ro', 'Bună\nziua');
+    assert.ok(link.startsWith('mailto:a@b.ro?subject='));
+    assert.ok(link.includes('body=Bun%C4%83%0Aziua'));
+  });
+});
