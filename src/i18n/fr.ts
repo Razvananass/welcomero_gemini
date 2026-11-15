@@ -142,7 +142,7 @@ export const fr: Record<MessageKey, string> = {
   'check.markDone': 'Marquer comme terminé',
   'check.reopen': 'Rouvrir',
   'check.status': 'Statut',
-  'check.coverage': 'Nos données couvrent pour l’instant en détail les étudiants internationaux. Pour votre situation, ces éléments sont généraux et doivent être vérifiés.',
+  'check.coverage': 'Nos données couvrent surtout en détail les étudiants internationaux. Les guides pour les travailleurs et les réfugiés sont plus récents et s’appuient sur moins de sources officielles : vérifiez chaque point marqué « À confirmer ».',
   'check.doFirst': 'À faire d’abord : {items}',
   'note.findAccommodationFirst': 'Vous n’avez pas encore de logement. Commencez par là, car les démarches d’adresse et de séjour l’exigent généralement.',
   'note.accommodationUnsure': 'Vous n’étiez pas sûr(e) de votre logement. Vérifiez si votre adresse doit être enregistrée.',
@@ -215,6 +215,7 @@ export const fr: Record<MessageKey, string> = {
   'inst.short.logs': 'Casa LOGS',
   'inst.short.uvt': 'UVT International',
   'inst.short.umft': 'UMFT Médecine',
+  'inst.short.asylum': 'Centre d’asile IGI',
 
   'ai.title': 'Assistant IA',
   'ai.subtitle': 'Posez vos questions sur les démarches roumaines, en mots simples.',

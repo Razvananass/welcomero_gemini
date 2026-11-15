@@ -142,7 +142,7 @@ export const ro: Record<MessageKey, string> = {
   'check.markDone': 'Marchează ca finalizat',
   'check.reopen': 'Redeschide',
   'check.status': 'Stare',
-  'check.coverage': 'Informațiile noastre acoperă momentan în detaliu studenții internaționali. Pentru situația ta, acești pași sunt orientativi și trebuie confirmați.',
+  'check.coverage': 'Datele noastre acoperă cel mai detaliat studenții internaționali. Ghidurile pentru lucrători și refugiați sunt mai noi și folosesc mai puține surse oficiale, așa că verifică fiecare punct marcat „Necesită confirmare”.',
   'check.doFirst': 'Recomandat mai întâi: {items}',
   'note.findAccommodationFirst': 'Nu ți-ai găsit încă cazare. Rezolvă mai întâi acest pas, deoarece vei avea nevoie de dovada cazării pentru adresă și permisul de ședere.',
   'note.accommodationUnsure': 'Ai ales că nu ești sigur(ă) în privința cazării. Verifică dacă trebuie să îți înregistrezi adresa.',
@@ -215,6 +215,7 @@ export const ro: Record<MessageKey, string> = {
   'inst.short.logs': 'Casa LOGS',
   'inst.short.uvt': 'UVT Internațional',
   'inst.short.umft': 'UMFT Medicină',
+  'inst.short.asylum': 'Centrul de azil IGI',
 
   'ai.title': 'Asistent AI',
   'ai.subtitle': 'Întreabă, în cuvinte simple, despre actele și procedurile din România.',

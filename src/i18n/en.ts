@@ -149,7 +149,7 @@ export const en = {
   'check.markDone': 'Mark as done',
   'check.reopen': 'Reopen',
   'check.status': 'Status',
-  'check.coverage': 'Our data currently covers international students in detail. For your situation, these items are general and must be verified.',
+  'check.coverage': 'Our data covers international students in the most detail. The guides for workers and refugees are newer and use fewer official sources, so check every item marked “Needs confirmation”.',
   'check.doFirst': 'Recommended first: {items}',
   'note.findAccommodationFirst': 'You have not arranged accommodation yet. Do this first, because address and residence paperwork usually needs it.',
   'note.accommodationUnsure': 'You were not sure about your accommodation. Check whether your address needs to be registered.',
@@ -224,6 +224,7 @@ export const en = {
   'inst.short.logs': 'Casa LOGS',
   'inst.short.uvt': 'UVT International',
   'inst.short.umft': 'UMFT Medical',
+  'inst.short.asylum': 'IGI Asylum Centre',
 
   // ---- AI assistant
   'ai.title': 'AI assistant',

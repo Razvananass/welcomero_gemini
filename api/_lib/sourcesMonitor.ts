@@ -61,6 +61,11 @@ const ALLOWED_HOST_SUFFIXES = [
   'uav.ro',
   'umfcluj.ro',
   'grupullogs.ro',
+  // Worker and refugee guides: the government hiring platform, the UN Refugee Agency's Romania help site,
+  // and ECRE's Asylum Information Database. Exact hosts only, not whole domains.
+  'workinromania.gov.ro',
+  'help.unhcr.org',
+  'asylumineurope.org',
 ];
 
 export function isOfficialAllowedUrl(rawUrl: string): boolean {

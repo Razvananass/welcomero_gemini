@@ -95,6 +95,13 @@ export const INSTITUTION_VISUALS: Record<string, InstitutionVisual> = {
     pinBorder: '#312e81',
     badgeClass: 'bg-indigo-100 text-indigo-900 border-indigo-200',
   },
+  'igi-dai-timisoara': {
+    icon: 'shield',
+    shortKey: 'inst.short.asylum',
+    pinBg: '#0b5a86',
+    pinBorder: '#0a3350',
+    badgeClass: 'bg-sky-100 text-sky-900 border-sky-200',
+  },
   'umft-dri': {
     icon: 'medical',
     shortKey: 'inst.short.umft',

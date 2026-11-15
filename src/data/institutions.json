@@ -340,5 +340,66 @@
       "ne": "UMFT को मुख्य रेक्टोरेटको ठेगाना Piața Eftimie Murgu nr. 2 हो। जानुअघि सिधा फोन, इमेल र काउन्टरको समय umft.eu मा जाँच गर्नुहोस्।"
     },
     "sourceIds": ["umft-home"]
+  },
+  {
+    "id": "igi-dai-timisoara",
+    "name": {
+      "en": "IGI Regional Centre for Procedures and Accommodation for Asylum Seekers, Timișoara",
+      "ro": "Centrul Regional de Proceduri și Cazare pentru Solicitanții de Azil Timișoara (IGI – Direcția Azil și Integrare)",
+      "fr": "Centre régional de procédures et d’hébergement pour demandeurs d’asile, Timișoara (IGI)",
+      "ar": "المركز الإقليمي للإجراءات وإيواء طالبي اللجوء في تيميشوارا (IGI)",
+      "uk": "Регіональний центр процедур і розміщення шукачів притулку, Тімішоара (IGI)",
+      "ne": "शरण माग्नेहरूका लागि प्रक्रिया र आवासको क्षेत्रीय केन्द्र, तिमिशोरा (IGI)"
+    },
+    "description": {
+      "en": "The IGI asylum centre for western Romania. It registers and examines asylum requests, interviews applicants and can offer accommodation during the procedure.",
+      "ro": "Centrul IGI pentru azil din vestul României. Înregistrează și analizează cererile de azil, intervievează solicitanții și poate oferi cazare pe durata procedurii.",
+      "fr": "Le centre d’asile de l’IGI pour l’ouest de la Roumanie. Il enregistre et examine les demandes d’asile, mène les entretiens et peut proposer un hébergement pendant la procédure.",
+      "ar": "مركز اللجوء التابع لـ IGI في غرب رومانيا. يسجل طلبات اللجوء ويدرسها، ويجري المقابلات مع مقدمي الطلبات، ويمكن أن يوفر السكن خلال الإجراءات.",
+      "uk": "Центр IGI з питань притулку для заходу Румунії. Реєструє та розглядає заяви про притулок, проводить співбесіди із заявниками та може надати житло на час процедури.",
+      "ne": "पश्चिम रोमानियाका लागि IGI को शरण केन्द्र। यसले शरणका आवेदन दर्ता र जाँच गर्छ, आवेदकको अन्तर्वार्ता लिन्छ र प्रक्रियाको बेला बस्ने ठाउँ दिन सक्छ।"
+    },
+    "services": [
+      {
+        "en": "Registering asylum requests",
+        "ro": "Înregistrarea cererilor de azil",
+        "fr": "Enregistrement des demandes d’asile",
+        "ar": "تسجيل طلبات اللجوء",
+        "uk": "Реєстрація заяв про притулок",
+        "ne": "शरणका आवेदन दर्ता"
+      },
+      {
+        "en": "Interviews and decisions on international protection",
+        "ro": "Interviuri și decizii privind protecția internațională",
+        "fr": "Entretiens et décisions sur la protection internationale",
+        "ar": "المقابلات والقرارات بشأن الحماية الدولية",
+        "uk": "Співбесіди та рішення щодо міжнародного захисту",
+        "ne": "अन्तर्राष्ट्रिय संरक्षणबारे अन्तर्वार्ता र निर्णय"
+      },
+      {
+        "en": "Accommodation and assistance during the procedure",
+        "ro": "Cazare și asistență pe durata procedurii",
+        "fr": "Hébergement et assistance pendant la procédure",
+        "ar": "السكن والمساعدة خلال الإجراءات",
+        "uk": "Житло та допомога під час процедури",
+        "ne": "प्रक्रियाको बेला बस्ने ठाउँ र सहयोग"
+      }
+    ],
+    "address": null,
+    "phone": null,
+    "email": null,
+    "website": "https://igi.mai.gov.ro/en/general-description/",
+    "hours": null,
+    "verifiedNote": {
+      "en": "IGI lists a regional asylum centre in Timișoara. Its address and phone were not verified for this app. Ask LOGS or UNHCR’s legal partners how to get there.",
+      "ro": "IGI menționează un centru regional pentru azil în Timișoara. Adresa și telefonul nu au fost verificate pentru această aplicație. Întreabă LOGS sau partenerii juridici UNHCR cum ajungi acolo.",
+      "fr": "L’IGI mentionne un centre régional d’asile à Timișoara. Son adresse et son téléphone n’ont pas été vérifiés pour cette application. Demandez à LOGS ou aux partenaires juridiques du HCR comment vous y rendre.",
+      "ar": "تذكر IGI وجود مركز إقليمي للجوء في تيميشوارا. لم يتم التحقق من عنوانه وهاتفه لهذا التطبيق. اسأل LOGS أو الشركاء القانونيين للمفوضية كيف تصل إليه.",
+      "uk": "IGI зазначає регіональний центр з питань притулку в Тімішоарі. Його адресу й телефон для цього застосунку не перевірено. Запитайте в LOGS або юридичних партнерів УВКБ ООН, як туди дістатися.",
+      "ne": "IGI ले तिमिशोरामा शरणको क्षेत्रीय केन्द्र रहेको जनाएको छ। यसको ठेगाना र फोन यो एपका लागि जाँच गरिएको छैन। त्यहाँ कसरी पुग्ने भनेर LOGS वा UNHCR का कानुनी साझेदारलाई सोध्नुहोस्।"
+    },
+    "sourceIds": [
+      "igi-asylum-general"
+    ]
   }
 ]

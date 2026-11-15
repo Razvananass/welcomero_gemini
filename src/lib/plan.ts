@@ -21,11 +21,20 @@ export const SUGGESTED_OFFSET_DAYS: Record<string, number> = {
   'eu-registration-certificate': 21,
   cnp: 28,
   'tax-id': 35,
+  // Workers and refugees: welcomeRo's suggested order, not legal deadlines.
+  'international-protection': 1,
+  'temporary-protection-ukraine': 7,
+  'residence-permit-work': 21,
 };
 export const DEFAULT_OFFSET_DAYS = 30;
 
-/** A university guide says to apply at least 30 days before the visa/permit expires. Unconfirmed; ask IGI. */
-export const PERMIT_PROCEDURE_ID = 'residence-permit-student';
+/**
+ * Permits that must be requested at least 30 days before the current visa/permit expires
+ * (IGI's residence permit page; for students also reported by university guides). Ask IGI to confirm.
+ */
+export const PERMIT_PROCEDURE_IDS = ['residence-permit-student', 'residence-permit-work'];
+/** @deprecated kept for older imports; use PERMIT_PROCEDURE_IDS. */
+export const PERMIT_PROCEDURE_ID = PERMIT_PROCEDURE_IDS[0];
 export const PERMIT_LEAD_DAYS = 30;
 
 const ISO = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -113,7 +122,7 @@ export function buildPlan(tasks: ChecklistTask[], progress: ProgressMap, dates: 
     let date = suggested;
     let basis: PlanItem['basis'] = 'suggested';
     let latestBy: string | undefined;
-    if (id === PERMIT_PROCEDURE_ID && dates.expiry !== '') {
+    if (PERMIT_PROCEDURE_IDS.includes(id) && dates.expiry !== '') {
       latestBy = addDays(dates.expiry, -PERMIT_LEAD_DAYS);
       if (daysBetween(latestBy, suggested) > 0) {
         date = latestBy;
