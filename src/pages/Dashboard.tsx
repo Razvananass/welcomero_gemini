@@ -82,7 +82,7 @@ export function Dashboard() {
 
           <article
             aria-labelledby={`title-${hero.procedure.id}`}
-            className="overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 p-6 text-white shadow-lg sm:p-8"
+            className="keep-light overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 p-6 text-white shadow-lg sm:p-8"
           >
             <div className="flex flex-wrap items-center gap-2">
               <StatusBadge status={effectiveStatus(hero, progress)} />

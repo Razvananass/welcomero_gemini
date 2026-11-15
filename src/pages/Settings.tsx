@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { Icon } from '../components/Icon';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { ThemeChoice } from '../components/ThemeToggle';
 import { btnPrimary, btnSecondary, cardClass, inputClass, Notice, PageHeader } from '../components/ui';
 
 export function Settings() {
@@ -130,6 +131,16 @@ export function Settings() {
         </h2>
         <div className="mt-3 max-w-xs">
           <LanguageSwitcher className={inputClass} />
+        </div>
+      </section>
+
+      <section className={cardClass} aria-labelledby="theme-title">
+        <h2 id="theme-title" className="text-lg font-bold text-brand-900">
+          {t('theme.title')}
+        </h2>
+        <p className="mt-2 text-sm text-muted">{t('theme.body')}</p>
+        <div className="mt-3">
+          <ThemeChoice />
         </div>
       </section>
 

@@ -102,13 +102,13 @@ export function ProgressRing({ percent, label, size = 132 }: { percent: number; 
       style={{ width: size, height: size }}
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#e2e8f0" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--color-slate-200)" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#0b5a86"
+          stroke="var(--color-brand-700)"
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circumference}

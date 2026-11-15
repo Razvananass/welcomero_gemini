@@ -18,13 +18,110 @@
   --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans", "Noto Sans Arabic", Tahoma, sans-serif;
 }
 
+/* `dark:` utilities apply when <html> has the `dark` class (set by src/lib/theme.ts and index.html). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---- Night mode ----
+   The app's classes (bg-white, text-brand-900, bg-slate-100, ...) all read these colour variables, so night mode
+   swaps the palette instead of adding dark: classes everywhere: light shades become dark surfaces and dark
+   shades become light text. "white" is the card/panel surface. Text colours keep WCAG AA contrast on the
+   dark surfaces. Screen only, so printing (appointment kit) stays black on white. */
+@media screen {
+  .dark {
+    color-scheme: dark;
+    --page-bg: #0f1821;
+    --color-white: #17232e;
+    --color-ink: #e6edf3;
+    --color-muted: #a3b3c2;
+
+    --color-brand-50: #132a3d;
+    --color-brand-100: #183550;
+    --color-brand-200: #22496b;
+    --color-brand-500: #4fa8dc;
+    --color-brand-600: #6db9e6;
+    --color-brand-700: #8ccbef;
+    --color-brand-800: #b0dcf5;
+    --color-brand-900: #e0f0fa;
+    --color-sun-100: #3a3214;
+    --color-sun-600: #f2c94c;
+
+    --color-slate-50: #1a2632;
+    --color-slate-100: #213040;
+    --color-slate-200: #2b3b4b;
+    --color-slate-300: #3a4d60;
+    --color-slate-400: #566b80;
+    --color-slate-500: #8a9db0;
+    --color-slate-700: #c3d0dc;
+    --color-slate-800: #dbe4ec;
+
+    --color-amber-50: #2a2010;
+    --color-amber-100: #3a2c0f;
+    --color-amber-200: #5a4314;
+    --color-amber-300: #7a5a18;
+    --color-amber-400: #e0a92b;
+    --color-amber-900: #f6d58c;
+    --color-amber-950: #fbe6b8;
+
+    --color-emerald-50: #0f2a20;
+    --color-emerald-100: #11372a;
+    --color-emerald-200: #1a5640;
+    --color-emerald-300: #23684f;
+    --color-emerald-800: #7fe0b6;
+    --color-emerald-900: #a9f0d0;
+
+    --color-red-50: #2f1519;
+    --color-red-100: #3d1a1f;
+    --color-red-300: #7a2a33;
+    --color-red-700: #f08a95;
+    --color-red-800: #f6a8b0;
+    --color-red-900: #fbc9ce;
+
+    --color-sky-100: #12324a;
+    --color-sky-200: #1d4e70;
+    --color-sky-900: #b5e0fa;
+    --color-cyan-100: #0f3340;
+    --color-cyan-200: #155a6e;
+    --color-cyan-900: #a5ecfa;
+    --color-teal-100: #0e332f;
+    --color-teal-200: #175c55;
+    --color-teal-900: #a6efe4;
+    --color-indigo-100: #22244d;
+    --color-indigo-200: #393d80;
+    --color-indigo-900: #c9ccff;
+    --color-violet-100: #2c1d4d;
+    --color-violet-200: #4a3380;
+    --color-violet-900: #dccbff;
+    --color-rose-100: #3d1626;
+    --color-rose-200: #6e2742;
+    --color-rose-900: #fdc4d4;
+  }
+
+  /* Deep-blue highlight cards (e.g. the dashboard "next step") keep their daytime colours at night. */
+  .dark .keep-light {
+    --color-white: #ffffff;
+    --color-brand-50: #eef6fb;
+    --color-brand-700: #0b5a86;
+    --color-brand-800: #0a4668;
+    --color-brand-900: #0a3350;
+  }
+
+  .dark .skeleton {
+    background-image: linear-gradient(90deg, #1f2d3a 25%, #2a3a49 50%, #1f2d3a 75%);
+  }
+
+  /* OpenStreetMap tiles are only available in light colours; invert them so the map is not a bright block. */
+  .dark .leaflet-tile-pane {
+    filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: #f6f9fb;
+  background: var(--page-bg, #f6f9fb);
   color: var(--color-ink);
   font-family: var(--font-sans);
   line-height: 1.55;
