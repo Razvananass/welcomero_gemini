@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../context/useI18n';
+import { LANGUAGES } from '../i18n';
 import { fetchMonitorSnapshot, type MonitoredSourceState, type MonitorSnapshot, type SourceMonitorStatus } from '../lib/sourcesMonitor';
 import { Icon } from './Icon';
 import { cardClass, linkClass, Notice } from './ui';
@@ -14,7 +15,7 @@ const STATUS_BADGE: Record<SourceMonitorStatus, string> = {
 function formatTime(iso: string | null, lang: string): string | null {
   if (!iso) return null;
   try {
-    const locale = lang === 'ro' ? 'ro-RO' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar' : lang === 'uk' ? 'uk-UA' : lang === 'ne' ? 'ne-NP' : 'en-GB';
+    const locale = LANGUAGES.find((l) => l.code === lang)?.locale ?? 'en-GB';
     return new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso));
   } catch {
     return iso;

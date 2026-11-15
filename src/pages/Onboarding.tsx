@@ -1,9 +1,10 @@
 import { Icon, type IconName } from '../components/Icon';
+import { LanguageSelect } from '../components/LanguageSelect';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
-import { LANGUAGES, isLang, type MessageKey } from '../i18n';
+import type { MessageKey } from '../i18n';
 import {
   ACCOMMODATIONS,
   CITIZENSHIPS,
@@ -92,7 +93,7 @@ function loadInitial(profileDraft: ProfileDraft | null): { draft: ProfileDraft; 
 }
 
 export function Onboarding() {
-  const { profile, language, setLanguage, completeOnboarding } = useApp();
+  const { profile, completeOnboarding } = useApp();
   const { t } = useI18n();
   const navigate = useNavigate();
 
@@ -191,18 +192,7 @@ export function Onboarding() {
       <form onSubmit={handleSubmit} noValidate className={`${cardClass} mt-6 space-y-6`}>
         {step === 1 ? (
           <Question legend={t('onb.q.language')}>
-            {LANGUAGES.map((lang) => (
-              <Choice
-                key={lang.code}
-                type="radio"
-                name="language"
-                checked={language === lang.code}
-                onChange={() => {
-                  if (isLang(lang.code)) setLanguage(lang.code);
-                }}
-                label={lang.nativeName}
-              />
-            ))}
+            <LanguageSelect id="onboarding-language" label={t('onb.q.language')} />
           </Question>
         ) : null}
 

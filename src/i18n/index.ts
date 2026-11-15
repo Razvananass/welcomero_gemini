@@ -5,6 +5,16 @@ import { fr } from './fr';
 import { ar } from './ar';
 import { uk } from './uk';
 import { ne } from './ne';
+import { ru } from './ru';
+import { es } from './es';
+import { tr } from './tr';
+import { hi } from './hi';
+import { bn } from './bn';
+import { fa } from './fa';
+import { ur } from './ur';
+import { vi } from './vi';
+import { zh } from './zh';
+import { de } from './de';
 
 export type { MessageKey };
 
@@ -13,20 +23,38 @@ export interface LanguageInfo {
   /** Name written in the language itself, so people can recognise it. */
   nativeName: string;
   dir: 'ltr' | 'rtl';
+  /** BCP-47 tag for date formatting. */
+  locale: string;
 }
 
+/**
+ * Supported languages, in display order: English, Romanian, then the rest alphabetically by English name.
+ * To add a language: create src/i18n/<code>.ts, add the code to Lang, then add one row here.
+ */
 export const LANGUAGES: LanguageInfo[] = [
-  { code: 'en', nativeName: 'English', dir: 'ltr' },
-  { code: 'ro', nativeName: 'Română', dir: 'ltr' },
-  { code: 'fr', nativeName: 'Français', dir: 'ltr' },
-  { code: 'ar', nativeName: 'العربية', dir: 'rtl' },
-  { code: 'uk', nativeName: 'Українська', dir: 'ltr' },
-  { code: 'ne', nativeName: 'नेपाली', dir: 'ltr' },
+  { code: 'en', nativeName: 'English', dir: 'ltr', locale: 'en-GB' }, // English
+  { code: 'ro', nativeName: 'Română', dir: 'ltr', locale: 'ro-RO' }, // Romanian
+  { code: 'ar', nativeName: 'العربية', dir: 'rtl', locale: 'ar' }, // Arabic
+  { code: 'bn', nativeName: 'বাংলা', dir: 'ltr', locale: 'bn-BD' }, // Bengali
+  { code: 'zh', nativeName: '中文', dir: 'ltr', locale: 'zh-CN' }, // Chinese
+  { code: 'fr', nativeName: 'Français', dir: 'ltr', locale: 'fr-FR' }, // French
+  { code: 'de', nativeName: 'Deutsch', dir: 'ltr', locale: 'de-DE' }, // German
+  { code: 'hi', nativeName: 'हिन्दी', dir: 'ltr', locale: 'hi-IN' }, // Hindi
+  { code: 'ne', nativeName: 'नेपाली', dir: 'ltr', locale: 'ne-NP' }, // Nepali
+  { code: 'fa', nativeName: 'فارسی', dir: 'rtl', locale: 'fa-IR' }, // Persian
+  { code: 'ru', nativeName: 'Русский', dir: 'ltr', locale: 'ru-RU' }, // Russian
+  { code: 'es', nativeName: 'Español', dir: 'ltr', locale: 'es-ES' }, // Spanish
+  { code: 'tr', nativeName: 'Türkçe', dir: 'ltr', locale: 'tr-TR' }, // Turkish
+  { code: 'uk', nativeName: 'Українська', dir: 'ltr', locale: 'uk-UA' }, // Ukrainian
+  { code: 'ur', nativeName: 'اردو', dir: 'rtl', locale: 'ur-PK' }, // Urdu
+  { code: 'vi', nativeName: 'Tiếng Việt', dir: 'ltr', locale: 'vi-VN' }, // Vietnamese
 ];
 
 export const DEFAULT_LANG: Lang = 'en';
 
-export const dictionaries: Record<Lang, Record<MessageKey, string>> = { en, ro, fr, ar, uk, ne };
+export const dictionaries: Record<Lang, Record<MessageKey, string>> = {
+  en, ro, fr, ar, uk, ne, ru, es, tr, hi, bn, fa, ur, vi, zh, de,
+};
 
 export function isLang(value: unknown): value is Lang {
   return typeof value === 'string' && LANGUAGES.some((l) => l.code === value);

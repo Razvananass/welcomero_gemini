@@ -61,7 +61,7 @@ export const ar: Record<MessageKey, string> = {
   'landing.feature.checklist.title': 'قائمة مخصصة',
   'landing.feature.checklist.body': 'الإجراءات المناسبة لوضعك فقط، مع حفظ تقدمك.',
   'landing.feature.guides.title': 'أدلة متعددة اللغات',
-  'landing.feature.guides.body': 'الإنجليزية والرومانية والفرنسية والعربية والأوكرانية والنيبالية، مع دعم الاتجاه من اليمين إلى اليسار.',
+  'landing.feature.guides.body': 'أدلة بلغات كثيرة، مع دعم الاتجاه من اليمين إلى اليسار.',
   'landing.feature.ai.title': 'مساعدة بالذكاء الاصطناعي',
   'landing.feature.ai.body': 'اطرح أسئلتك بلغتك. تعتمد الإجابات على معلوماتنا الموثقة.',
   'landing.feature.helper.title': 'مساعد التواصل بالرومانية',

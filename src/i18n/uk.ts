@@ -61,7 +61,7 @@ export const uk: Record<MessageKey, string> = {
   'landing.feature.checklist.title': 'Персональний список справ',
   'landing.feature.checklist.body': 'Лише ті процедури, що підходять до вашої ситуації, а ваш прогрес зберігається.',
   'landing.feature.guides.title': 'Інструкції кількома мовами',
-  'landing.feature.guides.body': 'Англійською, румунською, французькою, арабською, українською та непальською, зокрема з розташуванням тексту справа наліво.',
+  'landing.feature.guides.body': 'Інструкції багатьма мовами, зокрема з розташуванням тексту справа наліво.',
   'landing.feature.ai.title': 'Допомога на основі ШІ',
   'landing.feature.ai.body': 'Ставте запитання своєю мовою. Відповіді ґрунтуються на нашій перевіреній інформації.',
   'landing.feature.helper.title': 'Помічник для спілкування румунською',

@@ -24,8 +24,11 @@ import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
 import { speakableText } from '../src/lib/speech';
 import { routeTitleKey, safeGuideOrigin, SAMPLE_STUDENT_PROFILE, stepProgress } from '../src/lib/journey';
-import { dictionaries, LANGUAGES, localize, translate, type MessageKey } from '../src/i18n';
+import { dictionaries, directionOf, isLang, LANGUAGES, localize, translate, type MessageKey } from '../src/i18n';
 import type { Accommodation, Citizenship, CompletedKey, Profile, ProgressMap, Situation } from '../src/types';
+
+/** Languages with fully translated data JSON. Newer languages have UI dictionaries and fall back to English for data. */
+const DATA_LANGS = LANGUAGES.filter((l) => ['en', 'ro', 'fr', 'ar', 'uk', 'ne'].includes(l.code));
 
 const profile = (p: Partial<Profile> = {}): Profile => ({
   situation: 'student',
@@ -446,7 +449,7 @@ describe('administrative data integrity', () => {
   });
 
   it('titles, summaries and "why" exist in all four languages', () => {
-    for (const p of procedures) for (const lang of LANGUAGES) for (const f of ['title', 'summary', 'why', 'whoNeeds', 'whoDoesNot', 'submitWhere'] as const) {
+    for (const p of procedures) for (const lang of DATA_LANGS) for (const f of ['title', 'summary', 'why', 'whoNeeds', 'whoDoesNot', 'submitWhere'] as const) {
       assert.ok(p[f][lang.code], `${p.id}.${f} missing ${lang.code}`);
     }
   });
@@ -464,7 +467,7 @@ describe('administrative data integrity', () => {
       for (const field of ['address', 'phone', 'email'] as const) assert.ok(i[field] === null || i[field]!.trim().length > 0, `${i.id}.${field}`);
       assert.ok(i.website.startsWith('https://'));
       for (const id of i.sourceIds) assert.ok(sources[id], `${i.id}: unknown source ${id}`);
-      for (const lang of LANGUAGES) {
+      for (const lang of DATA_LANGS) {
         assert.ok(i.name[lang.code] && i.description[lang.code] && i.verifiedNote[lang.code], `${i.id} missing ${lang.code}`);
       }
     }
@@ -474,8 +477,8 @@ describe('administrative data integrity', () => {
     assert.ok(phrases.length >= 7);
     for (const ph of phrases) {
       assert.ok(ph.ro.length > 0);
-      for (const lang of LANGUAGES) assert.ok(ph.meaning[lang.code] || lang.code === 'ro', `${ph.id} meaning ${lang.code}`);
-      for (const lang of LANGUAGES) assert.ok(ph.label[lang.code], `${ph.id} label ${lang.code}`);
+      for (const lang of DATA_LANGS) assert.ok(ph.meaning[lang.code] || lang.code === 'ro', `${ph.id} meaning ${lang.code}`);
+      for (const lang of DATA_LANGS) assert.ok(ph.label[lang.code], `${ph.id} label ${lang.code}`);
       const count = (s: string) => (s.match(/\[[^\]]+\]/g) ?? []).length;
       for (const lang of ['en', 'fr', 'ar', 'uk', 'ne'] as const) assert.equal(count(ph.meaning[lang]!), count(ph.ro), `${ph.id}: placeholders match in ${lang}`);
     }
@@ -486,7 +489,7 @@ describe('administrative data integrity', () => {
 describe('translations', () => {
   const enKeys = Object.keys(dictionaries.en).sort();
 
-  it('all four languages define exactly the same keys', () => {
+  it('all languages define exactly the same keys', () => {
     for (const lang of LANGUAGES) assert.deepEqual(Object.keys(dictionaries[lang.code]).sort(), enKeys, lang.code);
   });
 
@@ -507,6 +510,38 @@ describe('translations', () => {
     assert.ok(/[\u0400-\u04FF]/.test(dictionaries.uk['landing.cta']));
     assert.ok(/[\u0900-\u097F]/.test(dictionaries.ne['landing.cta']));
     assert.equal(dictionaries.uk['app.name'], 'WelcomeRO');
+  });
+
+  it('new languages use their own scripts', () => {
+    const script: Record<string, RegExp> = {
+      ru: /[\u0400-\u04FF]/, hi: /[\u0900-\u097F]/, bn: /[\u0980-\u09FF]/, fa: /[\u0600-\u06FF]/,
+      ur: /[\u0600-\u06FF]/, zh: /[\u4E00-\u9FFF]/, tr: /[ğşıİçöü]/i, es: /[¿¡ñáéíóú]/i, de: /[äöüß]/i, vi: /[ăâêôơưđạảấầẩẫậắằẳẵặẹẻẽếềểễệ]/i,
+    };
+    for (const [code, re] of Object.entries(script)) {
+      const sample = dictionaries[code as keyof typeof dictionaries];
+      assert.ok(re.test(Object.values(sample).join(' ')), `${code} uses its script`);
+    }
+    assert.ok(/[\u0600-\u06FF]/.test(dictionaries.fa['landing.cta']) && /[\u0600-\u06FF]/.test(dictionaries.ur['landing.cta']));
+  });
+
+  it('isLang and directionOf cover every language, with fa, ur and ar right-to-left', () => {
+    for (const lang of LANGUAGES) assert.ok(isLang(lang.code), lang.code);
+    for (const code of ['en', 'ro', 'fr', 'uk', 'ne', 'ru', 'es', 'tr', 'hi', 'bn', 'vi', 'zh', 'de']) assert.equal(directionOf(code as never), 'ltr', code);
+    for (const code of ['ar', 'fa', 'ur']) assert.equal(directionOf(code as never), 'rtl', code);
+    assert.ok(!isLang('xx') && !isLang(undefined) && !isLang(''));
+    for (const code of ['en', 'ro', 'fr', 'ar', 'uk', 'ne']) assert.ok(isLang(code), `persisted ${code} stays valid`);
+  });
+
+  it('data without a translation falls back to English for new languages', () => {
+    for (const code of ['ru', 'fa', 'zh'] as const) assert.deepEqual(localize({ en: 'Hello', ro: 'Salut' }, code), { text: 'Hello', fallback: true });
+  });
+
+  it('lists English, Romanian, then the rest alphabetically by English name, with unique codes', () => {
+    const codes = LANGUAGES.map((l) => l.code);
+    assert.deepEqual(codes.slice(0, 2), ['en', 'ro']);
+    assert.equal(new Set(codes).size, codes.length);
+    const names = LANGUAGES.slice(2).map((l) => new Intl.DisplayNames('en', { type: 'language' }).of(l.code)!);
+    assert.deepEqual(names, [...names].sort());
   });
 
   it('Arabic text is actually Arabic and Romanian has diacritics', () => {
@@ -1369,10 +1404,10 @@ describe('Romanian practice', () => {
     assert.equal(new Set(ALL_CARDS.map((c) => c.id)).size, ALL_CARDS.length, 'card ids are unique across decks');
     for (const deck of DECKS) {
       assert.ok(deck.cards.length >= 5, `${deck.id} has enough cards for a quiz`);
-      for (const lang of LANGUAGES) assert.ok(deck.title[lang.code], `${deck.id} title ${lang.code}`);
+      for (const lang of DATA_LANGS) assert.ok(deck.title[lang.code], `${deck.id} title ${lang.code}`);
       for (const card of deck.cards) {
         assert.ok(card.ro.trim().length > 0);
-        for (const lang of LANGUAGES) assert.ok(card.meaning[lang.code] || lang.code === 'ro', `${card.id} meaning ${lang.code}`);
+        for (const lang of DATA_LANGS) assert.ok(card.meaning[lang.code] || lang.code === 'ro', `${card.id} meaning ${lang.code}`);
       }
     }
   });
@@ -1434,7 +1469,7 @@ describe('new guides for workers and refugees', () => {
     for (const id of ['employment-contract', 'bank-account', 'asylum-seeker-rights', 'integration-programme', 'temporary-protection-rights', 'learn-romanian']) {
       const p = guide(id);
       assert.ok(p, id);
-      for (const lang of LANGUAGES) for (const f of ['title', 'summary', 'why', 'whoNeeds', 'whoDoesNot', 'submitWhere'] as const) {
+      for (const lang of DATA_LANGS) for (const f of ['title', 'summary', 'why', 'whoNeeds', 'whoDoesNot', 'submitWhere'] as const) {
         assert.ok(p[f][lang.code], `${id}.${f} missing ${lang.code}`);
       }
       assert.ok(p.steps.length >= 4 && p.warnings.length >= 1 && p.documents.length >= 1, `${id} has content`);

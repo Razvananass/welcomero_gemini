@@ -16,7 +16,7 @@ A fictional sample student journey is available from the landing page for demons
 
 ## Languages
 
-English, Română, Français, العربية (RTL), Українська, and नेपाली. The interface and guide summaries are translated. Some detailed administrative content is English-first and can be translated in the app; critical translations still need review by fluent speakers.
+Picked from one dropdown, in this order: English, Română, then alphabetically by English name: العربية (RTL), বাংলা, 中文, Français, Deutsch, हिन्दी, नेपाली, فارسی (RTL), Русский, Español, Türkçe, Українська, اردو (RTL), and Tiếng Việt. The interface is translated into all of them. Guide data is fully translated for English, Romanian, French, Arabic, Ukrainian and Nepali; the other languages show English for that content until it is translated. Adding a language means one new `src/i18n/<code>.ts` file plus one row in `src/i18n/index.ts`. Some detailed administrative content is English-first and can be translated in the app; critical translations still need review by fluent speakers.
 
 ## Stack and data
 
