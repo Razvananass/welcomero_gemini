@@ -20,6 +20,8 @@ export function buildHelpMessage(profile: Profile, tasks: ChecklistTask[], progr
     '',
     'Sunt nou-venit(ă) în Timișoara și am nevoie de ajutor cu actele.',
     `Situația mea: ${ro(`onb.situation.${profile.situation}`)}; ${ro(`onb.citizenship.${profile.citizenship}`)}.`,
+    ...(profile.workerStatus ? [`Situația profesională: ${ro(`onb.workerStatus.${profile.workerStatus}`)}.`] : []),
+    ...(profile.protectionStatus ? [`Statutul protecției: ${ro(`onb.protectionStatus.${profile.protectionStatus}`)}.`] : []),
     `Cazare: ${ro(`onb.accommodation.${profile.accommodation}`)}.`,
     `Am făcut deja: ${list(done)}.`,
     `În curs: ${list(inProgress)}.`,

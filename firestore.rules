@@ -34,9 +34,19 @@ service cloud.firestore {
     function isValidProfileMap(profile) {
       return profile is map
         && profile.keys().hasAll(['situation', 'citizenship', 'accommodation', 'completed'])
-        && profile.keys().hasOnly(['situation', 'citizenship', 'accommodation', 'completed'])
+        && profile.keys().hasOnly(['situation', 'workerStatus', 'protectionStatus', 'citizenship', 'accommodation', 'completed'])
         && profile.situation is string
         && profile.situation in ['student', 'worker', 'refugee', 'other']
+        && (!('workerStatus' in profile) || (
+          profile.situation == 'worker'
+          && profile.workerStatus is string
+          && profile.workerStatus in ['employed', 'looking-for-work', 'self-employed', 'unsure']
+        ))
+        && (!('protectionStatus' in profile) || (
+          profile.situation == 'refugee'
+          && profile.protectionStatus is string
+          && profile.protectionStatus in ['considering-asylum', 'asylum-pending', 'protection-granted', 'temporary-protection', 'unsure']
+        ))
         && profile.citizenship is string
         && profile.citizenship in ['eu', 'non-eu']
         && profile.accommodation is string

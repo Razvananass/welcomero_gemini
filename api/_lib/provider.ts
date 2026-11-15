@@ -37,7 +37,7 @@ export class ProviderError extends Error {
 
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const REQUEST_TIMEOUT_MS = 18_000;
+const REQUEST_TIMEOUT_MS = 12_000;
 
 /** Sends one JSON request and turns every failure into a ProviderError with a safe, generic message. */
 
@@ -164,7 +164,7 @@ const geminiProvider: AiProvider = {
     const apiKey = readEnvKey("GEMINI_API_KEY");
     if (!apiKey) throw new ProviderError("Missing API key", "upstream");
     const model =
-      process.env.GEMINI_MODEL || process.env.AI_MODEL || "gemini-4-hydrogen";
+      process.env.GEMINI_MODEL || process.env.AI_MODEL || "gemini-3.8-flash";
     const ai = new GoogleGenAI({
       apiKey,
       httpOptions: {

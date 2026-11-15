@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { docCounts } from '../lib/docs';
 import { Icon } from './Icon';
@@ -17,6 +17,7 @@ interface TaskCardProps {
 
 export function TaskCard({ task, status, onStatusChange, pendingDependencies }: TaskCardProps) {
   const { t, loc } = useI18n();
+  const location = useLocation();
   const { procedure, priority } = task;
   const selectId = `status-${procedure.id}`;
   const done = status === 'completed';
@@ -81,10 +82,10 @@ export function TaskCard({ task, status, onStatusChange, pendingDependencies }: 
       ) : null}
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <Link to={`/guides/${procedure.id}`} className={btnPrimary}>
+        <Link to={`/guides/${procedure.id}`} state={{ from: location.pathname }} className={btnPrimary}>
           {t('check.open')} <Arrow />
         </Link>
-        <Link to={`/kit/${procedure.id}`} className={btnSecondary}>
+        <Link to={`/kit/${procedure.id}`} state={{ guideOrigin: location.pathname }} className={btnSecondary}>
           <Icon name="printer" className="size-4" />
           {t('kit.open')}
         </Link>

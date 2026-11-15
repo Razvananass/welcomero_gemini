@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { getInstitution, getProcedure, getSources } from '../data';
@@ -8,15 +8,23 @@ import { AiError, translateLines } from '../lib/ai';
 import { collectEnglishOnly, formatBatch, makeBatches, parseBatchReply } from '../lib/translate';
 import { sessionData, STORAGE_KEYS } from '../lib/storage';
 import { docCounts, isDocReady } from '../lib/docs';
+import { safeGuideOrigin, type GuideOrigin } from '../lib/journey';
 import { Icon } from '../components/Icon';
 import { Arrow, btnPrimary, btnSecondary, cardClass, inputClass, LevelBadge, LevelLegend, Notice, ProgressBar, StatusBadge, linkClass } from '../components/ui';
+import type { MessageKey } from '../i18n';
 import type { Item, Localized, Procedure, TaskStatus } from '../types';
 
 const STATUSES: TaskStatus[] = ['not-started', 'in-progress', 'completed'];
+const BACK_LABELS: Record<GuideOrigin, MessageKey> = {
+  '/dashboard': 'guide.backDashboard',
+  '/checklist': 'guide.back',
+  '/guides': 'guide.backAll',
+  '/plan': 'guide.backPlan',
+};
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, children, id }: { title: string; children: ReactNode; id?: string }) {
   return (
-    <section className="border-t border-slate-200 pt-6">
+    <section id={id} tabIndex={id ? -1 : undefined} className="scroll-mt-24 border-t border-slate-200 pt-6 outline-none">
       <h2 className="text-xl font-bold text-brand-900">{title}</h2>
       <div className="mt-3 space-y-3">{children}</div>
     </section>
@@ -36,6 +44,8 @@ export function GuideDetail() {
   const { id } = useParams<{ id: string }>();
   const { tasks, progress, setTaskStatus, lang, docs, toggleDoc } = useGuideContext();
   const { t, loc, isFallback } = useI18n();
+  const location = useLocation();
+  const backTo = safeGuideOrigin((location.state as { from?: unknown } | null)?.from);
   const procedure = id ? getProcedure(id) : undefined;
 
   // Reading the English-only details in the user's language (translated by the AI on request, kept for this visit).
@@ -136,8 +146,8 @@ export function GuideDetail() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <Link to="/checklist" className={`${linkClass} inline-flex items-center gap-1`}>
-        <Icon name="arrow" className="size-4 rotate-180 rtl:rotate-0" /> {t('guide.back')}
+      <Link to={backTo} className={`${linkClass} inline-flex items-center gap-1`}>
+        <Icon name="arrow" className="size-4 rotate-180 rtl:rotate-0" /> {t(BACK_LABELS[backTo])}
       </Link>
 
       <header>
@@ -145,8 +155,38 @@ export function GuideDetail() {
         <p className="mt-1 text-sm text-muted">{t('guide.lastChecked', { date: procedure.lastVerified })}</p>
       </header>
 
+      <section aria-labelledby="action-summary-title" className={`${cardClass} border-s-4 border-s-brand-600`}>
+        <h2 id="action-summary-title" className="text-lg font-bold text-brand-900">
+          {t('guide.summary.title')}
+        </h2>
+        <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <dt className="text-sm font-semibold text-muted">{t('guide.summary.action')}</dt>
+            <dd className="mt-1 font-medium text-brand-900">{loc(procedure.summary)}</dd>
+          </div>
+          <div>
+            <dt className="text-sm font-semibold text-muted">{t('guide.summary.documents')}</dt>
+            <dd className="mt-1 font-medium text-brand-900">{t('docs.progress', { ready: counts.ready, total: counts.total })}</dd>
+          </div>
+          <div>
+            <dt className="text-sm font-semibold text-muted">{t('guide.summary.location')}</dt>
+            <dd className="mt-1 font-medium text-brand-900">
+              {institution ? `${loc(institution.name)}${institution.address ? ` — ${institution.address}` : ''}` : t('common.none')}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-sm font-semibold text-muted">{t('guide.summary.deadline')}</dt>
+            <dd className="mt-1 font-medium text-brand-900">{procedure.deadline ? loc(procedure.deadline.text) : t('common.none')}</dd>
+          </div>
+          <div className="sm:col-span-2">
+            <dt className="text-sm font-semibold text-muted">{t('guide.summary.reviewed')}</dt>
+            <dd className="mt-1 font-medium text-brand-900">{procedure.lastVerified}</dd>
+          </div>
+        </dl>
+      </section>
+
       <div>
-        <Link to={`/kit/${procedure.id}`} className={btnSecondary}>
+        <Link to={`/kit/${procedure.id}`} state={{ guideOrigin: backTo }} className={btnSecondary}>
           <Icon name="printer" className="size-4" />
           {t('kit.open')}
         </Link>
@@ -232,7 +272,7 @@ export function GuideDetail() {
         <p>{loc(procedure.whoDoesNot)}</p>
       </Section>
 
-      <Section title={t('guide.s4')}>
+      <Section id="documents" title={t('guide.s4')}>
         <div>
           <p className="font-semibold text-brand-900" data-testid="docs-progress">
             {t('docs.progress', { ready: counts.ready, total: counts.total })}
@@ -373,8 +413,8 @@ export function GuideDetail() {
         <Link to="/helper" className={btnSecondary}>
           {t('guide.helper')}
         </Link>
-        <Link to="/checklist" className={btnSecondary}>
-          {t('guide.back')}
+        <Link to={backTo} className={btnSecondary}>
+          {t(BACK_LABELS[backTo])}
         </Link>
       </div>
     </div>

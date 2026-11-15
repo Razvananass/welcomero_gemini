@@ -1,6 +1,6 @@
-// Browser client for /api/sources-monitor (live official government & university source verification).
+// Browser client for the durable administrative-source status endpoint.
 
-export type SourceMonitorStatus = 'verified_unchanged' | 'updated' | 'unreachable' | 'pending';
+export type SourceMonitorStatus = 'reachable' | 'updated' | 'unreachable' | 'pending';
 
 export interface MonitoredSourceState {
   id: string;
@@ -13,9 +13,8 @@ export interface MonitoredSourceState {
   lastChangedAt: string | null;
   lastModifiedHeader: string | null;
   contentHash: string | null;
-  snippet: string | null;
+  observedHash: string | null;
   highlights: string[];
-  changeSummary: string | null;
 }
 
 export interface MonitorSnapshot {
@@ -25,21 +24,13 @@ export interface MonitorSnapshot {
 
 export async function fetchMonitorSnapshot(): Promise<MonitorSnapshot | null> {
   try {
-    const res = await fetch('/api/sources-monitor', { method: 'GET' });
-    const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !type.includes('application/json')) return null;
-    return (await res.json()) as MonitorSnapshot;
-  } catch {
-    return null;
-  }
-}
-
-export async function triggerMonitorSweep(): Promise<MonitorSnapshot | null> {
-  try {
-    const res = await fetch('/api/sources-monitor', { method: 'POST' });
-    const type = res.headers.get('content-type') ?? '';
-    if (!res.ok || !type.includes('application/json')) return null;
-    return (await res.json()) as MonitorSnapshot;
+    const response = await fetch('/api/sources-monitor', {
+      method: 'GET',
+      signal: AbortSignal.timeout(8_000),
+    });
+    const type = response.headers.get('content-type') ?? '';
+    if (!response.ok || !type.includes('application/json')) return null;
+    return (await response.json()) as MonitorSnapshot;
   } catch {
     return null;
   }

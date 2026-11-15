@@ -1,0 +1,60 @@
+name: Check administrative sources
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: source-monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh source status and review pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing="$(gh api "repos/${GITHUB_REPOSITORY}/pulls?state=open&per_page=100" --jq '[.[] | select(.head.ref | startswith("automation/source-status-"))][0].number // empty')"
+
+          if [ -n "$existing" ]; then
+            branch="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${existing}" --jq '.head.ref')"
+            git fetch origin "$branch"
+            git checkout -b "$branch" --track "origin/$branch"
+            git merge --no-edit "origin/${GITHUB_REF_NAME}"
+          else
+            branch="automation/source-status-${GITHUB_RUN_ID}"
+            git checkout -b "$branch"
+          fi
+
+          node scripts/check-sources.mjs
+          if git diff --quiet -- src/data/source-status.json; then
+            echo "No recorded source-status changes."
+            exit 0
+          fi
+
+          git config user.name "welcomeRO source monitor"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/source-status.json
+          git commit -m "chore: refresh administrative source status"
+          git push -u origin "$branch"
+
+          if [ -z "$existing" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/pulls" \
+              -f title="Review administrative source changes" \
+              -f head="$branch" \
+              -f base="${GITHUB_REF_NAME}" \
+              -f body="Automated reachability and content-fingerprint check for the sources used by WelcomeRO. A changed fingerprint is a review alert only: inspect the linked source and update affected guidance before accepting the new baseline."
+          fi

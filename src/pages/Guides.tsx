@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { procedures } from '../data';
@@ -10,6 +10,7 @@ import type { Procedure } from '../types';
 export function Guides() {
   const { tasks, progress } = useApp();
   const { t, loc } = useI18n();
+  const location = useLocation();
 
   const relevantIds = new Set(tasks.map((task) => task.procedure.id));
   const relevant = procedures.filter((p) => relevantIds.has(p.id)).sort((a, b) => a.order - b.order);
@@ -22,7 +23,7 @@ export function Guides() {
           const task = tasks.find((item) => item.procedure.id === procedure.id);
           return (
             <li key={procedure.id}>
-              <Link to={`/guides/${procedure.id}`} className="block px-5 py-4 hover:bg-slate-50">
+              <Link to={`/guides/${procedure.id}`} state={{ from: location.pathname }} className="block px-5 py-4 hover:bg-slate-50">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <h3 className="text-lg font-bold text-brand-900">{loc(procedure.title)}</h3>
                   {showStatus && task ? <StatusBadge status={effectiveStatus(task, progress)} /> : null}

@@ -1,10 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import type { MessageKey } from '../i18n';
 import { LanguagePicker } from '../components/LanguagePicker';
 import { Arrow, btnPrimary, btnSecondary, Notice } from '../components/ui';
 import { Icon } from '../components/Icon';
+import { SAMPLE_STUDENT_PROFILE } from '../lib/journey';
+import { localData, STORAGE_KEYS } from '../lib/storage';
 
 const STEPS: Array<{ title: MessageKey; body: MessageKey }> = [
   { title: 'landing.how.1.title', body: 'landing.how.1.body' },
@@ -23,13 +25,20 @@ const FEATURES: Array<{ title: MessageKey; body: MessageKey }> = [
 ];
 
 export function Landing() {
-  const { profile, user, authReady, authLoading, authError, signInWithGoogle } = useApp();
+  const { profile, user, authReady, authLoading, authError, signInWithGoogle, completeOnboarding } = useApp();
   const { t } = useI18n();
   const location = useLocation();
+  const navigate = useNavigate();
   const justDeleted = (location.state as { deleted?: boolean } | null)?.deleted === true;
 
   const ctaTarget = profile ? '/dashboard' : '/onboarding';
   const ctaLabel = profile ? t('landing.cta.continue') : t('landing.cta');
+
+  function startSampleJourney() {
+    localData.remove(STORAGE_KEYS.draft);
+    completeOnboarding(SAMPLE_STUDENT_PROFILE);
+    navigate('/dashboard');
+  }
 
   return (
     <div className="space-y-14">
@@ -67,6 +76,18 @@ export function Landing() {
           </div>
         ) : null}
         <p className="mt-4 text-base text-muted">{t('landing.audience')}</p>
+
+        {!profile ? (
+          <div className="mt-7 max-w-xl rounded-lg border border-brand-200 bg-brand-50/70 p-5">
+            <p className="text-sm font-bold uppercase tracking-wide text-brand-700">{t('landing.sample.label')}</p>
+            <h2 className="mt-1 text-xl font-bold text-brand-900">{t('landing.sample.title')}</h2>
+            <p className="mt-2 text-muted">{t('landing.sample.body')}</p>
+            <button type="button" onClick={startSampleJourney} className={`${btnSecondary} mt-4`}>
+              {t('landing.sample.cta')} <Arrow />
+            </button>
+            <p className="mt-2 text-sm text-muted">{t('landing.sample.note')}</p>
+          </div>
+        ) : null}
       </section>
 
       <section aria-labelledby="how-title" className="border-t border-slate-200 pt-10">

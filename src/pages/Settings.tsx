@@ -25,10 +25,20 @@ export function Settings() {
   const { t } = useI18n();
   const navigate = useNavigate();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteFailed, setDeleteFailed] = useState(false);
 
-  function handleConfirmDelete() {
-    resetAll();
-    navigate('/', { state: { deleted: true } });
+  async function handleConfirmDelete() {
+    if (deleting) return;
+    setDeleting(true);
+    setDeleteFailed(false);
+    try {
+      await resetAll();
+      navigate('/', { state: { deleted: true } });
+    } catch {
+      setDeleteFailed(true);
+      setDeleting(false);
+    }
   }
 
   return (
@@ -99,6 +109,18 @@ export function Settings() {
               <dt className="font-semibold text-brand-900">{t('onb.q.situation')}</dt>
               <dd>{t(`onb.situation.${profile.situation}`)}</dd>
             </div>
+            {profile.situation === 'worker' && profile.workerStatus ? (
+              <div>
+                <dt className="font-semibold text-brand-900">{t('onb.q.workerStatus')}</dt>
+                <dd>{t(`onb.workerStatus.${profile.workerStatus}`)}</dd>
+              </div>
+            ) : null}
+            {profile.situation === 'refugee' && profile.protectionStatus ? (
+              <div>
+                <dt className="font-semibold text-brand-900">{t('onb.q.protectionStatus')}</dt>
+                <dd>{t(`onb.protectionStatus.${profile.protectionStatus}`)}</dd>
+              </div>
+            ) : null}
             <div>
               <dt className="font-semibold text-brand-900">{t('onb.q.citizenship')}</dt>
               <dd>{t(`onb.citizenship.${profile.citizenship}`)}</dd>
@@ -180,21 +202,24 @@ export function Settings() {
         <p className="mt-2 text-muted">{user ? t('set.data.bodyCloud') : t('set.data.body')}</p>
         <div className="mt-4">
           {confirmingDelete ? (
-            <div className="space-y-3 rounded-lg border border-red-300 bg-red-50 p-4" role="alertdialog" aria-labelledby="delete-confirm-text">
+            <div className="space-y-3 rounded-lg border border-red-300 bg-red-50 p-4" role="group" aria-labelledby="delete-confirm-text">
               <p id="delete-confirm-text" className="text-sm font-semibold text-red-900">
                 {t('set.delete.confirm')}
               </p>
+              {deleteFailed ? <Notice role="alert" tone="error">{t('set.delete.failed')}</Notice> : null}
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={handleConfirmDelete}
-                  className="inline-flex min-h-11 items-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-800"
+                  onClick={() => void handleConfirmDelete()}
+                  disabled={deleting}
+                  className="inline-flex min-h-11 items-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-800 disabled:cursor-wait disabled:opacity-60"
                 >
-                  {t('set.delete')}
+                  {deleting ? t('set.delete.deleting') : t('set.delete')}
                 </button>
                 <button
                   type="button"
                   onClick={() => setConfirmingDelete(false)}
+                  disabled={deleting}
                   className={btnSecondary}
                 >
                   {t('common.cancel')}

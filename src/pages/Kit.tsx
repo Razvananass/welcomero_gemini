@@ -1,8 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { getInstitution, getProcedure, kitQuestions, phrases } from '../data';
 import { docCounts, isDocReady } from '../lib/docs';
+import { safeGuideOrigin } from '../lib/journey';
 import { formatDate, todayIso } from '../lib/plan';
 import { btnPrimary, btnSecondary, CopyButton, linkClass, SpeakButtons } from '../components/ui';
 import { Icon } from '../components/Icon';
@@ -43,6 +44,8 @@ export function Kit() {
   const { id } = useParams<{ id: string }>();
   const { docs, toggleDoc, language } = useApp();
   const { t, loc } = useI18n();
+  const location = useLocation();
+  const guideOrigin = safeGuideOrigin((location.state as { guideOrigin?: unknown } | null)?.guideOrigin);
   const procedure = id ? getProcedure(id) : undefined;
 
   if (!procedure) {
@@ -67,7 +70,7 @@ export function Kit() {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div className="no-print flex flex-wrap items-center justify-between gap-3">
-        <Link to={`/guides/${procedure.id}`} className={`${linkClass} inline-flex items-center gap-1`}>
+        <Link to={`/guides/${procedure.id}`} state={{ from: guideOrigin }} className={`${linkClass} inline-flex items-center gap-1`}>
           <Icon name="arrow" className="size-4 rotate-180 rtl:rotate-0" /> {t('kit.backToGuide')}
         </Link>
         <button type="button" className={btnPrimary} onClick={() => window.print()}>

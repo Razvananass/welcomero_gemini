@@ -9,8 +9,8 @@ import { join } from 'node:path';
 import { procedures, institutions, phrases, sources, getProcedure } from '../src/data';
 import { buildChecklist, effectiveStatus, summarize, nextUp, pendingDependencies, sanitizeProgress, hasLimitedCoverage } from '../src/lib/checklist';
 import {
-  ACCOMMODATIONS, CITIZENSHIPS, COMPLETED_KEYS, SITUATIONS,
-  draftToProfile, isDraft, isProfile, normaliseCompleted, toggleCompleted, validateStep,
+  ACCOMMODATIONS, CITIZENSHIPS, COMPLETED_KEYS, PROTECTION_STATUSES, SITUATIONS, WORKER_STATUSES,
+  draftToProfile, isDraft, isProfile, normaliseCompleted, profileNeedsDetails, profileToDraft, toggleCompleted, validateStep,
 } from '../src/lib/profile';
 import { parseFormReply, parsePhraseReply } from '../src/lib/ai';
 import { addDays, buildIcs, buildPlan, daysBetween, formatDate, isIsoDate, sanitizeDates, validateDates } from '../src/lib/plan';
@@ -23,6 +23,7 @@ import { ALL_CARDS, buildQuiz, DECKS, normalizeForCompare, rateAttempt, sanitize
 import { getInstitution } from '../src/data';
 import { kitQuestions } from '../src/data';
 import { speakableText } from '../src/lib/speech';
+import { routeTitleKey, safeGuideOrigin, SAMPLE_STUDENT_PROFILE, stepProgress } from '../src/lib/journey';
 import { dictionaries, LANGUAGES, localize, translate, type MessageKey } from '../src/i18n';
 import type { Accommodation, Citizenship, CompletedKey, Profile, ProgressMap, Situation } from '../src/types';
 
@@ -34,6 +35,43 @@ const profile = (p: Partial<Profile> = {}): Profile => ({
   ...p,
 });
 const ids = (p: Profile) => buildChecklist(procedures, p).map((t) => t.procedure.id);
+
+// ---------------------------------------------------------------------------------------------
+describe('judge-facing sample journey and navigation', () => {
+  it('uses a valid non-EU international student sample with a useful checklist', () => {
+    assert.equal(isProfile(SAMPLE_STUDENT_PROFILE), true);
+    assert.deepEqual(SAMPLE_STUDENT_PROFILE, {
+      situation: 'student',
+      citizenship: 'non-eu',
+      accommodation: 'not-registered',
+      completed: ['none'],
+    });
+    const sampleTasks = buildChecklist(procedures, SAMPLE_STUDENT_PROFILE);
+    assert.ok(sampleTasks.length > 0);
+    assert.ok(sampleTasks.some((task) => task.procedure.id === 'residence-permit-student'));
+    assert.ok(!sampleTasks.some((task) => task.procedure.id === 'eu-registration-certificate'));
+  });
+
+  it('accepts only known guide origins and falls back safely', () => {
+    for (const origin of ['/dashboard', '/checklist', '/guides', '/plan']) assert.equal(safeGuideOrigin(origin), origin);
+    for (const unsafe of [undefined, null, '/settings', '/guides/fake', 'https://example.com', 'javascript:alert(1)']) {
+      assert.equal(safeGuideOrigin(unsafe), '/guides');
+    }
+  });
+
+  it('maps app routes to specific titles and unknown routes to not found', () => {
+    assert.equal(routeTitleKey('/dashboard'), 'dash.welcome');
+    assert.equal(routeTitleKey('/guides/residence-permit-student'), 'guides.title');
+    assert.equal(routeTitleKey('/kit/residence-permit-student'), 'kit.title');
+    assert.equal(routeTitleKey('/dashboard/'), 'dash.welcome');
+    assert.equal(routeTitleKey('/guides/residence-permit-student/extra'), 'nf.title');
+    assert.equal(routeTitleKey('/missing'), 'nf.title');
+  });
+
+  it('shows the final onboarding step as 100 percent', () => {
+    assert.deepEqual([1, 2, 3, 4].map((step) => stepProgress(step, 4)), [25, 50, 75, 100]);
+  });
+});
 
 // ---------------------------------------------------------------------------------------------
 describe('checklist: the three required profiles', () => {
@@ -159,6 +197,83 @@ describe('checklist: rules for every combination of answers', () => {
   });
 });
 
+describe('checklist: worker and protection status scoping', () => {
+  const scopedIds = [
+    'international-protection',
+    'temporary-protection-ukraine',
+    'asylum-seeker-rights',
+    'temporary-protection-rights',
+    'employment-contract',
+    'residence-permit-work',
+    'integration-programme',
+  ];
+  const selected = (p: Profile) => buildChecklist(procedures, p).filter((task) => scopedIds.includes(task.procedure.id));
+
+  it('preserves the unscoped checklist for legacy profiles while requiring one migration answer', () => {
+    assert.equal(profileNeedsDetails(profile({ situation: 'worker' })), true);
+    assert.equal(profileNeedsDetails(profile({ situation: 'refugee' })), true);
+    assert.deepEqual(selected(profile({ situation: 'worker' })).map((task) => task.procedure.id), ['employment-contract', 'residence-permit-work']);
+    assert.deepEqual(selected(profile({ situation: 'refugee' })).map((task) => task.procedure.id), [
+      'international-protection',
+      'temporary-protection-ukraine',
+      'asylum-seeker-rights',
+      'temporary-protection-rights',
+      'integration-programme',
+    ]);
+  });
+
+  it('shows worker procedures only to employed workers', () => {
+    const employed = profile({ situation: 'worker', workerStatus: 'employed' });
+    assert.equal(hasLimitedCoverage(employed), false);
+    assert.deepEqual(selected(employed).map((task) => task.procedure.id), [
+      'employment-contract',
+      'residence-permit-work',
+    ]);
+    for (const workerStatus of ['looking-for-work', 'self-employed'] as const) {
+      const workerProfile = profile({ situation: 'worker', workerStatus });
+      assert.deepEqual(selected(workerProfile).map((task) => task.procedure.id), []);
+      assert.equal(hasLimitedCoverage(workerProfile), true);
+    }
+  });
+
+  it('uses one calm verify fallback when a worker is unsure', () => {
+    const tasks = selected(profile({ situation: 'worker', workerStatus: 'unsure' }));
+    assert.equal(hasLimitedCoverage(profile({ situation: 'worker', workerStatus: 'unsure' })), true);
+    assert.deepEqual(tasks.map((task) => task.procedure.id), ['employment-contract']);
+    assert.equal(tasks[0].relevance, 'verify');
+    assert.ok(tasks[0].notes.includes('verifyApplies'));
+  });
+
+  it('shows only the guide for the selected protection stage', () => {
+    const cases = [
+      ['considering-asylum', ['international-protection']],
+      ['asylum-pending', ['asylum-seeker-rights']],
+      ['protection-granted', ['integration-programme']],
+      ['temporary-protection', ['temporary-protection-ukraine', 'temporary-protection-rights']],
+    ] as const;
+    for (const [protectionStatus, expected] of cases) {
+      const protectionProfile = profile({ situation: 'refugee', protectionStatus });
+      assert.equal(hasLimitedCoverage(protectionProfile), false);
+      assert.deepEqual(selected(protectionProfile).map((task) => task.procedure.id), expected);
+    }
+  });
+
+  it('does not fall through to legacy rules for a known unmatched status', () => {
+    const tasks = selected(profile({ situation: 'refugee', protectionStatus: 'unsure' }));
+    assert.deepEqual(tasks.map((task) => task.procedure.id), ['international-protection']);
+    assert.equal(tasks[0].relevance, 'verify');
+    assert.ok(tasks[0].notes.includes('verifyApplies'));
+  });
+
+  it('prefers scoped rules even when an unscoped rule comes first and keeps generic guides', () => {
+    const employment = getProcedure('employment-contract')!;
+    const reversed = { ...employment, audience: [...employment.audience].reverse() };
+    const tasks = buildChecklist([reversed], profile({ situation: 'worker', workerStatus: 'unsure' }));
+    assert.equal(tasks[0].relevance, 'verify');
+    assert.ok(ids(profile({ situation: 'worker', workerStatus: 'self-employed' })).includes('health-insurance'));
+  });
+});
+
 describe('progress tracking', () => {
   const tasks = buildChecklist(procedures, profile({ accommodation: 'not-registered' }));
 
@@ -220,6 +335,10 @@ describe('onboarding rules', () => {
     assert.equal(validateStep(2, { completed: [] }), 'onb.error.required');
     assert.equal(validateStep(2, { situation: 'student', completed: [] }), 'onb.error.required');
     assert.equal(validateStep(2, { situation: 'student', citizenship: 'eu', completed: [] }), null);
+    assert.equal(validateStep(2, { situation: 'worker', citizenship: 'eu', completed: [] }), 'onb.error.required');
+    assert.equal(validateStep(2, { situation: 'worker', workerStatus: 'employed', citizenship: 'eu', completed: [] }), null);
+    assert.equal(validateStep(2, { situation: 'refugee', citizenship: 'non-eu', completed: [] }), 'onb.error.required');
+    assert.equal(validateStep(2, { situation: 'refugee', protectionStatus: 'asylum-pending', citizenship: 'non-eu', completed: [] }), null);
     assert.equal(validateStep(3, { completed: [] }), 'onb.error.required');
     assert.equal(validateStep(4, { completed: [] }), 'onb.error.completed');
     assert.equal(validateStep(4, { completed: ['none'] }), null);
@@ -230,13 +349,38 @@ describe('onboarding rules', () => {
     assert.equal(draftToProfile({ situation: 'student', citizenship: 'eu', accommodation: 'none', completed: [] }), null);
     const p = draftToProfile({ situation: 'student', citizenship: 'eu', accommodation: 'none', completed: ['none'] });
     assert.ok(p && isProfile(p));
+    assert.equal(draftToProfile({ situation: 'worker', citizenship: 'eu', accommodation: 'none', completed: ['none'] }), null);
+    assert.equal(draftToProfile({ situation: 'refugee', citizenship: 'non-eu', accommodation: 'none', completed: ['none'] }), null);
+    assert.deepEqual(
+      draftToProfile({
+        situation: 'worker',
+        workerStatus: 'employed',
+        protectionStatus: 'asylum-pending',
+        citizenship: 'eu',
+        accommodation: 'none',
+        completed: ['none'],
+      }),
+      { situation: 'worker', workerStatus: 'employed', citizenship: 'eu', accommodation: 'none', completed: ['none'] },
+    );
+    assert.deepEqual(
+      profileToDraft(profile({ situation: 'refugee', protectionStatus: 'asylum-pending' })),
+      profile({ situation: 'refugee', protectionStatus: 'asylum-pending' }),
+    );
   });
 
   it('rejects corrupted data from localStorage', () => {
     assert.equal(isProfile(null), false);
     assert.equal(isProfile({ situation: 'astronaut', citizenship: 'eu', accommodation: 'none', completed: [] }), false);
     assert.equal(isProfile({ situation: 'student', citizenship: 'eu', accommodation: 'none', completed: ['x'] }), false);
+    assert.equal(isProfile(profile()), true, 'legacy profiles without status fields remain valid');
+    assert.equal(isProfile(profile({ situation: 'worker', workerStatus: 'employed' })), true);
+    assert.equal(isProfile({ ...profile({ situation: 'worker' }), workerStatus: 'contractor' }), false);
+    assert.equal(isProfile({ ...profile(), workerStatus: 'employed' }), false, 'status must match the broad situation');
+    assert.equal(isProfile(profile({ situation: 'refugee', protectionStatus: 'temporary-protection' })), true);
+    assert.equal(isProfile({ ...profile({ situation: 'refugee' }), protectionStatus: 'unknown' }), false);
     assert.equal(isDraft({ completed: 'nope' }), false);
+    assert.equal(isDraft({ completed: [], workerStatus: 'looking-for-work', protectionStatus: 'asylum-pending' }), true);
+    assert.equal(isDraft({ completed: [], workerStatus: 'contractor' }), false);
     assert.equal(isDraft({ completed: [] }), true);
   });
 
@@ -265,6 +409,18 @@ describe('administrative data integrity', () => {
       assert.ok(institutions.some((i) => i.id === p.institutionId), `${p.id} institution exists`);
       assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(p.lastVerified), `${p.id} has a last verified date`);
       assert.ok(p.audience.length > 0);
+      for (const rule of p.audience) {
+        if (rule.workerStatuses) {
+          assert.ok(rule.workerStatuses.length > 0, `${p.id}: workerStatuses is not empty`);
+          assert.ok(rule.workerStatuses.every((status) => WORKER_STATUSES.includes(status)), `${p.id}: valid worker status`);
+          assert.ok(rule.situations.every((situation) => situation === 'worker'), `${p.id}: worker status only scopes worker rules`);
+        }
+        if (rule.protectionStatuses) {
+          assert.ok(rule.protectionStatuses.length > 0, `${p.id}: protectionStatuses is not empty`);
+          assert.ok(rule.protectionStatuses.every((status) => PROTECTION_STATUSES.includes(status)), `${p.id}: valid protection status`);
+          assert.ok(rule.situations.every((situation) => situation === 'refugee'), `${p.id}: protection status only scopes refugee rules`);
+        }
+      }
       for (const dep of p.dependsOn ?? []) assert.ok(getProcedure(dep), `${p.id} dependency ${dep} exists`);
       if (p.completedKey) assert.ok(COMPLETED_KEYS.includes(p.completedKey));
       const items = [...p.steps, ...p.warnings, ...(p.processingTime ? [p.processingTime] : []), ...(p.deadline ? [p.deadline] : [])];
@@ -343,6 +499,10 @@ describe('translations', () => {
     }
   });
 
+  it('all languages expose the real contact email', () => {
+    for (const lang of LANGUAGES) assert.equal(dictionaries[lang.code]['footer.contactPlaceholder'], 'welcomero.contact@gmail.com');
+  });
+
   it('Ukrainian is Cyrillic and Nepali is Devanagari', () => {
     assert.ok(/[\u0400-\u04FF]/.test(dictionaries.uk['landing.cta']));
     assert.ok(/[\u0900-\u097F]/.test(dictionaries.ne['landing.cta']));
@@ -375,12 +535,13 @@ describe('translations', () => {
     assert.deepEqual(missing, [], `keys used in code but missing from en.ts: ${missing.join(', ')}`);
     // dynamic keys: make sure every value we can build exists
     const values: Record<string, string[]> = {
-      'onb.situation.': SITUATIONS, 'onb.citizenship.': CITIZENSHIPS, 'onb.accommodation.': ACCOMMODATIONS,
+      'onb.situation.': SITUATIONS, 'onb.workerStatus.': WORKER_STATUSES, 'onb.protectionStatus.': PROTECTION_STATUSES,
+      'onb.citizenship.': CITIZENSHIPS, 'onb.accommodation.': ACCOMMODATIONS,
       'onb.completed.': COMPLETED_KEYS, 'status.': ['not-started', 'in-progress', 'completed'],
       'level.': ['verified', 'recommended', 'confirm'], 'note.': ['findAccommodationFirst', 'accommodationUnsure', 'needsAccommodation', 'preCompleted', 'addressNotRegistered'],
       'guide.sourceKind.': ['government', 'university', 'eu', 'ngo'], 'priority.': ['high', 'low'], 'ai.ex.': ['1', '2', '3', '4', '5'],
       'check.filter.': ['all', 'todo', 'progress', 'done'], 'guide.s': ['1', '2', '3', '4', '6', '7', '8', '9', '10'],
-      'monitor.status.': ['verified_unchanged', 'updated', 'unreachable', 'pending'],
+      'monitor.status.': ['reachable', 'updated', 'unreachable', 'pending'],
       'text.': ['normal', 'large', 'xlarge'],
     };
     for (const prefix of dynamicPrefixes) {
@@ -467,7 +628,11 @@ describe('AI endpoint (api/chat.ts) with a fake network', () => {
     }) as unknown as typeof fetch;
     try {
       const { POST } = await import('../api/chat');
-      const res = await POST(post({ ...goodBody, procedureId: 'cnp' }));
+      const res = await POST(post({
+        ...goodBody,
+        procedureId: 'cnp',
+        userContext: { situation: 'worker', workerStatus: 'employed', protectionStatus: 'temporary-protection' },
+      }));
       assert.equal(res.status, 200);
       assert.deepEqual(await res.json(), { reply: 'CNP înseamnă cod numeric personal.' });
       assert.ok(box.seen);
@@ -478,6 +643,8 @@ describe('AI endpoint (api/chat.ts) with a fake network', () => {
       assert.ok(s.body.system.includes('Residence permit for studies'), 'dataset is included');
       assert.ok(s.body.system.includes('Str. Andrei Mocioni nr. 8-10'), 'verified institution data is included');
       assert.ok(s.body.system.includes('Personal numeric code (CNP)'), 'focus procedure is mentioned');
+      assert.ok(s.body.system.includes('Worker status: employed'), 'worker status is included in assistant context');
+      assert.ok(s.body.system.includes('Protection status: temporary-protection'), 'protection status is included in assistant context');
       assert.ok(!JSON.stringify(s.body).includes('test-key'), 'the key is never placed in the prompt');
     } finally { restore(); }
   });
@@ -765,7 +932,7 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
     return box;
   };
 
-  it('Gemini: uses gemini-4-hydrogen via @google/genai with key in header, LOW thinking, and User-Agent', async () => {
+  it('Gemini: uses gemini-3.8-flash via @google/genai with key in header, MINIMAL thinking, output cap, and User-Agent', async () => {
     setup({ GEMINI_API_KEY: 'g-secret' });
     const box = capture({ candidates: [{ content: { parts: [{ text: 'The CNP is ' }, { text: 'a personal code.' }] } }] });
     try {
@@ -775,15 +942,15 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
       assert.equal(res.status, 200);
       assert.deepEqual(await res.json(), { reply: 'The CNP is a personal code.' });
       const s = box.seen as Seen;
-      assert.ok(s.url.includes('/models/gemini-4-hydrogen:generateContent'), `unexpected url: ${s.url}`);
+      assert.ok(s.url.includes('/models/gemini-3.8-flash:generateContent'), `unexpected url: ${s.url}`);
       assert.ok(!s.url.includes('g-secret'), 'key must not be in the URL');
       assert.equal(s.headers['x-goog-api-key'], 'g-secret');
       assert.ok(!s.raw.includes('g-secret'), 'key must not be in the body');
       assert.deepEqual(s.body.contents.map((c: any) => c.role), ['user', 'model', 'user']);
       const sysText = s.body.systemInstruction.parts[0].text;
       assert.ok(sysText.includes('Residence permit for studies'));
-      assert.deepEqual(s.body.generationConfig.thinkingConfig, { thinkingLevel: 'LOW' });
-      assert.equal(s.body.generationConfig.maxOutputTokens, undefined);
+      assert.deepEqual(s.body.generationConfig.thinkingConfig, { thinkingLevel: 'MINIMAL' });
+      assert.equal(s.body.generationConfig.maxOutputTokens, 500);
     } finally { restore(); }
   });
 
@@ -905,6 +1072,21 @@ describe('AI providers: Gemini (with @google/genai) and Groq with a fake network
   });
 });
 
+describe('best-effort API rate limiter', () => {
+  it('allows the configured number of requests, then returns Retry-After', async () => {
+    const { checkRateLimit, rateLimitedResponse } = await import('../api/_lib/rateLimit');
+    const request = new Request('https://example.test/api/chat', { headers: { 'x-forwarded-for': '192.0.2.25' } });
+    const scope = `test-${Date.now()}`;
+    assert.equal(checkRateLimit(request, scope, 2, 60_000).allowed, true);
+    assert.equal(checkRateLimit(request, scope, 2, 60_000).allowed, true);
+    const blocked = checkRateLimit(request, scope, 2, 60_000);
+    assert.equal(blocked.allowed, false);
+    const response = rateLimitedResponse(blocked.retryAfterSeconds);
+    assert.equal(response.status, 429);
+    assert.ok(Number(response.headers.get('retry-after')) >= 1);
+  });
+});
+
 describe('ElevenLabs TTS proxy (/api/tts)', () => {
   const realFetch = globalThis.fetch;
   const savedKey = process.env.ELEVENLABS_API_KEY;
@@ -959,9 +1141,9 @@ describe('ElevenLabs TTS proxy (/api/tts)', () => {
   });
 });
 
-describe('Official Government Source Monitor allowlist & extraction', () => {
-  it('only allows verified HTTPS official Romanian government, EU, university, and NGO domains', async () => {
-    const { isOfficialAllowedUrl, extractTextFromHtml, extractHighlights, loadSourceRegistry } = await import('../api/_lib/sourcesMonitor');
+describe('Official and recognized source monitor allowlist & durable snapshot', () => {
+  it('allows only trusted HTTPS source hosts and reconciles the committed snapshot', async () => {
+    const { isOfficialAllowedUrl, extractTextFromHtml, extractHighlights, loadSourceRegistry, loadMonitorSnapshot } = await import('../api/_lib/sourcesMonitor');
     assert.equal(isOfficialAllowedUrl('https://igi.mai.gov.ro/en/'), true);
     assert.equal(isOfficialAllowedUrl('https://www.anaf.ro/anaf/internet/ANAF'), true);
     assert.equal(isOfficialAllowedUrl('http://igi.mai.gov.ro/en/'), false, 'plain HTTP must be rejected');
@@ -969,8 +1151,11 @@ describe('Official Government Source Monitor allowlist & extraction', () => {
     assert.equal(isOfficialAllowedUrl('http://127.0.0.1:3000/api/chat'), false, 'localhost SSRF must be rejected');
 
     for (const [id, src] of Object.entries(loadSourceRegistry())) {
-      assert.equal(isOfficialAllowedUrl(src.url), true, `source ${id} must pass official allowlist`);
+      assert.equal(isOfficialAllowedUrl(src.url), true, `source ${id} must pass trusted allowlist`);
     }
+    const snapshot = loadMonitorSnapshot();
+    assert.equal(Object.keys(snapshot.sources).length, Object.keys(loadSourceRegistry()).length);
+    assert.ok(Object.values(snapshot.sources).every((source) => source.status === 'pending'));
 
     const clean = extractTextFromHtml('<html><head><script>alert(1)</script><style>.a{}</style></head><body><h1>Program IGI</h1><p>Tel: +40 256 402 450 &amp; email@mai.gov.ro</p></body></html>');
     assert.ok(!clean.includes('alert(1)'));
@@ -979,11 +1164,19 @@ describe('Official Government Source Monitor allowlist & extraction', () => {
     const highlights = extractHighlights(clean);
     assert.ok(highlights.some((h) => h.includes('256')));
     assert.ok(highlights.some((h) => h.includes('email@mai.gov.ro')));
+
+    const { buildKnowledge, citationsInReply } = await import('../api/_lib/knowledge');
+    const knowledge = buildKnowledge();
+    assert.ok(knowledge.includes('claim-specific sources'));
+    assert.ok(knowledge.includes('source note:'));
+    assert.ok(knowledge.includes('| evidence:'));
+    const citation = citationsInReply(`Check ${sources['igi-home'].url}`);
+    assert.deepEqual(citation.map((item) => item.id), ['igi-home']);
   });
 });
 
 describe('human help: ready-made message for LOGS', () => {
-  const p = profile({ situation: 'worker', citizenship: 'non-eu', accommodation: 'not-registered', completed: ['none'] });
+  const p = profile({ situation: 'worker', workerStatus: 'employed', citizenship: 'non-eu', accommodation: 'not-registered', completed: ['none'] });
   const tasks = buildChecklist(procedures, p);
   const first = tasks[0];
   const progress = { [first.procedure.id]: 'completed' } as ProgressMap;
@@ -998,6 +1191,7 @@ describe('human help: ready-made message for LOGS', () => {
     const msg = buildHelpMessage(p, tasks, progress, 'ar');
     assert.ok(msg.startsWith('Bună ziua,'));
     assert.ok(msg.includes(translate('ro', 'onb.situation.worker')));
+    assert.ok(msg.includes(translate('ro', 'onb.workerStatus.employed')));
     assert.ok(msg.includes(translate('ro', 'onb.citizenship.non-eu')));
     const doneLine = msg.split('\n').find((l) => l.startsWith('Am făcut deja:'))!;
     assert.ok(doneLine.includes(first.procedure.title.ro ?? first.procedure.title.en));
@@ -1006,6 +1200,12 @@ describe('human help: ready-made message for LOGS', () => {
 
   it('does not ask for a language preference when the user already uses Romanian', () => {
     assert.ok(!buildHelpMessage(p, tasks, {}, 'ro').includes('Prefer să comunic'));
+  });
+
+  it('includes protection status context when available', () => {
+    const protectedProfile = profile({ situation: 'refugee', protectionStatus: 'temporary-protection' });
+    const msg = buildHelpMessage(protectedProfile, buildChecklist(procedures, protectedProfile), {}, 'uk');
+    assert.ok(msg.includes(translate('ro', 'onb.protectionStatus.temporary-protection')));
   });
 
   it('encodes the email link so line breaks and diacritics survive', () => {

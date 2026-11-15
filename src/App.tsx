@@ -18,11 +18,12 @@ import { Onboarding } from './pages/Onboarding';
 import { Plan } from './pages/Plan';
 import { Practice } from './pages/Practice';
 import { Settings } from './pages/Settings';
+import { profileNeedsDetails } from './lib/profile';
 
 /** Pages that need a profile send new visitors to onboarding first. */
 function RequireProfile() {
   const { profile } = useApp();
-  return profile ? <Outlet /> : <Navigate to="/onboarding" replace />;
+  return profile && !profileNeedsDetails(profile) ? <Outlet /> : <Navigate to="/onboarding" replace />;
 }
 
 export default function App() {

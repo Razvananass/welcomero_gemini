@@ -1,7 +1,18 @@
 // Pure helpers for the onboarding questionnaire. No React in here, so it is easy to test.
-import type { Accommodation, Citizenship, CompletedKey, Profile, ProfileDraft, Situation } from '../types';
+import type {
+  Accommodation,
+  Citizenship,
+  CompletedKey,
+  Profile,
+  ProfileDraft,
+  ProtectionStatus,
+  Situation,
+  WorkerStatus,
+} from '../types';
 
 export const SITUATIONS: Situation[] = ['student', 'worker', 'refugee', 'other'];
+export const WORKER_STATUSES: WorkerStatus[] = ['employed', 'looking-for-work', 'self-employed', 'unsure'];
+export const PROTECTION_STATUSES: ProtectionStatus[] = ['considering-asylum', 'asylum-pending', 'protection-granted', 'temporary-protection', 'unsure'];
 export const CITIZENSHIPS: Citizenship[] = ['eu', 'non-eu'];
 export const ACCOMMODATIONS: Accommodation[] = ['registered', 'not-registered', 'none', 'unsure'];
 export const COMPLETED_KEYS: CompletedKey[] = ['residence', 'address', 'health', 'cnp', 'university', 'none', 'unsure'];
@@ -11,6 +22,11 @@ const EXCLUSIVE: CompletedKey[] = ['none', 'unsure'];
 
 export const ONBOARDING_STEPS = 4;
 
+export function profileNeedsDetails(profile: { situation?: Situation; workerStatus?: WorkerStatus; protectionStatus?: ProtectionStatus }): boolean {
+  return (profile.situation === 'worker' && !profile.workerStatus)
+    || (profile.situation === 'refugee' && !profile.protectionStatus);
+}
+
 export function emptyDraft(): ProfileDraft {
   return { completed: [] };
 }
@@ -18,8 +34,12 @@ export function emptyDraft(): ProfileDraft {
 /** Turn a draft into a profile, or return null if something required is missing. */
 export function draftToProfile(draft: ProfileDraft): Profile | null {
   if (!draft.situation || !draft.citizenship || !draft.accommodation || draft.completed.length === 0) return null;
+  if (draft.situation === 'worker' && !draft.workerStatus) return null;
+  if (draft.situation === 'refugee' && !draft.protectionStatus) return null;
   return {
     situation: draft.situation,
+    ...(draft.situation === 'worker' ? { workerStatus: draft.workerStatus } : {}),
+    ...(draft.situation === 'refugee' ? { protectionStatus: draft.protectionStatus } : {}),
     citizenship: draft.citizenship,
     accommodation: draft.accommodation,
     completed: normaliseCompleted(draft.completed),
@@ -54,7 +74,10 @@ export function validateStep(step: number, draft: ProfileDraft): OnboardingError
     case 1:
       return null; // a language is always selected
     case 2:
-      return draft.situation && draft.citizenship ? null : 'onb.error.required';
+      if (!draft.situation || !draft.citizenship) return 'onb.error.required';
+      if (draft.situation === 'worker' && !draft.workerStatus) return 'onb.error.required';
+      if (draft.situation === 'refugee' && !draft.protectionStatus) return 'onb.error.required';
+      return null;
     case 3:
       return draft.accommodation ? null : 'onb.error.required';
     case 4:
@@ -70,6 +93,8 @@ export function isProfile(value: unknown): value is Profile {
   const v = value as Record<string, unknown>;
   return (
     SITUATIONS.includes(v.situation as Situation) &&
+    (v.workerStatus === undefined || (v.situation === 'worker' && WORKER_STATUSES.includes(v.workerStatus as WorkerStatus))) &&
+    (v.protectionStatus === undefined || (v.situation === 'refugee' && PROTECTION_STATUSES.includes(v.protectionStatus as ProtectionStatus))) &&
     CITIZENSHIPS.includes(v.citizenship as Citizenship) &&
     ACCOMMODATIONS.includes(v.accommodation as Accommodation) &&
     Array.isArray(v.completed) &&
@@ -83,6 +108,8 @@ export function isDraft(value: unknown): value is ProfileDraft & { step?: number
   const optional = (list: string[], x: unknown) => x === undefined || list.includes(x as string);
   return (
     optional(SITUATIONS, v.situation) &&
+    optional(WORKER_STATUSES, v.workerStatus) &&
+    optional(PROTECTION_STATUSES, v.protectionStatus) &&
     optional(CITIZENSHIPS, v.citizenship) &&
     optional(ACCOMMODATIONS, v.accommodation) &&
     Array.isArray(v.completed) &&

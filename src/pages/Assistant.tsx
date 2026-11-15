@@ -1,9 +1,8 @@
-import { Fragment, useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { Fragment, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { getProcedure } from '../data';
-import { effectiveStatus } from '../lib/checklist';
 import {
   checkAvailability,
   explainDocument,
@@ -14,7 +13,6 @@ import {
   type AiAvailability,
   type ChatAttachment,
   type ChatMessage,
-  type UserContextSummary,
 } from '../lib/ai';
 import { sessionData, STORAGE_KEYS } from '../lib/storage';
 import { Icon } from '../components/Icon';
@@ -126,7 +124,7 @@ function loadHistory(): ChatMessage[] {
 }
 
 export function Assistant() {
-  const { language, profile, tasks, progress, dates } = useApp();
+  const { language } = useApp();
   const { t, loc } = useI18n();
   const [params] = useSearchParams();
 
@@ -134,6 +132,8 @@ export function Assistant() {
   const procedure = procedureId ? getProcedure(procedureId) : undefined;
 
   const [tab, setTab] = useState<'chat' | 'document'>('chat');
+  const chatTabRef = useRef<HTMLButtonElement | null>(null);
+  const documentTabRef = useRef<HTMLButtonElement | null>(null);
   const [availability, setAvailability] = useState<AiAvailability | 'checking'>('checking');
   const [messages, setMessages] = useState<ChatMessage[]>(loadHistory);
   const [input, setInput] = useState(procedure ? t('ai.explainPrompt', { title: loc(procedure.title) }) : '');
@@ -153,20 +153,6 @@ export function Assistant() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
   const [docPreparing, setDocPreparing] = useState(false);
-
-  const userContext = useMemo<UserContextSummary | undefined>(() => {
-    if (!profile) return undefined;
-    const completedCount = tasks.filter((task) => effectiveStatus(task, progress) === 'completed').length;
-    return {
-      situation: profile.situation,
-      citizenship: profile.citizenship,
-      accommodation: profile.accommodation,
-      arrival: dates.arrival || undefined,
-      expiry: dates.expiry || undefined,
-      completedCount,
-      totalCount: tasks.length,
-    };
-  }, [profile, tasks, progress, dates]);
 
   useEffect(() => {
     if (procedure) {
@@ -205,7 +191,6 @@ export function Assistant() {
         messages: next,
         language,
         procedureId: procedure?.id,
-        userContext,
       });
       setMessages([...next, { role: 'assistant', content: reply }]);
     } catch (caught) {
@@ -258,7 +243,7 @@ export function Assistant() {
     setDocResult(null);
     setFormResult(null);
     try {
-      const request = { text: docText, attachment: docAttachment?.attachment, language, userContext };
+      const request = { text: docText, attachment: docAttachment?.attachment, language };
       if (docKind === 'form') setFormResult(await explainForm(request));
       else setDocResult(await explainDocument(request));
     } catch (caught) {
@@ -269,6 +254,17 @@ export function Assistant() {
     } finally {
       setDocBusy(false);
     }
+  }
+
+  function handleTabKey(event: KeyboardEvent<HTMLButtonElement>) {
+    let next: 'chat' | 'document' | null = null;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') next = tab === 'chat' ? 'document' : 'chat';
+    if (event.key === 'Home') next = 'chat';
+    if (event.key === 'End') next = 'document';
+    if (!next) return;
+    event.preventDefault();
+    setTab(next);
+    (next === 'chat' ? chatTabRef : documentTabRef).current?.focus();
   }
 
   const unavailable = availability === 'not_configured' || availability === 'unreachable';
@@ -295,9 +291,14 @@ export function Assistant() {
 
       <div className="flex flex-wrap gap-2" role="tablist" aria-label={t('ai.title')}>
         <button
+          ref={chatTabRef}
+          id="assistant-chat-tab"
           type="button"
           role="tab"
           aria-selected={tab === 'chat'}
+          aria-controls="assistant-chat-panel"
+          tabIndex={tab === 'chat' ? 0 : -1}
+          onKeyDown={handleTabKey}
           onClick={() => setTab('chat')}
           className={`inline-flex min-h-10 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             tab === 'chat'
@@ -309,9 +310,14 @@ export function Assistant() {
           {t('ai.tab.chat')}
         </button>
         <button
+          ref={documentTabRef}
+          id="assistant-document-tab"
           type="button"
           role="tab"
           aria-selected={tab === 'document'}
+          aria-controls="assistant-document-panel"
+          tabIndex={tab === 'document' ? 0 : -1}
+          onKeyDown={handleTabKey}
           onClick={() => setTab('document')}
           className={`inline-flex min-h-10 items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             tab === 'document'
@@ -325,7 +331,13 @@ export function Assistant() {
       </div>
 
       {tab === 'chat' ? (
-        <>
+        <div
+          id="assistant-chat-panel"
+          role="tabpanel"
+          aria-labelledby="assistant-chat-tab"
+          tabIndex={0}
+          className="space-y-5"
+        >
           {procedure ? <p className="text-sm font-semibold text-brand-800">{t('ai.aboutProcedure', { title: loc(procedure.title) })}</p> : null}
 
           <section aria-label={t('ai.title')} className="rounded-lg border border-slate-200 bg-white p-4">
@@ -419,9 +431,15 @@ export function Assistant() {
               ))}
             </ul>
           </section>
-        </>
+        </div>
       ) : (
-        <section className={cardClass} aria-labelledby="doc-explainer-title">
+        <section
+          id="assistant-document-panel"
+          role="tabpanel"
+          aria-labelledby="assistant-document-tab"
+          tabIndex={0}
+          className={cardClass}
+        >
           <h2 id="doc-explainer-title" className="text-lg font-bold text-brand-900">
             {t('ai.doc.title')}
           </h2>

@@ -19,6 +19,7 @@ interface Doc {
   name: L;
   whereToGet: L;
   level: string;
+  sourceIds?: string[];
 }
 interface Proc {
   id: string;
@@ -45,12 +46,14 @@ interface Inst {
   website: string;
   hours: L | null;
   verifiedNote: L;
+  sourceIds: string[];
 }
 interface Src {
   title: string;
   url: string;
   kind: string;
   retrieved: string;
+  note?: string;
 }
 
 function loadJson<T>(file: string): T {
@@ -67,7 +70,17 @@ export function buildKnowledge(): string {
   const sources = loadJson<Record<string, Src>>('sources.json');
 
   const parts: string[] = [];
-  parts.push('=== PROCEDURES (each fact has a label: verified / recommended / confirm) ===');
+  const sourceRefs = (ids?: string[]): string => {
+    const refs = (ids ?? []).map((id) => {
+      const source = sources[id];
+      if (!source) return null;
+      const caveat = source.note ? `; source note: ${source.note}` : '';
+      return `${id}: ${source.title} [${source.kind}; recorded ${source.retrieved}] ${source.url}${caveat}`;
+    }).filter((value): value is string => Boolean(value));
+    return refs.length > 0 ? refs.join(' | ') : 'no claim-specific source recorded';
+  };
+
+  parts.push('=== PROCEDURES (each fact has a label: verified / recommended / confirm, followed by its claim-specific sources) ===');
   for (const p of procedures) {
     const lines: string[] = [];
     lines.push(`## ${p.title.en} (id: ${p.id}, last checked ${p.lastVerified})`);
@@ -77,15 +90,14 @@ export function buildKnowledge(): string {
     lines.push(`Who does not: ${p.whoDoesNot.en}`);
     lines.push(`Where to submit: ${p.submitWhere.en}`);
     lines.push('Documents:');
-    for (const d of p.documents) lines.push(`- [${d.level}] ${d.name.en} | where: ${d.whereToGet.en}`);
+    for (const d of p.documents) lines.push(`- [${d.level}] ${d.name.en} | where: ${d.whereToGet.en} | evidence: ${sourceRefs(d.sourceIds)}`);
     lines.push('Steps:');
-    p.steps.forEach((s, i) => lines.push(`${i + 1}. [${s.level}] ${s.text.en}`));
+    p.steps.forEach((s, i) => lines.push(`${i + 1}. [${s.level}] ${s.text.en} | evidence: ${sourceRefs(s.sourceIds)}`));
     lines.push('Warnings:');
-    for (const w of p.warnings) lines.push(`- [${w.level}] ${w.text.en}`);
-    lines.push(p.processingTime ? `Processing time: [${p.processingTime.level}] ${p.processingTime.text.en}` : 'Processing time: not verified');
-    lines.push(p.deadline ? `Deadline: [${p.deadline.level}] ${p.deadline.text.en}` : 'Deadline: not verified');
-    const links = p.sourceIds.map((id) => sources[id]).filter(Boolean).map((s) => `${s.title} (${s.kind}) ${s.url}`);
-    lines.push(`Sources: ${links.join('; ')}`);
+    for (const w of p.warnings) lines.push(`- [${w.level}] ${w.text.en} | evidence: ${sourceRefs(w.sourceIds)}`);
+    lines.push(p.processingTime ? `Processing time: [${p.processingTime.level}] ${p.processingTime.text.en} | evidence: ${sourceRefs(p.processingTime.sourceIds)}` : 'Processing time: not recorded');
+    lines.push(p.deadline ? `Deadline: [${p.deadline.level}] ${p.deadline.text.en} | evidence: ${sourceRefs(p.deadline.sourceIds)}` : 'Deadline: not recorded');
+    lines.push(`Procedure sources: ${sourceRefs(p.sourceIds)}`);
     parts.push(lines.join('\n'));
   }
 
@@ -98,8 +110,9 @@ export function buildKnowledge(): string {
         `Phone: ${i.phone ?? 'not verified'}`,
         `Email: ${i.email ?? 'not verified'}`,
         `Website: ${i.website}`,
-        `Opening hours: ${i.hours ? i.hours.en : 'not verified'}`,
+        `Opening hours: ${i.hours ? i.hours.en : 'not recorded'}`,
         `Note: ${i.verifiedNote.en}`,
+        `Sources: ${sourceRefs(i.sourceIds)}`,
       ].join('\n'),
     );
   }
@@ -127,4 +140,26 @@ export function buildKnowledge(): string {
 export function procedureTitle(id: string): string | null {
   const procedures = loadJson<Proc[]>('procedures.json');
   return procedures.find((p) => p.id === id)?.title.en ?? null;
+}
+
+export interface KnowledgeCitation {
+  id: string;
+  title: string;
+  url: string;
+  kind: string;
+  recordedAt: string;
+}
+
+/** Return only citations that exactly match a URL in the curated source registry. */
+export function citationsInReply(reply: string): KnowledgeCitation[] {
+  const sources = loadJson<Record<string, Src>>('sources.json');
+  return Object.entries(sources)
+    .filter(([, source]) => reply.includes(source.url))
+    .map(([id, source]) => ({
+      id,
+      title: source.title,
+      url: source.url,
+      kind: source.kind,
+      recordedAt: source.retrieved,
+    }));
 }

@@ -58,6 +58,8 @@ function buildUpdateFields(state: WorkspaceState): Record<string, unknown | Fiel
   if (state.profile) {
     base.profile = {
       situation: state.profile.situation,
+      ...(state.profile.workerStatus ? { workerStatus: state.profile.workerStatus } : {}),
+      ...(state.profile.protectionStatus ? { protectionStatus: state.profile.protectionStatus } : {}),
       citizenship: state.profile.citizenship,
       accommodation: state.profile.accommodation,
       completed: state.profile.completed.slice(0, 10),
@@ -84,6 +86,8 @@ function buildCreateFields(uid: string, state: WorkspaceState): Record<string, u
   if (state.profile) {
     base.profile = {
       situation: state.profile.situation,
+      ...(state.profile.workerStatus ? { workerStatus: state.profile.workerStatus } : {}),
+      ...(state.profile.protectionStatus ? { protectionStatus: state.profile.protectionStatus } : {}),
       citizenship: state.profile.citizenship,
       accommodation: state.profile.accommodation,
       completed: state.profile.completed.slice(0, 10),

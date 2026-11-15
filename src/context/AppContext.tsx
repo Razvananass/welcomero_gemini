@@ -55,7 +55,7 @@ interface AppContextValue {
   setDates: (dates: PlanDates) => void;
   tasks: ChecklistTask[];
   summary: ProgressSummary;
-  resetAll: () => void;
+  resetAll: () => Promise<void>;
   user: AuthUser | null;
   authReady: boolean;
   authLoading: boolean;
@@ -128,6 +128,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const activeUidRef = useRef<string | null>(null);
   const hasRemoteDocRef = useRef(false);
   const writeQueueRef = useRef<Promise<void>>(Promise.resolve());
+  const accountLoadVersionRef = useRef(0);
+  const deletingUidRef = useRef<string | null>(null);
 
   // Keep the page's language and reading direction (left-to-right / right-to-left) in sync.
   useEffect(() => {
@@ -151,11 +153,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const enqueueWrite = useCallback((uid: string, snapshot: WorkspaceState) => {
+    if (deletingUidRef.current === uid) return;
     setSyncStatus('syncing');
     writeQueueRef.current = writeQueueRef.current
       .catch(() => undefined)
       .then(async () => {
-        if (activeUidRef.current !== uid) return;
+        if (activeUidRef.current !== uid || deletingUidRef.current === uid) return;
         if (!hasRemoteDocRef.current) {
           await createUserWorkspace(uid, snapshot);
           hasRemoteDocRef.current = true;
@@ -175,6 +178,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      const loadVersion = ++accountLoadVersionRef.current;
       if (!firebaseUser) {
         activeUidRef.current = null;
         hasRemoteDocRef.current = false;
@@ -198,7 +202,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       try {
         const loaded = await loadUserWorkspace(uid);
-        if (activeUidRef.current !== uid) return;
+        if (activeUidRef.current !== uid || accountLoadVersionRef.current !== loadVersion) return;
         hasRemoteDocRef.current = loaded.exists;
 
         const localSnapshot = stateRef.current;
@@ -216,7 +220,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           enqueueWrite(uid, localSnapshot);
         }
       } catch {
-        if (activeUidRef.current === uid) {
+        if (activeUidRef.current === uid && accountLoadVersionRef.current === loadVersion) {
           setSyncStatus('error');
         }
       }
@@ -283,7 +287,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [enqueueWrite],
   );
 
-  const resetAll = useCallback(() => {
+  const resetAll = useCallback(async () => {
+    const uid = activeUidRef.current;
+    accountLoadVersionRef.current += 1;
+    if (uid) {
+      deletingUidRef.current = uid;
+      setSyncStatus('syncing');
+      try {
+        await writeQueueRef.current.catch(() => undefined);
+        if (activeUidRef.current !== uid) throw new Error('account_changed');
+        // Firestore deletion is idempotent, so do it even if the initial cloud read is still pending.
+        await deleteUserWorkspace(uid);
+        hasRemoteDocRef.current = false;
+      } catch (error) {
+        if (deletingUidRef.current === uid) deletingUidRef.current = null;
+        if (activeUidRef.current === uid) setSyncStatus('error');
+        throw error;
+      }
+    }
+
     clearAllData();
     const emptyState: WorkspaceState = {
       language: DEFAULT_LANG,
@@ -301,28 +323,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setLanguageChosen(false);
     setThemePreferenceState('system');
     setTextSizeState('normal');
-
-    const uid = activeUidRef.current;
-    if (uid) {
-      setSyncStatus('syncing');
-      writeQueueRef.current = writeQueueRef.current
-        .catch(() => undefined)
-        .then(async () => {
-          if (activeUidRef.current !== uid) return;
-          if (hasRemoteDocRef.current) {
-            await deleteUserWorkspace(uid);
-            hasRemoteDocRef.current = false;
-          }
-          if (activeUidRef.current === uid) {
-            setSyncStatus('idle');
-          }
-        })
-        .catch(() => {
-          if (activeUidRef.current === uid) {
-            setSyncStatus('error');
-          }
-        });
-    }
+    if (uid && deletingUidRef.current === uid) deletingUidRef.current = null;
+    setSyncStatus('idle');
   }, []);
 
   const signInWithGoogle = useCallback(async () => {

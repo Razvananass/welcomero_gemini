@@ -10,7 +10,9 @@
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "tsx tests/run.ts"
+    "test": "tsx tests/run.ts",
+    "sources:check": "node scripts/check-sources.mjs",
+    "sources:accept": "node scripts/check-sources.mjs --accept"
   },
   "dependencies": {
     "@firebase/eslint-plugin-security-rules": "^0.0.2",

@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { useI18n } from '../context/useI18n';
 import { buildPlan, formatDate, todayIso } from '../lib/plan';
 import { docCounts } from '../lib/docs';
 import { effectiveStatus, nextUp, pendingDependencies, timeSensitive } from '../lib/checklist';
-import { Arrow, btnSecondary, cardClass, LevelBadge, Notice, PageHeader, ProgressBar, StatusBadge } from '../components/ui';
+import { Arrow, btnSecondary, cardClass, inputClass, LevelBadge, Notice, PageHeader, ProgressBar, StatusBadge } from '../components/ui';
 import { Icon } from '../components/Icon';
 import { TaskCard } from '../components/TaskCard';
 import { HumanHelpCard } from '../components/HumanHelpCard';
 import { SafetyCard } from '../components/SafetyCard';
 import type { MessageKey } from '../i18n';
+import type { TaskStatus } from '../types';
+
+const STATUSES: TaskStatus[] = ['not-started', 'in-progress', 'completed'];
 
 const QUICK_LINKS: Array<{ to: string; key: MessageKey }> = [
   { to: '/plan', key: 'dash.quick.plan' },
@@ -24,6 +27,8 @@ const QUICK_LINKS: Array<{ to: string; key: MessageKey }> = [
 export function Dashboard() {
   const { tasks, progress, summary, setTaskStatus, dates, docs, language, user } = useApp();
   const { t, loc } = useI18n();
+  const location = useLocation();
+  const guideState = { from: location.pathname };
 
   const upcoming = nextUp(tasks, progress, 3);
   const hero = upcoming[0];
@@ -88,41 +93,96 @@ export function Dashboard() {
               {loc(hero.procedure.title)}
             </h3>
             <p className="mt-2 max-w-2xl text-white/90">{loc(hero.procedure.summary)}</p>
-            <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-base text-white/90">
-              {heroPlan ? (
-                <li className="flex items-center gap-1.5">
-                  <Icon name="calendar" className="size-4" />
-                  {t('dash.suggestedBy', { date: formatDate(heroPlan.date, language) })}
-                </li>
-              ) : (
-                <li>
-                  <Link to="/plan" className="font-semibold underline underline-offset-2">
-                    {t('dash.addDates')}
-                  </Link>
-                </li>
-              )}
-              {heroDocs && heroDocs.total > 0 ? (
-                <li className="flex items-center gap-1.5">
-                  <Icon name="file" className="size-4" />
-                  {t('docs.progress', { ready: heroDocs.ready, total: heroDocs.total })}
-                </li>
-              ) : null}
-            </ul>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link
-                to={`/guides/${hero.procedure.id}`}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-base font-semibold text-brand-900 hover:bg-brand-50"
-              >
-                {t('check.open')} <Arrow />
-              </Link>
-              <Link
-                to={`/kit/${hero.procedure.id}`}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/70 px-5 py-2.5 text-base font-semibold text-white hover:bg-white/10"
-              >
-                <Icon name="printer" className="size-4" />
-                {t('kit.open')}
-              </Link>
-            </div>
+            {heroPlan ? (
+              <p className="mt-3 flex items-center gap-1.5 text-base text-white/90">
+                <Icon name="calendar" className="size-4" />
+                {t('dash.suggestedBy', { date: formatDate(heroPlan.date, language) })}
+              </p>
+            ) : null}
+
+            <ol className="mt-6 grid gap-3 md:grid-cols-2" aria-label={t('dash.flow.label')}>
+              <li className="rounded-lg bg-white/10 p-4">
+                <p className="text-sm font-bold text-sun-300">1</p>
+                <h4 className="mt-1 text-lg font-bold">{t('dash.flow.understand')}</h4>
+                <p className="mt-1 text-sm text-white/85">{t('dash.flow.understand.body')}</p>
+                <Link
+                  to={`/guides/${hero.procedure.id}`}
+                  state={guideState}
+                  className="mt-3 inline-flex min-h-10 items-center gap-2 font-semibold underline underline-offset-2"
+                >
+                  {t('check.open')} <Arrow />
+                </Link>
+              </li>
+              <li className="rounded-lg bg-white/10 p-4">
+                <p className="text-sm font-bold text-sun-300">2</p>
+                <h4 className="mt-1 text-lg font-bold">{t('dash.flow.documents')}</h4>
+                <p className="mt-1 text-sm text-white/85">
+                  {heroDocs && heroDocs.total > 0
+                    ? t('docs.progress', { ready: heroDocs.ready, total: heroDocs.total })
+                    : t('dash.flow.documents.body')}
+                </p>
+                <Link
+                  to={`/guides/${hero.procedure.id}#documents`}
+                  state={guideState}
+                  className="mt-3 inline-flex min-h-10 items-center gap-2 font-semibold underline underline-offset-2"
+                >
+                  {t('dash.flow.documents.open')} <Arrow />
+                </Link>
+              </li>
+              <li className="rounded-lg bg-white/10 p-4">
+                <p className="text-sm font-bold text-sun-300">3</p>
+                <h4 className="mt-1 text-lg font-bold">{t('dash.flow.kit')}</h4>
+                <p className="mt-1 text-sm text-white/85">{t('dash.flow.kit.body')}</p>
+                <Link
+                  to={`/kit/${hero.procedure.id}`}
+                  state={{ guideOrigin: location.pathname }}
+                  className="mt-3 inline-flex min-h-10 items-center gap-2 font-semibold underline underline-offset-2"
+                >
+                  <Icon name="printer" className="size-4" />
+                  {t('kit.open')}
+                </Link>
+              </li>
+              <li className="rounded-lg bg-white/10 p-4">
+                <p className="text-sm font-bold text-sun-300">4</p>
+                <h4 className="mt-1 text-lg font-bold">{t('dash.flow.complete')}</h4>
+                <p className="mt-1 text-sm text-white/85">{t('dash.flow.complete.body')}</p>
+                <div className="mt-3 flex flex-wrap items-end gap-2">
+                  <div className="min-w-40 flex-1">
+                    <label htmlFor={`hero-status-${hero.procedure.id}`} className="sr-only">
+                      {t('check.status')}
+                    </label>
+                    <select
+                      id={`hero-status-${hero.procedure.id}`}
+                      value={effectiveStatus(hero, progress)}
+                      onChange={(event) => setTaskStatus(hero.procedure.id, event.target.value as TaskStatus)}
+                      className={inputClass}
+                    >
+                      {STATUSES.map((status) => (
+                        <option key={status} value={status}>
+                          {t(`status.${status}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setTaskStatus(hero.procedure.id, effectiveStatus(hero, progress) === 'completed' ? 'not-started' : 'completed')
+                    }
+                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/70 px-4 py-2 font-semibold hover:bg-white/10"
+                  >
+                    {effectiveStatus(hero, progress) === 'completed' ? t('check.reopen') : t('check.markDone')}
+                  </button>
+                </div>
+              </li>
+            </ol>
+            {!heroPlan ? (
+              <p className="mt-4 text-sm text-white/90">
+                <Link to="/plan" className="font-semibold underline underline-offset-2">
+                  {t('dash.addDates')}
+                </Link>
+              </p>
+            ) : null}
           </article>
 
           {rest.length > 0 ? (
@@ -155,7 +215,7 @@ export function Dashboard() {
             {dated.map((task) => (
               <li key={task.procedure.id} className="py-3 first:pt-0 last:pb-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Link to={`/guides/${task.procedure.id}`} className="font-semibold text-brand-800 underline">
+                  <Link to={`/guides/${task.procedure.id}`} state={guideState} className="font-semibold text-brand-800 underline">
                     {loc(task.procedure.title)}
                   </Link>
                   <StatusBadge status={effectiveStatus(task, progress)} />
@@ -168,14 +228,14 @@ export function Dashboard() {
         </section>
       ) : null}
 
-      <section aria-labelledby="quick-title">
-        <h2 id="quick-title" className="text-xl font-bold text-brand-900">
+      <section aria-labelledby="quick-title" className="border-t border-slate-200 pt-7">
+        <h2 id="quick-title" className="text-base font-bold text-brand-900">
           {t('dash.quick')}
         </h2>
-        <ul className="mt-3 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+        <ul className="mt-3 grid gap-x-6 gap-y-1 sm:grid-cols-2">
           {QUICK_LINKS.map((link) => (
             <li key={link.to}>
-              <Link to={link.to} className="flex items-center justify-between gap-3 px-4 py-3.5 font-medium text-brand-900 hover:bg-slate-50">
+              <Link to={link.to} className="flex min-h-10 items-center justify-between gap-3 rounded px-2 py-2 text-sm font-medium text-brand-800 hover:bg-slate-50">
                 <span>{t(link.key)}</span>
                 <Arrow />
               </Link>
